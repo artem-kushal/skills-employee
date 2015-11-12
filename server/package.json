@@ -1,0 +1,16 @@
+{
+  "name": "skills_employee_service",
+  "version": "1.0.0",
+  "description": "This rest service for crud operation with data",
+  "author": "Artsiom Kushal",
+  "email": "stdart9@gmail.com",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "express": "^4.13.3",
+    "fs": "0.0.2"
+  }
+}
