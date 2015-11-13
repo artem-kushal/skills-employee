@@ -1,12 +1,21 @@
 'use strict';
 
-// Declare app level module which depends on views, and components
-angular.module('myApp', [
-  'ngRoute',
-  'myApp.view1',
-  'myApp.view2',
-  'myApp.version'
-]).
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/view1'});
+var skillsApp = angular.module('skillsApp', [
+    'ngRoute',
+    'skillsControllers',
+    'ngMaterial'
+]);
+
+skillsApp.config(['$routeProvider', '$mdThemingProvider', function($routeProvider, $mdThemingProvider) {
+	$routeProvider.
+      when('/', {
+        templateUrl: 'partials/main.html',
+        controller: 'MainCtrl'
+      }).
+      otherwise({
+        redirectTo: '/'
+      });
+  $mdThemingProvider.theme('default')
+    .primaryPalette('blue')
+    .accentPalette('indigo');
 }]);
