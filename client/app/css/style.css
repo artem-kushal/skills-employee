@@ -1,12 +1,63 @@
-md-list-item.md-no-proxy{
-    flex: 1;
-    justify-content: center;
+body {
+	background: #f5f5f5;
+}
+header, .main, footer {
+	padding-left: 240px;
 }
 
-md-list-item:hover {
-	cursor: pointer;
+.main {
+	padding-top: 50px;
 }
 
-md-list-item a {
-	width: 100%;
+.top-nav {
+	height: 100px;
+	line-height: 100px;
+}
+
+nav .button-collapse i {
+	line-height: 100px;
+}
+
+.side-nav.fixed i {
+	position: relative;
+	top: 5px;
+	left: -10px;
+}
+
+/*-------------technologies page--------------------*/
+.tech-top {
+	padding: 10px;
+}
+
+.btn-tech {
+	padding: 0 1rem;
+}
+
+.tech-content {
+	padding: 10px 0;
+}
+
+.chips {
+	margin: 5px 0;
+}
+
+.chips .chip {
+	margin-bottom: 5px;
+}
+/*---------------------------------*/
+
+@media only screen and (max-width : 992px) {
+	header, .main, footer {
+		padding-left: 0;
+	}
+}
+
+@media only screen and (min-width: 993px) {
+	.container {
+	    width: 85%;
+	}
+}
+
+@media only screen and (min-width: 601px) {
+
 }

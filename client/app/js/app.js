@@ -3,10 +3,11 @@
 var skillsApp = angular.module('skillsApp', [
     'ngRoute',
     'skillsControllers',
-    'ngMaterial'
+    'skillsDirectives',
+    'skillsServices'
 ]);
 
-skillsApp.config(['$routeProvider', '$mdThemingProvider', function($routeProvider, $mdThemingProvider) {
+skillsApp.config(['$routeProvider', function($routeProvider) {
 	$routeProvider.
       when('/', {
         templateUrl: 'partials/main.html',
@@ -15,7 +16,6 @@ skillsApp.config(['$routeProvider', '$mdThemingProvider', function($routeProvide
       otherwise({
         redirectTo: '/'
       });
-  $mdThemingProvider.theme('default')
-    .primaryPalette('blue')
-    .accentPalette('indigo');
 }]);
+
+//blue indigo
