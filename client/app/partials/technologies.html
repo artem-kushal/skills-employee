@@ -1,0 +1,30 @@
+
+
+<div class="row white z-depth-1 tech-top">
+    <div class="col s12">
+        <h5>Дерево технологий</h5>
+    </div>
+    <form name="techForm" novalidate ng-submit="addTech()">
+        <div class="input-field col s12 m6" ng-class="{invalid: (newTech.techName == undefined || newTech.techName == '') && isTechFormSubmit}">
+            <input id="tech_name" name="tech_name" type="text" class="validate" required ng-model="newTech.techName">
+            <label for="tech_name">Имя новой технологии</label>
+            <span ng-show="(newTech.techName == undefined || newTech.techName == '') && isTechFormSubmit" class="invalid-message">Обязательное поле</span>
+        </div>
+        <div class="input-field col s12 m6">
+            <button class="waves-effect waves-light btn  blue darken-1" type="submit"><i class="material-icons left">add</i>Добавить</button>
+        </div>
+    </form>
+</div>
+
+<div class="row white z-depth-1 tech-content" ng-sortable="{animation:150,group: 'tech'}">
+    <div class="col s12" ng-repeat="tech in technologies">
+        <a class="btn-flat waves-effect btn-tech" ng-click="setActiveTech($index)" ng-class="{active: isActiveTech($index)}"><i class="material-icons left">keyboard_arrow_right</i>{{tech.techName}}</a>
+        <div class="row" ng-show="isActiveTech($index)">
+            <div class="col s12 chips" ng-sortable="subTechConfig">
+                <div class="chip" ng-repeat="subTech in tech.subTech">
+                    {{subTech.name}}<i class="material-icons">close</i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

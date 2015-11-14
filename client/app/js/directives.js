@@ -9,7 +9,7 @@ skillsDirectives.directive("navmenuInit", ["$timeout", function ($timeout) {
             link: function (scope, element) {
                 $timeout(function () {
                    $(element).sideNav({
-                        closeOnClick: true 
+                        closeOnClick: false 
                    });
                 });
             }

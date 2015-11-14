@@ -1,0 +1,53 @@
+[
+{
+	"techName": "Packages",
+	"subTech": [
+		{
+			"name": "meteor-platform"
+		},
+		{
+			"name": "accounts-base"
+		},
+		{
+			"name": "accounts-password"
+		},
+		{
+			"name": "facebook"
+		}
+	]
+},
+{
+	"techName": "API",
+	"subTech": [
+		{
+			"name": "Google maps"
+		},
+		{
+			"name": "Skype"
+		},
+		{
+			"name": "LinkedIn"
+		}
+	]
+},
+{
+	"techName": "Web technologies",
+	"subTech": [
+		{
+			"name": "HTML5"
+		},
+		{
+			"name": "CSS3"
+		},
+		{
+			"name": "SVG"
+		},
+		{
+			"name": "WevGl"
+		},
+		{
+			"name": "REST"
+		}
+	]
+}
+]
