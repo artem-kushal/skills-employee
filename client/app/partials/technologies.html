@@ -17,14 +17,39 @@
 </div>
 
 <div class="row white z-depth-1 tech-content" ng-sortable="{animation:150,group: 'tech'}">
+<!-- все корректно работает если убрать ng-sortable tech -->
     <div class="col s12" ng-repeat="tech in technologies">
-        <a class="btn-flat waves-effect btn-tech" ng-click="setActiveTech($index)" ng-class="{active: isActiveTech($index)}"><i class="material-icons left">keyboard_arrow_right</i>{{tech.techName}}</a>
+        <a class="btn-flat waves-effect btn-tech" ng-click="markTech($index)" ng-class="{active: isActiveTech($index), orange: isMarkedTech($index)}">
+            <i class="material-icons left arrow" ng-click="setActiveTech($index)">keyboard_arrow_right</i>
+            {{tech.techName}}
+            <i class="material-icons right" ng-click="removeTech($index)">close</i>
+            <i class="material-icons right" ng-click="editTech($index)" href="#editTech" modal-init>mode_edit</i>
+
+        </a>
         <div class="row" ng-show="isActiveTech($index)">
             <div class="col s12 chips" ng-sortable="subTechConfig">
-                <div class="chip" ng-repeat="subTech in tech.subTech">
-                    {{subTech.name}}<i class="material-icons">close</i>
+                <div class="chip" ng-repeat="subTech in tech.subTech" not-remove-chip>
+                    {{subTech.name}}<i class="material-icons" ng-click="removeSubTech($index, $parent.$index)">close</i><i class="material-icons" ng-click="editTech($index, $parent.$index)" href="#editTech" modal-init>mode_edit</i>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="editTech" class="modal">
+    <div class="modal-content">
+        <h5>Изменение технологии</h5>
+        <div class="row">
+            <div class="input-field col s12" ng-class="{invalid: editTechName == undefined || editTechName == ''}">
+                <input id="edit_name" name="edit_name" type="text" class="validate" required ng-model="editTechName" tabindex="1">
+                <label for="edit_name" class="active">Измените имя технологии</label>
+                <span ng-show="editTechName == undefined || editTechName == ''" class="invalid-message">Обязательное поле</span>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href class=" modal-action modal-close waves-effect waves-green btn-flat">Отмена</a>
+        <button class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="saveEditTech()" tabindex="2">Изменить</button>
     </div>
 </div>

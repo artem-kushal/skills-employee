@@ -15,3 +15,23 @@ skillsDirectives.directive("navmenuInit", ["$timeout", function ($timeout) {
             }
         };
     }]);
+
+skillsDirectives.directive('notRemoveChip',['$timeout', function ($timeout) {       
+    return {
+        link: function(scope, element, attrs) {   
+            $timeout(function () {
+                $(document).off('click.chip');
+            });     
+        }
+    }
+}]);
+
+skillsDirectives.directive('modalInit',['$timeout', function ($timeout) {       
+    return {
+        link: function(scope, element, attrs) {   
+            $timeout(function () {
+                $(element).leanModal();
+            });     
+        }
+    }
+}]);

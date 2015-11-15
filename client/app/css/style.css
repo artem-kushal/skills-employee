@@ -34,7 +34,12 @@ nav .nav-wrapper .button-collapse i {
 }
 
 .btn-tech {
+	color: #343434;
 	padding: 0 1rem;
+}
+
+.btn-tech.orange {
+	color: white;
 }
 
 .tech-content {
@@ -57,13 +62,29 @@ nav .nav-wrapper .button-collapse i {
 	cursor: pointer;
 }
 
-.btn-tech i {
-	transition: all 0.5s ease;
-}
-
-.btn-tech.active i {
+.btn-tech.active i.arrow {
 	-webkit-transform: rotate(90deg);
 	transform: rotate(90deg);
+}
+
+.btn-tech:hover i.right {
+	visibility: visible;
+	opacity: 0.7;
+}
+
+.btn-tech i.right {
+	visibility: hidden;
+	transition: all 0.5s ease;
+	opacity: 0;
+	font-size: 16px;
+}
+
+.btn-tech i.right:nth-child(2) {
+	margin-left: 5px;
+}
+
+#editTech .modal-content {
+	padding-bottom: 0;
 }
 
 /* input-field focus color */

@@ -44,6 +44,43 @@ skillsControllers.controller('TechnologiesCtrl', ['$scope', '$rootScope', 'techn
 
 		$scope.isActiveTech = function(index) {
 			return !(activeTech.indexOf(index) == -1);
+			// return true;
+		}
+
+		var markedTech;
+		$scope.markTech = function(index) {
+			markedTech = (markedTech === index) ? undefined : index;
+		}
+
+		$scope.isMarkedTech = function(index) {
+			return markedTech === index;
+		}
+
+		$scope.removeSubTech = function(index, parentIndex) {
+			$scope.technologies[parentIndex].subTech.splice(index, 1);
+		}
+
+		$scope.removeTech = function(index) {
+			$scope.technologies.splice(index, 1);
+		}
+
+		var indexEditTech = [];
+		$scope.editTech = function(index, parentIndex) {
+			$scope.editTechName = (parentIndex !== undefined) 
+				? $scope.technologies[parentIndex].subTech[index].name 
+				: $scope.technologies[index].techName;
+			indexEditTech.push(index);
+			indexEditTech.push(parentIndex);
+		}
+
+		$scope.saveEditTech = function() {
+			if (indexEditTech[1] === undefined) {
+				$scope.technologies[indexEditTech[0]].techName = $scope.editTechName;
+			} else {
+				$scope.technologies[indexEditTech[1]].subTech[indexEditTech[0]].name = $scope.editTechName;
+			}
+			$scope.editTechName = '';
+			indexEditTech = [];
 		}
 
 		 $scope.subTechConfig = {
