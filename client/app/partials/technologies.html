@@ -5,10 +5,10 @@
         <h5>Дерево технологий</h5>
     </div>
     <form name="techForm" novalidate ng-submit="addTech()">
-        <div class="input-field col s12 m6" ng-class="{invalid: (newTech.techName == undefined || newTech.techName == '') && isTechFormSubmit}">
-            <input id="tech_name" name="tech_name" type="text" class="validate" required ng-model="newTech.techName">
+        <div class="input-field col s12 m6" ng-class="{invalid: (newTechName == undefined || newTechName == '') && isTechFormSubmit}">
+            <input id="tech_name" name="tech_name" type="text" class="validate" required ng-model="newTechName">
             <label for="tech_name">Имя новой технологии</label>
-            <span ng-show="(newTech.techName == undefined || newTech.techName == '') && isTechFormSubmit" class="invalid-message">Обязательное поле</span>
+            <span ng-show="(newTechName == undefined || newTechName == '') && isTechFormSubmit" class="invalid-message">Обязательное поле</span>
         </div>
         <div class="input-field col s12 m6">
             <button class="waves-effect waves-light btn  blue darken-1" type="submit"><i class="material-icons left">add</i>Добавить</button>
@@ -16,12 +16,12 @@
     </form>
 </div>
 
-<div class="row white z-depth-1 tech-content" ng-sortable="{animation:150,group: 'tech'}">
+<div class="row white z-depth-1 tech-content">
 <!-- все корректно работает если убрать ng-sortable tech -->
     <div class="col s12" ng-repeat="tech in technologies">
-        <a class="btn-flat waves-effect btn-tech" ng-click="markTech($index)" ng-class="{active: isActiveTech($index), orange: isMarkedTech($index)}">
+        <a class="btn-flat waves-effect btn-tech"ng-class="{active: isActiveTech($index), orange: isMarkedTech($index)}">
             <i class="material-icons left arrow" ng-click="setActiveTech($index)">keyboard_arrow_right</i>
-            {{tech.techName}}
+            <span ng-click="markTech($index)" >{{tech.techName}}</span>
             <i class="material-icons right" ng-click="removeTech($index)">close</i>
             <i class="material-icons right" ng-click="editTech($index)" href="#editTech" modal-init>mode_edit</i>
 

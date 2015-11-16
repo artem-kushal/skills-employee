@@ -1,6 +1,11 @@
+@import url(material_icon_style.css);
+@import url(../bower_components/Materialize/dist/css/materialize.min.css);
+
+
 body {
 	background: #f5f5f5;
 }
+
 header, .main, footer {
 	padding-left: 240px;
 }
@@ -35,7 +40,12 @@ nav .nav-wrapper .button-collapse i {
 
 .btn-tech {
 	color: #343434;
-	padding: 0 1rem;
+	/*padding: 0 1rem;*/
+}
+
+.btn-tech span {
+	display: inline-block;
+	line-height: 36px;
 }
 
 .btn-tech.orange {
