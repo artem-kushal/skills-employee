@@ -35,3 +35,16 @@ skillsDirectives.directive('modalInit',['$timeout', function ($timeout) {
         }
     }
 }]);
+
+
+skillsDirectives.directive("tooltippedInit", ["$timeout", function ($timeout) {
+    return {
+    restrict: "EA",
+        scope: true,
+        link: function (scope, element) {
+            $timeout(function () {
+                $(element).tooltip({delay: 50});
+            });
+        }
+    };
+}]);

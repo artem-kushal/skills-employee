@@ -12,6 +12,8 @@
         </div>
         <div class="input-field col s12 m6">
             <button class="waves-effect waves-light btn  blue darken-1" type="submit"><i class="material-icons left">add</i>Добавить</button>
+            <button type="button" class="waves-effect waves-light btn btn-icon cyan tooltipped" data-position="bottom" data-delay="50" data-tooltip="Развернуть вложенные технологии" ng-click="showAllSubTech()" tooltipped-init><i class="material-icons">fullscreen</i></button>
+            <button type="button" class="waves-effect waves-light btn btn-icon cyan tooltipped" data-position="bottom" data-delay="50" data-tooltip="Свернуть вложенные технологии" ng-click="hideAllSubTech()" tooltipped-init><i class="material-icons">fullscreen_exit</i></button>
         </div>
     </form>
 </div>
@@ -19,7 +21,7 @@
 <div class="row white z-depth-1 tech-content">
 <!-- все корректно работает если убрать ng-sortable tech -->
     <div class="col s12" ng-repeat="tech in technologies">
-        <a class="btn-flat waves-effect btn-tech"ng-class="{active: isActiveTech($index), orange: isMarkedTech($index)}">
+        <a class="btn-flat waves-effect btn-tech" ng-class="{active: isActiveTech($index), orange: isMarkedTech($index)}">
             <i class="material-icons left arrow" ng-click="setActiveTech($index)">keyboard_arrow_right</i>
             <span ng-click="markTech($index)" >{{tech.techName}}</span>
             <i class="material-icons right" ng-click="removeTech($index)">close</i>

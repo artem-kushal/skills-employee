@@ -6,7 +6,7 @@ var skillsControllers = angular.module('skillsControllers', []);
 skillsControllers.controller('TechnologiesCtrl', ['$scope', '$rootScope', 'technologiesService', 
 	function($scope, $rootScope,technologiesService) {
 
-		$rootScope.pageName = "Проекты";
+		$rootScope.pageName = "Технологии";
 		var markedTech;
 
 		function getTechnologies() {
@@ -19,7 +19,7 @@ skillsControllers.controller('TechnologiesCtrl', ['$scope', '$rootScope', 'techn
 		}
 		getTechnologies();
 
-		$scope.isTechFormSubmit = false
+		$scope.isTechFormSubmit = false;
 		$scope.addTech = function() {
 			if ($scope.techForm.$valid) {
 				if (markedTech == undefined) {
@@ -43,11 +43,21 @@ skillsControllers.controller('TechnologiesCtrl', ['$scope', '$rootScope', 'techn
 			}
 		}
 
+        $scope.showAllSubTech = function() {
+        	activeTech = [];
+        	for(var i = 0; i < $scope.technologies.length; i++) {
+        		activeTech.push(i);
+        	}
+        }
+
+        $scope.hideAllSubTech = function() {
+        	activeTech = [];
+        }
+
 		$scope.isActiveTech = function(index) {
 			return !(activeTech.indexOf(index) == -1);
 			// return true;
 		}
-
 		
 		$scope.markTech = function(index) {
 			markedTech = (markedTech === index) ? undefined : index;
@@ -84,9 +94,10 @@ skillsControllers.controller('TechnologiesCtrl', ['$scope', '$rootScope', 'techn
 			indexEditTech = [];
 		}
 
-		 $scope.subTechConfig = {
+		$scope.subTechConfig = {
             group: 'subTech',
             animation: 150
         };
+
 
 }]);
