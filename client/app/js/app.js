@@ -5,10 +5,11 @@ var skillsApp = angular.module('skillsApp', [
     'skillsControllers',
     'skillsDirectives',
     'skillsServices',
-    'ng-sortable'
+    'ng-sortable',
+    'textAngular'
 ]);
 
-skillsApp.config(['$routeProvider', function($routeProvider) {
+skillsApp.config(['$routeProvider', '$provide', function($routeProvider, $provide) {
 	$routeProvider.
       when('/', {
         templateUrl: 'partials/technologies.html',
@@ -21,6 +22,42 @@ skillsApp.config(['$routeProvider', function($routeProvider) {
       otherwise({
         redirectTo: '/'
       });
+
+    $provide.decorator('taOptions', ['$delegate', function(taOptions){
+            taOptions.toolbar = [
+                ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote',
+                'bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol',
+                'justifyLeft','justifyCenter','justifyRight', 'justifyFull',
+                'indent', 'outdent',
+                'redo', 'undo', 'clear']
+            ];
+            taOptions.classes = {
+                focussed: 'focussed',
+                toolbar: 'btn-toolbar',
+                toolbarGroup: 'btn-group',
+                toolbarButton: 'waves-effect waves-light btn cyan',
+                toolbarButtonActive: 'active',
+                disabled: 'disabled',
+                textEditor: 'form-control',
+                htmlEditor: 'form-control'
+            };
+            return taOptions; // whatever you return will be the taOptions
+        }]);
+    // $provide.decorator('taTools', ['$delegate', function(taTools){
+    //         taTools.bold.iconclass = 'material-icons';
+    //         taTools.italics.iconclass = 'material-icons';
+    //         taTools.underline.iconclass = 'material-icons';
+    //         taTools.ul.iconclass = 'material-icons';
+    //         taTools.ol.iconclass = 'material-icons';
+    //         taTools.undo.iconclass = 'material-icons';
+    //         taTools.redo.iconclass = 'material-icons';
+    //         taTools.justifyLeft.iconclass = 'material-icons';
+    //         taTools.justifyRight.iconclass = 'material-icons';
+    //         taTools.justifyCenter.iconclass = 'material-icons';
+    //         taTools.clear.iconclass = 'material-icons';
+    //         taTools.quote.iconclass = 'material-icons';
+    //         return taTools;
+    //     }]);
 }]);
 
 //blue indigo

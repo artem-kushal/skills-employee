@@ -5,7 +5,7 @@ skillsControllers.controller('NewProjectCtrl', ['$scope', '$rootScope', 'technol
 	function($scope, $rootScope,technologiesService) {
 
 		$rootScope.pageName = "Новый проект";
-
+		
 		// $scope.newProject.tech = [];
 		$scope.isNewProjectForm = false;
 		$scope.addProject = function() {
@@ -78,12 +78,18 @@ skillsControllers.controller('NewProjectCtrl', ['$scope', '$rootScope', 'technol
 		}
 
 		$scope.addSubTechInProject = function(index, parentIndex) {
-			// console.log()
 			$scope.addTechInProject(parentIndex);
 			var newProjectParentIndex = isTechContains($scope.technologies[parentIndex].id);
 			if (!isSubTechContains(newProjectParentIndex, $scope.technologies[parentIndex].subTech[index].subTechId)) {
 				var addingSubItem = angular.copy($scope.technologies[parentIndex].subTech[index]);
 				$scope.newProject.tech[newProjectParentIndex].subTech.push(addingSubItem);
+			}
+		}
+
+		$scope.removeSubTechFromProject = function(subtechIndex, techIndex) {
+			$scope.newProject.tech[techIndex].subTech.splice(subtechIndex, 1);
+			if ($scope.newProject.tech[techIndex].subTech.length == 0) {
+				$scope.newProject.tech.splice(techIndex, 1);
 			}
 		}
 
@@ -95,4 +101,38 @@ skillsControllers.controller('NewProjectCtrl', ['$scope', '$rootScope', 'technol
 			}
 			return false;
 		}
+
+		$scope.isSelectedSubTech = function(techId, subtechId) {
+
+			var findTech = getTechById(techId);
+
+			if (findTech) {
+
+				if (getSubtechById(findTech, subtechId)) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		function getTechById(techId) {
+			for(var i=0; i < $scope.newProject.tech.length; i++) {
+				if ($scope.newProject.tech[i].id == techId) {
+					return $scope.newProject.tech[i];
+				}
+			}
+			return undefined;
+		}
+
+		function getSubtechById(tech, subtechId) {
+
+			for(var i=0; i < tech.subTech.length; i++) {
+				console.log(tech.subTech[i].subTechId == subtechId);
+				if (tech.subTech[i].subTechId == subtechId) {
+					return tech.subTech[i];
+				}
+			}
+			return undefined;
+		}
+
 }]);

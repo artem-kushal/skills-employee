@@ -5,22 +5,48 @@
     <div class="col s12">
     	<form name="newProjectForm" novalidate ng-submit="addProject()">
     		<div class="row">
-    			<div class="col s12 l6">
+    			<div class="col s12 l8">
     				<div class="row">
-				    	<div class="input-field col s12 m9 l12" ng-class="{invalid: (newProject.name == undefined || newProject.name == '') && isNewProjectForm}">
+				    	<div class="input-field col s12 m10 l12" ng-class="{invalid: (newProject.name == undefined || newProject.name == '') && isNewProjectForm}">
 				    		<input id="name" type="text" class="validate" required ng-model="newProject.name">
 				          	<label for="name">Наименование</label>
 				          	<span ng-show="(newProject.name == undefined || newProject.name == '') && isNewProjectForm" class="invalid-message">Обязательное поле</span>
 				    	</div>
 				    </div>
-				    <div class="row">
-				    	<div class="input-field col col s12 m9 l12">
-				    		<textarea id="description" class="materialize-textarea"></textarea>
-				          	<label for="description">Описание</label>
+				    <div class="row" replace-material-icon>
+				    	<div class="input-field col col s12 m10 l12">
+				    		<!-- <textarea id="description" class="materialize-textarea"></textarea> -->
+				          	<span class="grey-text">Описание</span>
+				    	
+				    		<div text-angular ng-model="newProject.description" ></div>
 				    	</div>
 				    </div>
+
+					<div class="row">
+						<div class="col s12 grey lighten-5 tech_list" ng-show="isShowTechList">
+		    				<div class="col s12 grey lighten-3 tech-panel">
+		    					<button type="button" class="waves-effect waves-light btn btn-icon cyan tooltipped" data-position="top" data-delay="50" data-tooltip="Развернуть вложенные технологии" ng-click="showAllSubTech()" tooltipped-init><i class="material-icons">fullscreen</i></button>
+					            <button type="button" class="waves-effect waves-light btn btn-icon cyan tooltipped" data-position="top" data-delay="50" data-tooltip="Свернуть вложенные технологии" ng-click="hideAllSubTech()" tooltipped-init><i class="material-icons">fullscreen_exit</i></button>
+		    				</div>
+		    				<div class="col s12" ng-repeat="tech in technologies">
+						        <a class="btn-flat waves-effect btn-tech" ng-click="setActiveTech($index)" ng-class="{active: isActiveTech($index)}">
+						            <i class="material-icons left arrow">keyboard_arrow_right</i>
+						            {{tech.techName}}
+						            <i class="material-icons right smaller">add</i>
+						        </a>
+						        <div class="row" ng-show="isActiveTech($index)">
+						            <div class="col s12 chips" ng-sortable="subTechConfig">
+						                <div class="chip" ng-repeat="subTech in tech.subTech" not-remove-chip  ng-click="addSubTechInProject($index,$parent.$index)" ng-hide="isSelectedSubTech(tech.id, subTech.subTechId)">
+						                    {{subTech.name}}
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+		    			</div>
+					</div>
+
 				    <div class="row">
-				    	<div class="input-field col col s12 m9 l12">
+				    	<div class="input-field col col s12 m10 l12" ng-class="{invalid: (newProject.tech == undefined || newProject.tech.length == 0) && isNewProjectForm}">
 				    		<span class="grey-text">Технологии</span>
 				    		<button type="button" class="waves-effect waves-light btn btn-small cyan" ng-click="showTechnologies()">
 				    			<span ng-hide="isShowTechList">Открыть список</span>
@@ -37,27 +63,31 @@
 							            <div class="col s12 chips" ng-sortable="subTechConfig">
 							                <div class="chip" ng-repeat="subTech in tech.subTech" not-remove-chip>
 							                    {{subTech.name}}
-							                    <i class="material-icons" ng-click="removeSubTech($index, $parent.$index)">close</i>
+							                    <i class="material-icons" ng-click="removeSubTechFromProject($index, $parent.$index)">close</i>
 							                </div>
 							            </div>
 							        </div>
 							     </div>
 				    		</div>
+				    		<span ng-show="(newProject.tech == undefined || newProject.tech.length == 0) && isNewProjectForm" class="invalid-message">Обязательное поле</span>
 				    	</div>
 				    </div>
+
+				    
+
 				    <div class="row">
-				    	<div class="input-field col col s12 m9 l12">
+				    	<div class="input-field col col s12 m10 l12">
 				    		<input id="responsibilities" type="text" class="validate">
 				          	<label for="responsibilities">Обязанности</label>
 				    	</div>
 				    </div>
 				    <div class="row">
-				    	<div class="input-field col col s12 m9 l12">
+				    	<div class="input-field col col s12 m10 l12">
 				    		<button class="waves-effect waves-light btn-large blue darken-2" type="submit"><i class="material-icons left">add</i>Создать</button>
 				    	</div>
 				    </div>
     			</div>
-    			<div class="col s12 l6" ng-show="isShowTechList">
+    			<!-- <div class="col s12 l6" ng-show="isShowTechList">
     				<div class="col s12 grey lighten-3 tech-panel">
     					<button type="button" class="waves-effect waves-light btn btn-icon cyan tooltipped" data-position="top" data-delay="50" data-tooltip="Развернуть вложенные технологии" ng-click="showAllSubTech()" tooltipped-init><i class="material-icons">fullscreen</i></button>
 			            <button type="button" class="waves-effect waves-light btn btn-icon cyan tooltipped" data-position="top" data-delay="50" data-tooltip="Свернуть вложенные технологии" ng-click="hideAllSubTech()" tooltipped-init><i class="material-icons">fullscreen_exit</i></button>
@@ -76,7 +106,7 @@
 				            </div>
 				        </div>
 				    </div>
-    			</div>
+    			</div> -->
     		</div>
 		    
 	    </form>
