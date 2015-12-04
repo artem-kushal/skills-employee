@@ -93,6 +93,10 @@ skillsControllers.controller('NewProjectCtrl', ['$scope', '$rootScope', 'technol
 			}
 		}
 
+		$scope.removeTechFromProj = function(techIndex) {
+			$scope.newProject.tech.splice(techIndex, 1);
+		}
+
 		function isSubTechContains(index,id) {
 			for(var i = 0; i < $scope.newProject.tech[index].subTech.length; i++) {
 				if ($scope.newProject.tech[index].subTech[i].subTechId === id) {
@@ -103,9 +107,7 @@ skillsControllers.controller('NewProjectCtrl', ['$scope', '$rootScope', 'technol
 		}
 
 		$scope.isSelectedSubTech = function(techId, subtechId) {
-
 			var findTech = getTechById(techId);
-
 			if (findTech) {
 
 				if (getSubtechById(findTech, subtechId)) {

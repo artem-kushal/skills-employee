@@ -19,6 +19,10 @@ skillsApp.config(['$routeProvider', '$provide', function($routeProvider, $provid
         templateUrl: 'partials/newproject.html',
         controller: 'NewProjectCtrl'
       }).
+      when('/projects', {
+        templateUrl: 'partials/projectListing.html',
+        controller: 'ProjectListingCtrl'
+      }).
       otherwise({
         redirectTo: '/'
       });

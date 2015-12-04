@@ -1,0 +1,18 @@
+<div class="row white z-depth-1 projects-content" >
+	<div class="col s12 head-btn">
+        <h5>Список проектов</h5>
+        <a href="#/newproject" class="waves-effect waves-light btn blue darken-2"><i class="material-icons left">add</i>Создать проект</a>
+    </div>
+    <div class="row">
+		<div class="col s12 m4" ng-repeat="project in projects">
+			<div class="card blue lighten-5">
+				<div class="card-content white-text">
+	              <span class="card-title blue-text darken-2">{{project.name}}</span>
+	            </div>
+	            <div class="card-action">
+	              <a href="#">открыть <i class="material-icons right">keyboard_arrow_right</i></a>
+	            </div>
+			</div>
+		</div>
+    </div>
+</div>

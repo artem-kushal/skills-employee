@@ -21,3 +21,23 @@ skillsServices.service("technologiesService", [ '$http', '$q', function( $http, 
 	}
 
 }]);
+
+skillsServices.service("projectsService", [ '$http', '$q', function( $http, $q ) {
+
+	this.getAll = function() {
+		var deferred = $q.defer();
+		httpGet(deferred, 'data/projects.json');
+		return deferred.promise;
+	}
+
+	function httpGet(deferred, url) {
+		$http.get(url)
+			.then(function (response) {
+				// console.log("url "+url+" response "+response.data)
+                deferred.resolve(response.data);
+            }, function (response) {
+                deferred.reject(response);
+            });
+	}
+
+}]);

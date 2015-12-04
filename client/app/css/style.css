@@ -106,7 +106,8 @@ nav .nav-wrapper .button-collapse i {
 	padding-bottom: 0;
 }
 /*-------------newproject page--------------------*/
-.newproject-content {
+.newproject-content,
+.projects-content {
 	padding: 20px;
 }
 
@@ -197,11 +198,35 @@ i.smaller {
 
 .tech_list.col {
 	padding: 0;
-	border: 2px solid #ff9800;
+	border: 2px solid #BBDEFB;
 }
+/*-------------------projects-content-----------------------------*/
+.card .card-content .card-title {
+	line-height: initial;
+}
+
+.card .card-action {
+	padding: 0;
+}
+
+.card .card-action a {
+	display: block;
+	padding: 20px;
+	margin-right: 0;
+}
+
+.head-btn {
+	position: relative;
+	margin-bottom: 10px;
+}
+
+.head-btn .btn {
+	position: absolute;
+	right: 0;
+	bottom: 3px;
+}
+
 /*------------------------------------------------*/
-
-
 /* input-field focus color */
 .input-field input:focus + label {
 	color: #42a5f5;
@@ -254,5 +279,12 @@ i.smaller {
 }
 
 @media only screen and (min-width: 601px) {
+	
+}
 
+
+@media only screen and (max-width: 600px) {
+	.head-btn .btn {
+		position: static;
+	}
 }
