@@ -19,6 +19,10 @@
 </div>
 
 <div class="row white z-depth-1 tech-content">
+    <div class="col s12" ng-if="technologies.length === 0">
+        <p>Техноологии отсутствуют. Воспользуйтесь формой выше для добавления новой технологии.</p>
+    </div>
+    
 <!-- все корректно работает если убрать ng-sortable tech -->
     <div class="col s12" ng-repeat="tech in technologies">
         <a class="btn-flat waves-effect btn-tech" ng-class="{active: isActiveTech($index), orange: isMarkedTech($index)}">
