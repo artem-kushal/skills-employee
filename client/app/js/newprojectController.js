@@ -1,8 +1,8 @@
 'use strict';
 
 
-skillsControllers.controller('NewProjectCtrl', ['$scope', '$rootScope', 'technologiesService',
-	function($scope, $rootScope,technologiesService) {
+skillsControllers.controller('NewProjectCtrl', ['$scope', '$rootScope', 'Technologies',
+	function($scope, $rootScope, Technologies) {
 
 		$rootScope.pageName = "Новый проект";
 		
@@ -20,12 +20,12 @@ skillsControllers.controller('NewProjectCtrl', ['$scope', '$rootScope', 'technol
 		}
 
 		function getTechnologies() {
-			technologiesService.getAll().then(
-				function(data) {
-					console.log(data);
-					$scope.technologies = data;
-				}, function(error) { console.log(error); }
-			);
+			Technologies.query(function(data) {
+				console.log(data);
+				$scope.technologies = data;
+			}, function(error) {
+				console.log(error);
+			});
 		}
 		getTechnologies();
 
@@ -61,7 +61,7 @@ skillsControllers.controller('NewProjectCtrl', ['$scope', '$rootScope', 'technol
 			tech: []
 		}
 		$scope.addTechInProject = function(index) {
-			if (isTechContains($scope.technologies[index].id) == undefined) {
+			if (isTechContains($scope.technologies[index]._id) == undefined) {
 				var addingItem = angular.copy($scope.technologies[index]);
 				addingItem.subTech = [];
 				$scope.newProject.tech.push(addingItem);
@@ -70,7 +70,7 @@ skillsControllers.controller('NewProjectCtrl', ['$scope', '$rootScope', 'technol
 
 		function isTechContains(id) {
 			for(var i = 0; i < $scope.newProject.tech.length; i++) {
-				if ($scope.newProject.tech[i].id === id) {
+				if ($scope.newProject.tech[i]._id === id) {
 					return i;
 				}
 			}
@@ -79,8 +79,8 @@ skillsControllers.controller('NewProjectCtrl', ['$scope', '$rootScope', 'technol
 
 		$scope.addSubTechInProject = function(index, parentIndex) {
 			$scope.addTechInProject(parentIndex);
-			var newProjectParentIndex = isTechContains($scope.technologies[parentIndex].id);
-			if (!isSubTechContains(newProjectParentIndex, $scope.technologies[parentIndex].subTech[index].subTechId)) {
+			var newProjectParentIndex = isTechContains($scope.technologies[parentIndex]._id);
+			if (!isSubTechContains(newProjectParentIndex, $scope.technologies[parentIndex].subTech[index]._id)) {
 				var addingSubItem = angular.copy($scope.technologies[parentIndex].subTech[index]);
 				$scope.newProject.tech[newProjectParentIndex].subTech.push(addingSubItem);
 			}
@@ -99,7 +99,7 @@ skillsControllers.controller('NewProjectCtrl', ['$scope', '$rootScope', 'technol
 
 		function isSubTechContains(index,id) {
 			for(var i = 0; i < $scope.newProject.tech[index].subTech.length; i++) {
-				if ($scope.newProject.tech[index].subTech[i].subTechId === id) {
+				if ($scope.newProject.tech[index].subTech[i]._id === id) {
 					return true;
 				}
 			}
@@ -119,7 +119,7 @@ skillsControllers.controller('NewProjectCtrl', ['$scope', '$rootScope', 'technol
 
 		function getTechById(techId) {
 			for(var i=0; i < $scope.newProject.tech.length; i++) {
-				if ($scope.newProject.tech[i].id == techId) {
+				if ($scope.newProject.tech[i]._id == techId) {
 					return $scope.newProject.tech[i];
 				}
 			}
@@ -129,8 +129,8 @@ skillsControllers.controller('NewProjectCtrl', ['$scope', '$rootScope', 'technol
 		function getSubtechById(tech, subtechId) {
 
 			for(var i=0; i < tech.subTech.length; i++) {
-				console.log(tech.subTech[i].subTechId == subtechId);
-				if (tech.subTech[i].subTechId == subtechId) {
+				console.log(tech.subTech[i]._id == subtechId);
+				if (tech.subTech[i]._id == subtechId) {
 					return tech.subTech[i];
 				}
 			}

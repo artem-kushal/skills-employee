@@ -3,6 +3,7 @@
 var skillsApp = angular.module('skillsApp', [
     'ngRoute',
     'ngResource',
+    'ngAnimate',
     'skillsControllers',
     'skillsDirectives',
     'skillsServices',

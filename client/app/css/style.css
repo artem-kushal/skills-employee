@@ -1,6 +1,6 @@
 @import url(material_icon_style.css);
 @import url(../bower_components/Materialize/dist/css/materialize.min.css);
-
+@import url(animated.css);
 
 body {
 	background: #f5f5f5;
@@ -31,6 +31,35 @@ nav .nav-wrapper .button-collapse i {
 
 .side-nav.fixed li.orange a {
 	color: white;
+}
+
+.partial.container.ng-enter {
+	-webkit-animation-duration: .75s;
+  animation-duration: .75s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+	-webkit-animation-name: fadeIn;
+  	animation-name: fadeIn;
+
+}
+
+
+.sub-tech-row.ng-hide-remove,
+.chip.ng-hide-remove,
+.tech_list.ng-hide-remove {
+		-webkit-animation-duration: .75s;
+  animation-duration: .75s;
+	-webkit-animation-name: fadeIn;
+  	animation-name: fadeIn;
+} 
+
+.sub-tech-row.ng-hide-add,
+.chip.ng-hide-add,
+.tech_list.ng-hide-add {
+		-webkit-animation-duration: .75s;
+  animation-duration: .75s;
+	-webkit-animation-name: fadeOut;
+  	animation-name: fadeOut;
 }
 
 /*-------------technologies page--------------------*/
@@ -226,6 +255,16 @@ i.smaller {
 	bottom: 3px;
 }
 
+.proj-list.ng-enter {
+
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+  -webkit-animation-name: bounce;
+          animation-name: bounce;
+  -webkit-transform-origin: center bottom;
+      -ms-transform-origin: center bottom;
+          transform-origin: center bottom;
+}
 /*------------------------------------------------*/
 /* input-field focus color */
 .input-field input:focus + label {

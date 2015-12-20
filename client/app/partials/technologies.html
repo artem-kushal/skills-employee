@@ -32,7 +32,7 @@
             <i class="material-icons right" ng-click="editTech($index)" href="#editTech" modal-init>mode_edit</i>
 
         </a>
-        <div class="row" ng-show="isActiveTech($index)">
+        <div class="row sub-tech-row" ng-show="isActiveTech($index)">
             <div class="col s12 chips" ng-sortable="subTechConfig">
                 <div class="chip" ng-repeat="subTech in tech.subTech" not-remove-chip>
                     {{subTech.name}}<i class="material-icons" ng-click="removeSubTech($index, $parent.$index)">close</i><i class="material-icons" ng-click="editTech($index, $parent.$index)" href="#editTech" modal-init>mode_edit</i>
