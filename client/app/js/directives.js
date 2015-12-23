@@ -88,3 +88,17 @@ skillsDirectives.directive("offsetTopTech", ["$timeout", function ($timeout) {
         }
     };
 }]);
+
+skillsDirectives.directive("collapsibleInit", ["$timeout", function ($timeout) {
+    return {
+    restrict: "EA",
+        scope: true,
+        link: function (scope, element) {
+            $timeout(function () {
+                $(element).collapsible({
+                  accordion : false 
+                });
+            });
+        }
+    };
+}]);

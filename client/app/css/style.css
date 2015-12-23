@@ -293,6 +293,23 @@ i.smaller {
 	background-color: #eeeeee  ;
 	color: #727272;
 }
+
+p.pb-none {
+	padding-bottom: 0;
+}
+
+p.pt-none {
+	padding-top: 0;
+}
+img.center {
+	display: block;
+	margin: 0 auto;
+}
+
+.collapsible-body .material-icons {
+	position: relative;
+	top: 6px;
+}
 /*------------------------------------------------*/
 
 /* input-field focus color */
