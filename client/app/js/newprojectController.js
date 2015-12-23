@@ -1,28 +1,23 @@
 'use strict';
 
 
-skillsControllers.controller('NewProjectCtrl', ['$scope', '$rootScope', 'Technologies', 'Project',
-	function($scope, $rootScope, Technologies, Project) {
-
-Project.query( 
-					function(data) {
-						console.log(data);
-					}, function(error) {
-						console.log(error);
-					}
-				)
+skillsControllers.controller('NewProjectCtrl', ['$scope', '$rootScope', 'Technologies', 'Project', '$location',
+	function($scope, $rootScope, Technologies, Project, $location) {
 
 		$rootScope.pageName = "Новый проект";
 		
-		// $scope.newProject.tech = [];
+		$scope.newProject = {
+			tech: []
+		};
 		$scope.isNewProjectForm = false;
 		$scope.addProject = function() {
-			if ($scope.newProjectForm.$valid) {
+			if ($scope.newProjectForm.$valid && $scope.newProject.tech.length !== 0) {
 				Project.post({newProject: $scope.newProject}, 
 					function(data) {
 						console.log(data.project);
 						$scope.isNewProjectForm = false;
 						Materialize.toast('Проект успешно добавлен!', 3000);
+						$location.path('/projects');
 					}, function(error) {
 						console.log(error);
 					}
@@ -73,9 +68,7 @@ Project.query(
 		$scope.showTechnologies = function(){
 			$scope.isShowTechList = ($scope.isShowTechList) ? false : true;
 		}
-		$scope.newProject = {
-			tech: []
-		}
+		
 		$scope.addTechInProject = function(index) {
 			if (isTechContains($scope.technologies[index]._id) == undefined) {
 				var addingItem = angular.copy($scope.technologies[index]);

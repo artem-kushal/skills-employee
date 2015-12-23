@@ -41,7 +41,8 @@ skillsServices.factory("SubTech", [ '$resource', function( $resource ) {
 
 skillsServices.factory("Project", [ '$resource', function( $resource ) {
   return $resource(restApiUrl + 'projects/:id', {}, {
-      query:  {method:'GET', params:{id:''}, isArray:true},
+      getAll:  {method:'GET', params:{id:''}, isArray:true},
+      get: {method:'GET', params:{id: '@id'}},
       post:   {method:'POST'},
       update: {method:'PUT', params: {id: '@id'}},
       remove: {method:'DELETE', params: {id: '@id'}}

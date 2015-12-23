@@ -1,17 +1,19 @@
 'use strict';
 
 
-skillsControllers.controller('ProjectListingCtrl', ['$scope', '$rootScope', 'projectsService',
-	function($scope, $rootScope, projectsService) {
+skillsControllers.controller('ProjectListingCtrl', ['$scope', '$rootScope', 'Project',
+	function($scope, $rootScope, Project) {
 
 		$rootScope.pageName = "Все проекты";
 
 		function getProjects() {
-			projectsService.getAll().then(
+			Project.getAll( 
 				function(data) {
 					console.log(data);
 					$scope.projects = data;
-				}, function(error) { console.log(error); }
+				}, function(error) {
+					console.log(error);
+				}
 			);
 		}
 		getProjects();

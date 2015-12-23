@@ -3,6 +3,9 @@
         <h5>Список проектов</h5>
         <a href="#/newproject" class="waves-effect waves-light btn blue darken-2"><i class="material-icons left">add</i>Создать проект</a>
     </div>
+    <div class="col s12" ng-if="projects.length === 0">
+        <p>Проекты отсутствуют. Перейдите на страницу добавления проекта воспользовавшись кнопкой выше.</p>
+    </div>
     <div class="row">
 		<div class="col s12 m4 proj-list" ng-repeat="project in projects">
 			<div class="card blue lighten-5">
@@ -10,7 +13,7 @@
 	              <span class="card-title blue-text darken-2">{{project.name}}</span>
 	            </div>
 	            <div class="card-action">
-	              <a href="#">открыть <i class="material-icons right">keyboard_arrow_right</i></a>
+	              <a href="#/projectdetail/{{project._id}}">открыть <i class="material-icons right">keyboard_arrow_right</i></a>
 	            </div>
 			</div>
 		</div>

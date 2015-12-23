@@ -185,23 +185,33 @@ app.delete('/subtech/:id', function(req, res){
     });
 });
 
-app.get('/projects', function (req, res) {
+app.get('/projects/', function (req, res) {
     return ProjectModel.find().populate('tech').exec(function (err, projects) {
-        if (!err) {
-            ProjectTechnologyModel.populate(projects, {
-                path: 'tech.subTech',
-                model: 'ProjectSubTech'
-              },
-              function(err, projects) {
-                return res.send(projects);
-              });
-        } else {
-            res.statusCode = 500;
-            log.error('Internal error(%d): %s',res.statusCode,err.message);
-            return res.send({ error: 'Server error' });
-        }
+        populateProject(err, projects, res);
     });
 });
+
+app.get('/projects/:id', function (req, res) {
+    return ProjectModel.findById(req.params.id).populate('tech').exec(function (err, projects) {
+        populateProject(err, projects, res);
+    });
+});
+
+function populateProject(err, projects,res) {
+    if (!err) {
+        ProjectTechnologyModel.populate(projects, {
+            path: 'tech.subTech',
+            model: 'ProjectSubTech'
+          },
+          function(err, projects) {
+            return res.send(projects);
+          });
+    } else {
+        res.statusCode = 500;
+        log.error('Internal error(%d): %s',res.statusCode,err.message);
+        return res.send({ error: 'Server error' });
+    }
+}
 
 app.post('/projects', function(req, res) {
     var project = new ProjectModel({
