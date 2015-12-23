@@ -39,6 +39,15 @@ skillsServices.factory("SubTech", [ '$resource', function( $resource ) {
     });
 }]);
 
+skillsServices.factory("Project", [ '$resource', function( $resource ) {
+  return $resource(restApiUrl + 'projects/:id', {}, {
+      query:  {method:'GET', params:{id:''}, isArray:true},
+      post:   {method:'POST'},
+      update: {method:'PUT', params: {id: '@id'}},
+      remove: {method:'DELETE', params: {id: '@id'}}
+    });
+}]);
+
 skillsServices.service("projectsService", [ '$http', '$q', function( $http, $q ) {
 
 	this.getAll = function() {

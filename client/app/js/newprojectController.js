@@ -1,8 +1,16 @@
 'use strict';
 
 
-skillsControllers.controller('NewProjectCtrl', ['$scope', '$rootScope', 'Technologies',
-	function($scope, $rootScope, Technologies) {
+skillsControllers.controller('NewProjectCtrl', ['$scope', '$rootScope', 'Technologies', 'Project',
+	function($scope, $rootScope, Technologies, Project) {
+
+Project.query( 
+					function(data) {
+						console.log(data);
+					}, function(error) {
+						console.log(error);
+					}
+				)
 
 		$rootScope.pageName = "Новый проект";
 		
@@ -10,10 +18,18 @@ skillsControllers.controller('NewProjectCtrl', ['$scope', '$rootScope', 'Technol
 		$scope.isNewProjectForm = false;
 		$scope.addProject = function() {
 			if ($scope.newProjectForm.$valid) {
-								
-				$scope.newProject = {};
-				$scope.isNewProjectForm = false;
-				Materialize.toast('Проект успешно добавлен!', 3000);
+				Project.post({newProject: $scope.newProject}, 
+					function(data) {
+						console.log(data.project);
+						$scope.isNewProjectForm = false;
+						Materialize.toast('Проект успешно добавлен!', 3000);
+					}, function(error) {
+						console.log(error);
+					}
+				);
+				// console.log($scope.newProject);
+				// $scope.newProject = {};
+				
 			} else {
 				$scope.isNewProjectForm = true;
 			}
@@ -129,7 +145,6 @@ skillsControllers.controller('NewProjectCtrl', ['$scope', '$rootScope', 'Technol
 		function getSubtechById(tech, subtechId) {
 
 			for(var i=0; i < tech.subTech.length; i++) {
-				console.log(tech.subTech[i]._id == subtechId);
 				if (tech.subTech[i]._id == subtechId) {
 					return tech.subTech[i];
 				}

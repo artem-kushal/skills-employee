@@ -7,6 +7,9 @@ var bodyParser = require('body-parser')
 var app = express();
 var TechnologyModel = require('./libs/mongoose').TechnologyModel;
 var SubTechModel = require('./libs/mongoose').SubTechModel;
+var ProjectTechnologyModel = require('./libs/mongoose').ProjectTechnologyModel;
+var ProjectSubTechModel = require('./libs/mongoose').ProjectSubTechModel;
+var ProjectModel = require('./libs/mongoose').ProjectModel;
 
 app.use(bodyParser.urlencoded({
   extended: true
@@ -179,6 +182,71 @@ app.delete('/subtech/:id', function(req, res){
                 log.error('Internal error(%d): %s',res.statusCode,err.message);
             }
         });
+    });
+});
+
+app.get('/projects', function (req, res) {
+    return ProjectModel.find().populate('tech').exec(function (err, projects) {
+        if (!err) {
+            ProjectTechnologyModel.populate(projects, {
+                path: 'tech.subTech',
+                model: 'ProjectSubTech'
+              },
+              function(err, projects) {
+                return res.send(projects);
+              });
+        } else {
+            res.statusCode = 500;
+            log.error('Internal error(%d): %s',res.statusCode,err.message);
+            return res.send({ error: 'Server error' });
+        }
+    });
+});
+
+app.post('/projects', function(req, res) {
+    var project = new ProjectModel({
+        name: req.body.newProject.name,
+        description: req.body.newProject.description,
+        responsibility: req.body.newProject.responsibility
+    });
+    for(var i = 0; i < req.body.newProject.tech.length; i++) {
+        var technology = new ProjectTechnologyModel({
+            techName: req.body.newProject.tech[i].techName,
+            project: project._id
+        });
+        project.tech.push(technology._id);
+        var projSubTech = req.body.newProject.tech[i].subTech;
+        for(var i = 0; i < projSubTech.length; i++) {
+            var newSubTech = new ProjectSubTechModel({
+                name: projSubTech[i].name,
+                technology: technology._id
+            });
+            technology.subTech.push(newSubTech._id);
+            newSubTech.save(function (err) {
+                if (err) {
+                    res.statusCode = 500;
+                    res.send({ error: 'Server error' });
+                    log.error('Internal error(%d): %s',res.statusCode,err.message);
+                }
+            });
+        }
+        technology.save(function (err) {
+            if (err) {
+                res.statusCode = 500;
+                res.send({ error: 'Server error' });
+                log.error('Internal error(%d): %s',res.statusCode,err.message);
+            } 
+        });
+    }
+    project.save(function (err) {
+        if (!err) {
+            log.info("project created");
+            return res.send({ project : project});
+        } else {
+            res.statusCode = 500;
+            res.send({ error: 'Server error' });
+            log.error('Internal error(%d): %s',res.statusCode,err.message);
+        }
     });
 });
 
