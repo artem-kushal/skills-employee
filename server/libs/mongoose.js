@@ -8,8 +8,8 @@ var db = mongoose.connection;
 db.on('error', function (err) {
     log.error('connection error:', err.message);
 });
-db.once('open', function callback () {
-    log.info("Connected to DB!");
+db.once('open', function callback() {
+    log.info('Connected to DB!');
 });
 
 var Schema = mongoose.Schema;
@@ -30,7 +30,7 @@ var Technology = new Schema({
 
 var ProjectSubTech = new Schema({
     name: String,
-    subTechId: String, 
+    subTechId: String,
     technology: { type: Schema.Types.ObjectId, ref: 'ProjectTechnology' }
 });
 
@@ -43,11 +43,11 @@ var ProjectTechnology = new Schema({
 
 
 var Project = new Schema({
-	name: String,
-	description: String,
-	tech: [{ type: Schema.Types.ObjectId, ref: 'ProjectTechnology' }],
-	responsibility: String,
-	dateCreated: { type: Date, default: Date.now }
+    name: String,
+    description: String,
+    tech: [{ type: Schema.Types.ObjectId, ref: 'ProjectTechnology' }],
+    responsibility: String,
+    dateCreated: { type: Date, default: Date.now }
 });
 
 var TechnologyModel = mongoose.model('Technology', Technology);
