@@ -72,7 +72,11 @@ skillsServices.service('responsibilityService', ['$http', '$q', function ($http,
 
     this.getAll = function () {
         var deferred = $q.defer();
-        httpGet(deferred, restApiUrl + 'responsibilities');
+        $http.get(restApiUrl + 'responsibilities').then(function (response) {
+            deferred.resolve(response.data);
+        }, function (response) {
+            deferred.reject(response);
+        });
         return deferred.promise;
     }
 
@@ -109,13 +113,51 @@ skillsServices.service('responsibilityService', ['$http', '$q', function ($http,
         return deferred.promise;
     }
 
-    function httpGet(deferred, url) {
-        $http.get(url).then(function (response) {
-            // console.log("url "+url+" response "+response.data)
+}]);
+
+skillsServices.service('roleService', ['$http', '$q', function ($http, $q) {
+
+    this.getAll = function () {
+        var deferred = $q.defer();
+        $http.get(restApiUrl + 'roles').then(function (response) {
             deferred.resolve(response.data);
         }, function (response) {
             deferred.reject(response);
         });
+        return deferred.promise;
+    }
+
+    this.addItem = function (name) {
+        var deferred = $q.defer();
+        $http.post(restApiUrl + 'roles', { name: name })
+        .then(function (response) {
+            deferred.resolve(response.data);
+        }, function (response) {
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    }
+
+    this.removeItem = function (id) {
+        var deferred = $q.defer();
+        $http.delete(restApiUrl + 'roles/' + id)
+        .then(function (response) {
+            deferred.resolve(response.data);
+        }, function (response) {
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    }
+
+    this.updateItem = function (editingRole) {
+        var deferred = $q.defer();
+        $http.put(restApiUrl + 'roles/' + editingRole._id, { name: editingRole.name })
+        .then(function (response) {
+            deferred.resolve(response.data);
+        }, function (response) {
+            deferred.reject(response);
+        });
+        return deferred.promise;
     }
 
 }]);

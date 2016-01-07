@@ -55,12 +55,18 @@ var Responsibility = new Schema({
     dateCreated: { type: Date, default: Date.now }
 });
 
+var Role = new Schema({
+    name: String,
+    dateCreated: { type: Date, default: Date.now }
+});
+
 var TechnologyModel = mongoose.model('Technology', Technology);
 var SubTechModel = mongoose.model('SubTech', SubTech);
 var ProjectTechnologyModel = mongoose.model('ProjectTechnology', ProjectTechnology);
 var ProjectSubTechModel = mongoose.model('ProjectSubTech', ProjectSubTech);
 var ProjectModel = mongoose.model('Project', Project);
 var ResponsibilityModel = mongoose.model('Responsibility', Responsibility);
+var RoleModel = mongoose.model('Role', Role);
 
 module.exports.TechnologyModel = TechnologyModel;
 module.exports.SubTechModel = SubTechModel;
@@ -68,6 +74,7 @@ module.exports.ProjectTechnologyModel = ProjectTechnologyModel;
 module.exports.ProjectSubTechModel = ProjectSubTechModel;
 module.exports.ProjectModel = ProjectModel;
 module.exports.ResponsibilityModel = ResponsibilityModel;
+module.exports.RoleModel = RoleModel;
 // validation
 // Article.path('title').validate(function (v) {
 //     return v.length > 5 && v.length < 70;
