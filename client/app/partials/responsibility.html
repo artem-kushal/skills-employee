@@ -1,0 +1,46 @@
+<div class="row white z-depth-1 tech-top">
+    <form name="responsibilityForm" novalidate ng-submit="addResponsibility()">
+        <div class="input-field col s12 m6" ng-class="{invalid: (newResponsibility == undefined || newResponsibility == '') && isFormSubmit}">
+            <input id="tech_name" name="tech_name" type="text" class="validate" required ng-model="newResponsibility">
+            <label for="tech_name">Имя новой обязанности</label>
+            <span ng-show="(newResponsibility == undefined || newResponsibility == '') && isFormSubmit" class="invalid-message">Обязательное поле</span>
+        </div>
+        <div class="input-field col s12 m6">
+            <button class="waves-effect waves-light btn  blue darken-1" type="submit"><i class="material-icons left">add</i>Добавить</button>
+        </div>
+    </form>
+</div>
+
+<div class="row white z-depth-1 tech-content">
+    <div class="col s12" ng-if="responsibilities.length === 0">
+        <p>Обязанности отсутствуют. Воспользуйтесь формой выше для добавления новой обязанности.</p>
+    </div>
+    
+    <div class="col s8" ng-show="responsibilities.length !== 0">
+        <ul class="collection">
+            <li class="collection-item" ng-repeat="responsibility in responsibilities">
+                {{responsibility.name}}
+                <a href ng-click="removeResponsibility(responsibility._id)" class="secondary-content"><i class="material-icons cyan-text">close</i></a>
+                <a href="#editResponsibility" ng-click="editResponsibility(responsibility)" class="secondary-content" modal-init><i class="material-icons cyan-text">edit</i></a>
+            </li>
+        </ul>
+    </div>    
+</div>
+
+<!-- Modal Structure -->
+<div id="editResponsibility" class="modal">
+    <div class="modal-content">
+        <h5>Изменение обязанности</h5>
+        <div class="row">
+            <div class="input-field col s12" ng-class="{invalid: editingResponsibility.name == undefined || editingResponsibility.name == ''}">
+                <input id="edit_name" name="edit_name" type="text" class="validate" required ng-model="editingResponsibility.name" tabindex="1">
+                <label for="edit_name" class="active" ng-class="{active: editingResponsibility.name !== '' && editingResponsibility.name !== undefined}" >Измените имя обязанности</label>
+                <span ng-show="editingResponsibility.name == undefined || editingResponsibility.name == ''" class="invalid-message">Обязательное поле</span>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href class=" modal-action modal-close waves-effect waves-green btn-flat">Отмена</a>
+        <button class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="saveEditing()" tabindex="2">Изменить</button>
+    </div>
+</div>

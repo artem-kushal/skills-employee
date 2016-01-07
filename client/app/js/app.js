@@ -33,6 +33,10 @@ skillsApp.config(['$routeProvider', '$provide', function ($routeProvider, $provi
             templateUrl: 'partials/instruction.html',
             controller: 'InstructionCtrl'
         }).
+        when('/responsibility', {
+            templateUrl: 'partials/responsibility.html',
+            controller: 'responsibilityCtrl'
+        }).
         otherwise({
             redirectTo: '/'
         });

@@ -10,6 +10,7 @@ var SubTechModel = require('./libs/mongoose').SubTechModel;
 var ProjectTechnologyModel = require('./libs/mongoose').ProjectTechnologyModel;
 var ProjectSubTechModel = require('./libs/mongoose').ProjectSubTechModel;
 var ProjectModel = require('./libs/mongoose').ProjectModel;
+var ResponsibilityModel = require('./libs/mongoose').ResponsibilityModel;
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -40,6 +41,70 @@ app.get('/technologies', function (req, res) {
             log.error('Internal error(%d): %s', res.statusCode, err.message);
             return res.send({ error: 'Server error' });
         }
+    });
+});
+
+app.get('/responsibilities', function (req, res) {
+    return ResponsibilityModel.find().exec(function (err, responsibilities) {
+        if (!err) {
+            return res.send(responsibilities);
+        } else {
+            res.statusCode = 500;
+            log.error('Internal error(%d): %s', res.statusCode, err.message);
+            return res.send({ error: 'Server error' });
+        }
+    });
+});
+
+app.post('/responsibilities', function (req, res) {
+    var responsibility = new ResponsibilityModel({
+        name: req.body.name
+    });
+
+    responsibility.save(function (err) {
+        if (!err) {
+            log.info('responsibility created');
+            return res.send({ responsibility : responsibility });
+        } else {
+            res.statusCode = 500;
+            res.send({ error: 'Server error' });
+            log.error('Internal error(%d): %s', res.statusCode, err.message);
+        }
+    });
+});
+
+app.delete('/responsibilities/:id', function (req, res) {
+    return ResponsibilityModel.findById(req.params.id, function (err, responsibility) {
+        return responsibility.remove(function (err) {
+            if (!err) {
+                log.info('responsibility removed');
+                return res.send({ status: 'OK' });
+            } else {
+                res.statusCode = 500;
+                res.send({ error: 'Server error' });
+                log.error('Internal error(%d): %s', res.statusCode, err.message);
+            }
+        });
+    });
+});
+
+app.put('/responsibilities/:id', function (req, res) {
+    return ResponsibilityModel.findById(req.params.id, function (err, responsibility) {
+        if (!responsibility) {
+            res.statusCode = 404;
+            return res.send({ error: 'Not found' });
+        }
+        responsibility.name = req.body.name;
+        return responsibility.save(function (err) {
+            if (!err) {
+                log.info('responsibility updated');
+                return res.send({ responsibility: responsibility });
+            } else {
+                res.statusCode = 500;
+                res.send({ error: 'Server error' });
+                log.error('Internal error(%d): %s', res.statusCode, err.message);
+            }
+        });
     });
 });
 
@@ -165,7 +230,8 @@ app.delete('/subtech/:id', function (req, res) {
     return SubTechModel.findById(req.params.id, function (err, subtech) {
         return subtech.remove(function (err) {
             if (!err){
-                TechnologyModel.update({ _id: subtech.technology }, { $pull : { subTech : subtech._id }}, function (err, numberAffected) {
+                TechnologyModel.update({ _id: subtech.technology },
+                    { $pull : { subTech : subtech._id }}, function (err, numberAffected) {
                     if (!err){
                         log.info('removed subtech id in technology');
                     } else {

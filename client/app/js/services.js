@@ -67,3 +67,55 @@ skillsServices.service('projectsService', ['$http', '$q', function ($http, $q) {
     }
 
 }]);
+
+skillsServices.service('responsibilityService', ['$http', '$q', function ($http, $q) {
+
+    this.getAll = function () {
+        var deferred = $q.defer();
+        httpGet(deferred, restApiUrl + 'responsibilities');
+        return deferred.promise;
+    }
+
+    this.addItem = function (name) {
+        var deferred = $q.defer();
+        $http.post(restApiUrl + 'responsibilities', { name: name })
+        .then(function (response) {
+            deferred.resolve(response.data);
+        }, function (response) {
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    }
+
+    this.removeItem = function (id) {
+        var deferred = $q.defer();
+        $http.delete(restApiUrl + 'responsibilities/' + id)
+        .then(function (response) {
+            deferred.resolve(response.data);
+        }, function (response) {
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    }
+
+    this.updateItem = function (editingResponsibility) {
+        var deferred = $q.defer();
+        $http.put(restApiUrl + 'responsibilities/' + editingResponsibility._id, { name: editingResponsibility.name })
+        .then(function (response) {
+            deferred.resolve(response.data);
+        }, function (response) {
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    }
+
+    function httpGet(deferred, url) {
+        $http.get(url).then(function (response) {
+            // console.log("url "+url+" response "+response.data)
+            deferred.resolve(response.data);
+        }, function (response) {
+            deferred.reject(response);
+        });
+    }
+
+}]);
