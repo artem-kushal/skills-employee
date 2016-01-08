@@ -386,6 +386,12 @@ i.smaller
     padding: 20px;
 }
 
+.card .del {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
 .head-btn
 {
     position: relative;

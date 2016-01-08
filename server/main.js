@@ -224,14 +224,12 @@ app.post('/projects', function (req, res) {
         roles: req.body.newProject.roles,
         dateEnd: req.body.newProject.dateEnd
     });
-    console.log(req.body.newProject.tech.length);
     for (var i = 0; i < req.body.newProject.tech.length; i++) {
         var technology = new ProjectTechnologyModel({
             techName: req.body.newProject.tech[i].techName,
             project: project._id
         });
         project.tech.push(technology._id);
-        console.log(i);
         var projSubTech = req.body.newProject.tech[i].subTech;
         for (var j = 0; j < projSubTech.length; j++) {
             var newSubTech = new ProjectSubTechModel({
@@ -264,6 +262,33 @@ app.post('/projects', function (req, res) {
             res.send({ error: 'Server error' });
             log.error('Internal error(%d): %s', res.statusCode, err.message);
         }
+    });
+});
+
+app.delete('/projects/:id', function (req, res) {
+    return ProjectModel.findById(req.params.id, function (err, project) {
+        return project.remove(function (err) {
+            if (!err){
+                for (var i = 0; i < project.tech.length; i++) {
+                    ProjectTechnologyModel.findById(project.tech[i], function (err, technology) {
+                        if (!err){
+                            for (var j = 0; j < technology.subTech.length; j++) {
+                                ProjectSubTechModel.findById(technology.subTech[j], function (err, subtech) {
+                                    return subtech.remove();
+                                });
+                            }
+                        }
+                        return technology.remove();
+                    });
+                }
+                log.info('project removed');
+                return res.send({ status: 'OK' });
+            } else {
+                res.statusCode = 500;
+                res.send({ error: 'Server error' });
+                log.error('Internal error(%d): %s', res.statusCode, err.message);
+            }
+        });
     });
 });
 

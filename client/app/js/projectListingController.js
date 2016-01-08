@@ -15,4 +15,13 @@ skillsControllers.controller('ProjectListingCtrl', ['$scope', '$rootScope', 'Pro
         });
     }
     getProjects();
+
+    $scope.removeProject = function (index) {
+        Project.remove({ id : $scope.projects[index]._id }, function (data) {
+            console.log(data);
+            $scope.projects.splice(index, 1);
+        }, function (error) {
+            console.log(error);
+        });
+    }
 }]);
