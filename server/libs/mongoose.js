@@ -46,7 +46,9 @@ var Project = new Schema({
     name: String,
     description: String,
     tech: [{ type: Schema.Types.ObjectId, ref: 'ProjectTechnology' }],
-    responsibility: String,
+    roles: [{ name: String, count: Number }],
+    responsibilities: [{ name: String, responsibId: String }],
+    dateEnd: { type: String },
     dateCreated: { type: Date, default: Date.now }
 });
 

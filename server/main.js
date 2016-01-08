@@ -220,18 +220,22 @@ app.post('/projects', function (req, res) {
     var project = new ProjectModel({
         name: req.body.newProject.name,
         description: req.body.newProject.description,
-        responsibility: req.body.newProject.responsibility
+        responsibilities: req.body.newProject.responsibilities,
+        roles: req.body.newProject.roles,
+        dateEnd: req.body.newProject.dateEnd
     });
+    console.log(req.body.newProject.tech.length);
     for (var i = 0; i < req.body.newProject.tech.length; i++) {
         var technology = new ProjectTechnologyModel({
             techName: req.body.newProject.tech[i].techName,
             project: project._id
         });
         project.tech.push(technology._id);
+        console.log(i);
         var projSubTech = req.body.newProject.tech[i].subTech;
-        for (var i = 0; i < projSubTech.length; i++) {
+        for (var j = 0; j < projSubTech.length; j++) {
             var newSubTech = new ProjectSubTechModel({
-                name: projSubTech[i].name,
+                name: projSubTech[j].name,
                 technology: technology._id
             });
             technology.subTech.push(newSubTech._id);

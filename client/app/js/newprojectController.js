@@ -2,15 +2,19 @@
 
 
 skillsControllers.controller('NewProjectCtrl', ['$scope', '$rootScope', 'Technologies', 'Project', '$location',
-	function ($scope, $rootScope, Technologies, Project, $location) {
-
+    'roleService', 'responsibilityService',
+    function ($scope, $rootScope, Technologies, Project, $location, roleService, responsibilityService) {
     $rootScope.pageName = 'Новый проект';
     $scope.newProject = {
-        tech: []
+        tech: [],
+        roles: [],
+        responsibilities: []
     };
     $scope.isNewProjectForm = false;
     $scope.addProject = function () {
-        if ($scope.newProjectForm.$valid && $scope.newProject.tech.length !== 0) {
+        var isCanAdd = $scope.newProject.tech.length !== 0 && $scope.newProject.roles.length !== 0 &&
+        $scope.newProject.responsibilities.length !== 0;
+        if ($scope.newProjectForm.$valid && isCanAdd) {
             Project.post({ newProject: $scope.newProject },	function (data) {
                 console.log(data.project);
                 $scope.isNewProjectForm = false;
@@ -138,5 +142,84 @@ skillsControllers.controller('NewProjectCtrl', ['$scope', '$rootScope', 'Technol
         }
         return undefined;
     }
+
+    $scope.isShowRoleList = false;
+    $scope.showRoles = function () {
+        $scope.isShowRoleList = ($scope.isShowRoleList) ? false : true;
+    }
+
+    function getRoles() {
+        $scope.roles = [];
+        roleService.getAll().then(function (data) {
+            $scope.roles = data;
+        }, function (error) {
+            console.log(error);
+        });
+    }
+    getRoles();
+
+    $scope.addRole = function (role) {
+        var isConsist = false;
+        for (var i = 0; i < $scope.newProject.roles.length; i++) {
+            if ($scope.newProject.roles[i].name == role.name) {
+                $scope.newProject.roles[i].count++;
+                isConsist = true;
+            }
+        }
+        if (!isConsist) {
+            $scope.newProject.roles.push({ name: role.name, count: 1 });
+        }
+    }
+
+    $scope.removeRole = function (index) {
+        $scope.newProject.roles.splice(index, 1);
+    }
+
+    $scope.isShowResponsibList = false;
+    $scope.showResponsibility = function () {
+        $scope.isShowResponsibList = ($scope.isShowResponsibList) ? false : true;
+    }
+
+    function getResponsibilities() {
+        $scope.responsibilities = [];
+        responsibilityService.getAll().then(function (data) {
+            $scope.responsibilities = data;
+            console.log($scope.responsibilities);
+        }, function (error) {
+            console.log(error);
+        });
+    }
+    getResponsibilities();
+
+    $scope.addResponsibility = function (responsibility) {
+        $scope.newProject.responsibilities.push({ name: responsibility.name, responsibId: responsibility._id });
+    }
+
+    $scope.removeResponsibility = function (index) {
+        $scope.newProject.responsibilities.splice(index, 1);
+    }
+
+    $scope.isSelectedResponsibility = function (responsibility) {
+        return Boolean(getResponsibilityById(responsibility));
+    }
+
+    function getResponsibilityById(responsibility) {
+        for (var i = 0; i < $scope.newProject.responsibilities.length; i++) {
+            if (responsibility._id === $scope.newProject.responsibilities[i].responsibId) {
+                return $scope.newProject.responsibilities[i];
+            }
+        }
+    }
+
+    $scope.addNewResponsibility = function () {
+        if ($scope.newResponsibility.name !== undefined && $scope.newResponsibility.name !== '') {
+            $scope.newProject.responsibilities.push($scope.newResponsibility);
+            $scope.newResponsibility = undefined;
+        };
+    }
+
+    $scope.$watch('newProject.dateEnd', function (newVal, oldVal) {
+        console.log(newVal);
+    });
 
 }]);

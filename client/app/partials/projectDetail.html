@@ -8,6 +8,17 @@
     			<label>Описание</label>
     			<div ng-bind-html="project.description"></div>
     		</div>
+            <div class="col s12">
+                <label>Роли на проекте</label>
+                <div class="row chips">
+                    <div class="col s12">
+                        <div class="chip role" ng-repeat="role in project.roles" not-remove-chip>
+                            {{role.name}}
+                            <span class="new badge" ng-show="role.count > 1">{{role.count}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
     		<div class="col s12">
     			<label>Технологии</label>
     			<div class="col s12 tech_list">
@@ -31,14 +42,24 @@
     			</div>
 
     		</div>
-    		<div class="col s12" ng-show="project.responsibility !== undefined">
+    		<div class="col s12">
     			<label>Обязанности</label>
-    			<p ng-bind="project.responsibility"></p>
+    			<ul class="collection">
+                    <li class="collection-item" ng-repeat="responsibility in project.responsibilities">
+                        {{responsibility.name}}
+                        
+                    </li>
+                </ul>
     		</div>
     		<div class="col s12">
     			<label>Дата создания</label>
-    			<p>{{project.dateCreated | date:'dd.MM.yyyy'}}</p>
+    			<p>{{project.dateCreated | date:'dd/MM/yyyy'}}</p>
     		</div>
+            <div class="col s12">
+                <label>Дата окончания проекта</label>
+                <p ng-if="project.dateEnd === undefined">Проект в разработке</p>
+                <p ng-if="project.dateEnd !== undefined">{{project.dateEnd}}</p>
+            </div>
     	</div>
     </div>
 </div>
