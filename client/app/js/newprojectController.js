@@ -2,30 +2,40 @@
 
 
 skillsControllers.controller('NewProjectCtrl', ['$scope', '$rootScope', 'Technologies', 'Project', '$location',
-    'roleService', 'responsibilityService',
-    function ($scope, $rootScope, Technologies, Project, $location, roleService, responsibilityService) {
+    'roleService', 'responsibilityService', 'uploadService',
+    function ($scope, $rootScope, Technologies, Project, $location, roleService, responsibilityService, uploadService) {
     $rootScope.pageName = 'Новый проект';
     $scope.newProject = {
         tech: [],
         roles: [],
         responsibilities: []
     };
+    $scope.projectImgs = [];
     $scope.isNewProjectForm = false;
     $scope.addProject = function () {
         var isCanAdd = $scope.newProject.tech.length !== 0 && $scope.newProject.roles.length !== 0 &&
         $scope.newProject.responsibilities.length !== 0;
         if ($scope.newProjectForm.$valid && isCanAdd) {
-            Project.post({ newProject: $scope.newProject },	function (data) {
+            Project.post({ newProject: $scope.newProject }, function (data) {
                 console.log(data.project);
-                $scope.isNewProjectForm = false;
-                Materialize.toast('Проект успешно добавлен!', 3000);
-                $location.path('/projects');
+                uploadFiles(data.project._id);
             }, function (error) {
                 console.log(error);
             });
         } else {
             $scope.isNewProjectForm = true;
         }
+    }
+
+    function uploadFiles(id) {
+        uploadService.add($scope.projectImgs, id).then(function (data) {
+            console.log(data);
+            $scope.isNewProjectForm = false;
+            Materialize.toast('Проект успешно добавлен!', 3000);
+            $location.path('/projects');
+        }, function (error) {
+            console.log(error);
+        });
     }
 
     function getTechnologies() {
@@ -218,8 +228,37 @@ skillsControllers.controller('NewProjectCtrl', ['$scope', '$rootScope', 'Technol
         };
     }
 
-    $scope.$watch('newProject.dateEnd', function (newVal, oldVal) {
-        console.log(newVal);
+    $scope.$watch('files', function (newVal, oldVal) {
+        if (newVal !== undefined && newVal !== null) {
+            console.log(newVal);
+            console.log(JSON.stringify(newVal));
+            $scope.projectImgs = $scope.projectImgs.concat(newVal);
+        }
     });
+
+    $scope.removeImage = function (index) {
+        $scope.projectImgs.splice(index, 1);
+    }
+
+    // $scope.upload = function (file) {
+    //     console.log(file);
+    //     Upload.upload({
+    //         url: 'http://localhost:1337/images',
+    //         method: 'POST',
+    //         arrayKey: '',
+    //         data: {
+    //             files: file,
+    //             project: $scope.newProject
+    //         }
+    //     }).then(function (resp) {
+    //         console.log('Success ' + resp.config.file.name + 'uploaded. Response: ' + resp.data);
+    //     }, function (resp) {
+    //         console.log('Error status: ' + resp.status);
+    //     }, function (evt) {
+    //         var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+    //         console.log('progress: ' + progressPercentage + '% ');
+    //     });
+    // };
+
 
 }]);

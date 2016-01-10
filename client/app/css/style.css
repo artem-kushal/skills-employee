@@ -367,6 +367,57 @@ i.smaller
     border-color: #2196f3;
 }
 
+.file-preview .col.s12
+{
+    padding: 10px;
+    padding-right: 20px;
+}
+
+.file-preview img
+{
+    width: auto;
+    height: 160px;
+}
+
+.file-preview .img-cont
+{
+    position: relative;
+
+    overflow: hidden;
+
+    height: 0;
+    margin-bottom: 1%;
+    padding-bottom: 20%;
+}
+
+.file-preview .img-cont:before
+{
+    font-size: 1rem;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+    padding: 40%;
+
+    content: '\274c';
+    cursor: pointer;
+    text-align: center;
+
+    opacity: 0;
+    color: white;
+    background: #9e9e9e;
+}
+
+.file-preview .img-cont:hover:before
+{
+    transition: all ease-out .5s;
+
+    opacity: 1;
+}
+
 /*-------------------projects-content-----------------------------*/
 .card .card-content .card-title
 {
@@ -386,10 +437,11 @@ i.smaller
     padding: 20px;
 }
 
-.card .del {
+.card .del
+{
     position: absolute;
-    right: 5px;
     top: 5px;
+    right: 5px;
 }
 
 .head-btn
@@ -417,6 +469,34 @@ i.smaller
             animation-duration: 1s;
 }
 /*-------------------project detail-----------------------------*/
+
+.proj-img .col.s12
+{
+    padding: 10px;
+    padding-right: 20px;
+}
+
+.proj-img .col.s12 .row
+{
+    margin-bottom: 0;
+}
+
+.proj-img img
+{
+    width: auto;
+    height: 160px;
+}
+
+.proj-img .img-cont
+{
+    position: relative;
+
+    overflow: hidden;
+
+    height: 0;
+    margin-bottom: 1%;
+    padding-bottom: 20%;
+}
 
 .projdetail-content .tech_list.col
 {
@@ -558,5 +638,10 @@ img.center
     .head-btn .btn
     {
         position: static;
+    }
+
+    .proj-img .img-cont
+    {
+        padding-bottom: 40%;
     }
 }

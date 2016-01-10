@@ -1,9 +1,13 @@
 var express = require('express');
+var multer  = require('multer')
+var storage = multer.memoryStorage()
+var upload = multer({ storage: storage })
+
 var log = require('./libs/log')(module);
 var fs = require('fs');
 var config = require('./libs/config');
 var mongo = require('mongodb');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 var app = express();
 var TechnologyModel = require('./libs/mongoose').TechnologyModel;
 var SubTechModel = require('./libs/mongoose').SubTechModel;
@@ -12,6 +16,7 @@ var ProjectSubTechModel = require('./libs/mongoose').ProjectSubTechModel;
 var ProjectModel = require('./libs/mongoose').ProjectModel;
 var ResponsibilityModel = require('./libs/mongoose').ResponsibilityModel;
 var RoleModel = require('./libs/mongoose').RoleModel;
+var ImgModel = require('./libs/mongoose').ImgModel;
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -32,6 +37,37 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.post('/images', upload.array('files'), function (req, res) {
+    var image = new ImgModel();
+    image.img.data = req.file.buffer;
+    image.img.contentType = req.file.mimetype;
+    console.log(req.files);
+    console.log(req.body.project);
+    image.save(function (err) {
+        if (!err) {
+            log.info('image saved');
+            return res.send({ data: 'ok' });
+        } else {
+            res.statusCode = 500;
+            res.send({ error: 'Server error' });
+            log.error('Internal error(%d): %s', res.statusCode, err.message);
+        }
+    });
+});
+
+app.get('/images', function (req, res) {
+    return ImgModel.find().exec(function (err, images) {
+        if (!err) {
+            // res.contentType(images[0].img.contentType);
+            var base64 = (images[2].img.data.toString('base64'));
+            return res.send({ contentType: images[2].img.contentType, data: base64 });
+        } else {
+            res.statusCode = 500;
+            log.error('Internal error(%d): %s', res.statusCode, err.message);
+            return res.send({ error: 'Server error' });
+        }
+    });
+});
 
 app.get('/technologies', function (req, res) {
     return TechnologyModel.find().populate('subTech').exec(function (err, technologies) {
@@ -262,6 +298,27 @@ app.post('/projects', function (req, res) {
             res.send({ error: 'Server error' });
             log.error('Internal error(%d): %s', res.statusCode, err.message);
         }
+    });
+});
+
+app.post('/upload', upload.array('files'), function (req, res) {
+    ProjectModel.findById(req.body.id, function (err, project) {
+        for (var i = 0; i < req.files.length; i++) {
+            project.images.push({
+                data: req.files[i].buffer.toString('base64'),
+                contentType: req.files[i].mimetype
+            });
+        }
+        project.save(function (err) {
+            if (!err) {
+                log.info('images uploaded');
+                return res.send({ project : project });
+            } else {
+                res.statusCode = 500;
+                res.send({ error: 'Server error' });
+                log.error('Internal error(%d): %s', res.statusCode, err.message);
+            }
+        });
     });
 });
 

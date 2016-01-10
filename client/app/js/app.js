@@ -8,7 +8,8 @@ var skillsApp = angular.module('skillsApp', [
     'skillsDirectives',
     'skillsServices',
     'ng-sortable',
-    'textAngular'
+    'textAngular',
+    'ngFileUpload'
 ]);
 
 skillsApp.config(['$routeProvider', '$provide', function ($routeProvider, $provide) {

@@ -140,3 +140,12 @@ skillsDirectives.directive('datepickerInit', ['$timeout', function ($timeout) {
         }
     };
 }]);
+
+skillsDirectives.directive('boxedWithOrientable', function () {
+    return {
+        restrict : 'EA',
+        link: function (scope, element, attrs) {
+            $(element).materialbox();
+        }
+    }
+});

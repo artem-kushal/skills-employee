@@ -3,6 +3,7 @@
         <h5>Создание нового проекта</h5>
     </div>
     <div class="col s12">
+    	
     	<form name="newProjectForm" novalidate ng-submit="addProject()">
     		<div class="row">
     			<div class="col s12 l8">
@@ -140,7 +141,26 @@
 				    </div>
 
 					<div class="row">
-					    <div class="input-field col col s12 m10 l12">
+						<div class="file-field input-field col s12 m10 l12 ">
+					    	<div class="btn cyan">
+					        	<span>Файлы</span>
+					        	<input type="file" ngf-select ng-model="files" ngf-multiple="true" ngf-max-size="'10MB'" ngf-pattern="'.jpg,.png,.jpg,.jpeg,.gif'">
+					    	</div>
+					    	<div class="file-path-wrapper">
+					        	<input class="file-path validate" type="text">
+					    	</div>
+					    </div>
+					</div>
+					<div class="row file-preview" ng-show="projectImgs.length != 0">
+						<div class="col s12 m10 l12 grey lighten-3">
+							<div class="row">
+								<div class="col s3 img-cont" ng-repeat="image in projectImgs" ng-click="removeImage($index)"><img ngf-thumbnail="image"></div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+					    <div class="input-field col s12 m10 l12">
 	                        <input id="dateEnd" type="date" class="datepicker ss">
 	                        <label for="dateEnd">Дата окончания проекта</label>
 	                        <input type="text" ng-model="newProject.dateEnd" class="customdate"  datepicker-init>

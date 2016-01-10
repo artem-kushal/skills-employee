@@ -161,3 +161,25 @@ skillsServices.service('roleService', ['$http', '$q', function ($http, $q) {
     }
 
 }]);
+
+skillsServices.service('uploadService', ['$http', '$q', 'Upload', function ($http, $q, Upload) {
+
+    this.add = function (files, id) {
+        var deferred = $q.defer();
+        Upload.upload({
+            url: restApiUrl + 'upload',
+            method: 'POST',
+            arrayKey: '',
+            data: {
+                files: files,
+                id: id
+            }
+        }).then(function (response) {
+            deferred.resolve(response.data);
+        }, function (response) {
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    };
+
+}]);
