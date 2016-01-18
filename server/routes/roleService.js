@@ -2,23 +2,20 @@ var log = require('./../utils/log')(module);
 var RoleModel = require('./../models/role').RoleModel;
 var roleService = {};
 
-roleService.getAll = function (req, res) {
+roleService.getAll = function (req, res, next) {
     return RoleModel.find().exec(function (err, roles) {
         if (!err) {
             return res.send(roles);
         } else {
-            res.statusCode = 500;
-            log.error('Internal error(%d): %s', res.statusCode, err.message);
-            return res.send({ error: 'Server error' });
+            return next(err);
         }
     });
 }
 
-roleService.update = function (req, res) {
+roleService.update = function (req, res, next) {
     return RoleModel.findById(req.params.id, function (err, role) {
         if (!role) {
-            res.statusCode = 404;
-            return res.send({ error: 'Not found' });
+            return next(404);
         }
         role.name = req.body.name;
         return role.save(function (err) {
@@ -26,9 +23,7 @@ roleService.update = function (req, res) {
                 log.info('role updated');
                 return res.send({ role: role });
             } else {
-                res.statusCode = 500;
-                res.send({ error: 'Server error' });
-                log.error('Internal error(%d): %s', res.statusCode, err.message);
+                return next(err);
             }
         });
     });
@@ -44,23 +39,22 @@ roleService.add = function (req, res) {
             log.info('role created');
             return res.send({ role : role });
         } else {
-            res.statusCode = 500;
-            res.send({ error: 'Server error' });
-            log.error('Internal error(%d): %s', res.statusCode, err.message);
+            return next(err);
         }
     });
 }
 
 roleService.remove = function (req, res) {
     return RoleModel.findById(req.params.id, function (err, role) {
+        if (!role) {
+            return next(404);
+        }
         return role.remove(function (err) {
             if (!err) {
                 log.info('role removed');
                 return res.send({ status: 'OK' });
             } else {
-                res.statusCode = 500;
-                res.send({ error: 'Server error' });
-                log.error('Internal error(%d): %s', res.statusCode, err.message);
+                return next(err);
             }
         });
     });

@@ -6,8 +6,7 @@ var subtechService = {};
 subtechService.update = function (req, res) {
     return SubTechModel.findById(req.params.id, function (err, subtech) {
         if (!subtech) {
-            res.statusCode = 404;
-            return res.send({ error: 'Not found' });
+            return next(404);
         }
         subtech.name = req.body.name;
         subtech.modified = Date.now();
@@ -16,9 +15,7 @@ subtechService.update = function (req, res) {
                 log.info('subtech updated');
                 return res.send({ subtech: subtech });
             } else {
-                res.statusCode = 500;
-                res.send({ error: 'Server error' });
-                log.error('Internal error(%d): %s', res.statusCode, err.message);
+                return next(err);
             }
         });
     });
@@ -27,8 +24,7 @@ subtechService.update = function (req, res) {
 subtechService.add = function (req, res) {
     TechnologyModel.findById(req.body.parentId, function (err, technology) {
         if (!technology) {
-            res.statusCode = 404;
-            return res.send({ error: 'Parent technology not found' });
+            return next(404);
         }
         var newSubTech = new SubTechModel({
             name: req.body.name,
@@ -43,15 +39,11 @@ subtechService.add = function (req, res) {
                         log.info('subtech created');
                         return res.send({ newSubTech : newSubTech });
                     } else {
-                        res.statusCode = 500;
-                        res.send({ error: 'Server error' });
-                        log.error('Internal error(%d): %s', res.statusCode, err.message);
+                        return next(err);
                     }
                 });
             } else {
-                res.statusCode = 500;
-                res.send({ error: 'Server error' });
-                log.error('Internal error(%d): %s', res.statusCode, err.message);
+                return next(err);
             }
         });
     });
@@ -59,6 +51,9 @@ subtechService.add = function (req, res) {
 
 subtechService.remove = function (req, res) {
     return SubTechModel.findById(req.params.id, function (err, subtech) {
+        if (!subtech) {
+            return next(404);
+        }
         return subtech.remove(function (err) {
             if (!err){
                 TechnologyModel.update({ _id: subtech.technology },
@@ -67,17 +62,13 @@ subtechService.remove = function (req, res) {
                     if (!err){
                         log.info('removed subtech id in technology');
                     } else {
-                        res.statusCode = 500;
-                        res.send({ error: 'Server error' });
-                        log.error('Internal error(%d): %s', res.statusCode, err.message);
+                        return next(err);
                     }
                 });
                 log.info('subtech removed');
                 return res.send({ status: 'OK' });
             } else {
-                res.statusCode = 500;
-                res.send({ error: 'Server error' });
-                log.error('Internal error(%d): %s', res.statusCode, err.message);
+                return next(err);
             }
         });
     });

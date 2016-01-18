@@ -1,6 +1,7 @@
 module.exports = function (app, express) {
     var bodyParser = require('body-parser');
     var router = require('./../routes');
+    var errorHandler = require('./errorHandler');
 
     app.use(bodyParser.urlencoded({
         extended: true
@@ -16,4 +17,6 @@ module.exports = function (app, express) {
     });
 
     router(app);
+
+    errorHandler(app, express);
 }

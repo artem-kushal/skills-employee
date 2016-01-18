@@ -31,5 +31,5 @@ module.exports = function (app) {
     app.get('/roles', role.getAll);
     app.post('/roles', role.add);
     app.delete('/roles/:id', role.remove);
-    app.put('/roles/:id', role.add);
+    app.put('/roles/:id', role.update);
 };

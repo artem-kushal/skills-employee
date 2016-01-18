@@ -25,9 +25,7 @@ function populateProject(err, projects, res) {
             return res.send(projects);
         });
     } else {
-        res.statusCode = 500;
-        log.error('Internal error(%d): %s', res.statusCode, err.message);
-        return res.send({ error: 'Server error' });
+        return next(err);
     }
 }
 
@@ -58,17 +56,13 @@ projectService.add = function (req, res) {
             technology.subTech.push(newSubTech._id);
             newSubTech.save(function (err) {
                 if (err) {
-                    res.statusCode = 500;
-                    res.send({ error: 'Server error' });
-                    log.error('Internal error(%d): %s', res.statusCode, err.message);
+                    return next(err);
                 }
             });
         }
         technology.save(function (err) {
             if (err) {
-                res.statusCode = 500;
-                res.send({ error: 'Server error' });
-                log.error('Internal error(%d): %s', res.statusCode, err.message);
+                return next(err);
             }
         });
     }
@@ -77,9 +71,7 @@ projectService.add = function (req, res) {
             log.info('project created');
             return res.send({ project : project });
         } else {
-            res.statusCode = 500;
-            res.send({ error: 'Server error' });
-            log.error('Internal error(%d): %s', res.statusCode, err.message);
+            return next(err);
         }
     });
 }
@@ -103,9 +95,7 @@ projectService.remove = function (req, res) {
                 log.info('project removed');
                 return res.send({ status: 'OK' });
             } else {
-                res.statusCode = 500;
-                res.send({ error: 'Server error' });
-                log.error('Internal error(%d): %s', res.statusCode, err.message);
+                return next(err);
             }
         });
     });
@@ -124,9 +114,7 @@ projectService.uploadImages = function (req, res) {
                 log.info('images uploaded');
                 return res.send({ project : project });
             } else {
-                res.statusCode = 500;
-                res.send({ error: 'Server error' });
-                log.error('Internal error(%d): %s', res.statusCode, err.message);
+                return next(err);
             }
         });
     });
