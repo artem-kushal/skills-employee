@@ -21,7 +21,7 @@ skillsControllers.controller('roleCtrl', ['$scope', '$rootScope', 'roleService',
         if ($scope.roleForm.$valid) {
             roleService.addItem($scope.newRole).then(function (data) {
                 console.log(data);
-                $scope.roles.push(data.role);
+                $scope.roles.push(data);
             }, function (error) {
                 console.log(error);
             });

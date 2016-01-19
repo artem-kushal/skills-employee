@@ -2,38 +2,34 @@ var log = require('./../utils/log')(module);
 var ProjectModel = require('./../models/project').ProjectModel;
 var ProjectTechnologyModel = require('./../models/projectTech').ProjectTechnologyModel;
 var ProjectSubTechModel = require('./../models/projectTech').ProjectSubTechModel;
-var projectService = {};
+var projectService = require('./../services/projectService');
+var projectHelper = {};
 
-projectService.getAll = function (req, res) {
-    return ProjectModel.find().populate('tech').exec(function (err, projects) {
-        populateProject(err, projects, res);
-    });
-}
-
-projectService.get = function (req, res) {
-    return ProjectModel.findById(req.params.id).populate('tech').exec(function (err, projects) {
-        populateProject(err, projects, res);
-    });
-}
-
-function populateProject(err, projects, res) {
-    if (!err) {
-        ProjectTechnologyModel.populate(projects, {
-            path: 'tech.subTech',
-            model: 'ProjectSubTech'
-        }, function (err, projects) {
-            return res.send(projects);
-        });
-    } else {
+projectHelper.getAll = function (req, res) {
+    projectService.getAll().then(function (projects) {
+        return projectService.populate(projects);
+    }).then(function (projects) {
+        return res.send(projects);
+    }).catch(function (err) {
         return next(err);
-    }
+    });
 }
 
-projectService.update = function () {
+projectHelper.get = function (req, res) {
+    projectService.get(req.params.id).then(function (project) {
+        return projectService.populate(project);
+    }).then(function (project) {
+        return res.send(project);
+    }).catch(function (err) {
+        return next(err);
+    });
+}
+
+projectHelper.update = function () {
 
 }
 
-projectService.add = function (req, res) {
+projectHelper.add = function (req, res) {
     var project = new ProjectModel({
         name: req.body.newProject.name,
         description: req.body.newProject.description,
@@ -76,7 +72,7 @@ projectService.add = function (req, res) {
     });
 }
 
-projectService.remove = function (req, res) {
+projectHelper.remove = function (req, res) {
     return ProjectModel.findById(req.params.id, function (err, project) {
         return project.remove(function (err) {
             if (!err){
@@ -101,7 +97,7 @@ projectService.remove = function (req, res) {
     });
 }
 
-projectService.uploadImages = function (req, res) {
+projectHelper.uploadImages = function (req, res) {
     ProjectModel.findById(req.body.id, function (err, project) {
         for (var i = 0; i < req.files.length; i++) {
             project.images.push({
@@ -120,4 +116,4 @@ projectService.uploadImages = function (req, res) {
     });
 }
 
-module.exports = projectService;
+module.exports = projectHelper;

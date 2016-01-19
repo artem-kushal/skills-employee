@@ -1,11 +1,11 @@
 var log = require('./../utils/log')(module);
 var multer  = require('multer')
 var upload = multer({ storage: multer.memoryStorage() })
-var technology = require('./technologyService');
-var subtech = require('./subtechService');
-var projects = require('./projectService');
-var responsibility = require('./responsibilityService');
-var role = require('./roleService');
+var technology = require('./technologyHelper');
+var subtech = require('./subtechHelper');
+var projects = require('./projectHelper');
+var responsibility = require('./responsibilityHelper');
+var role = require('./roleHelper');
 
 module.exports = function (app) {
     app.get('/technologies', technology.getAll);
