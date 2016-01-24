@@ -11,7 +11,8 @@ var ProjectTechnology = new Schema({
 var ProjectSubTech = new Schema({
     name: String,
     subTechId: String,
-    technology: { type: Schema.Types.ObjectId, ref: 'ProjectTechnology' }
+    technology: { type: Schema.Types.ObjectId, ref: 'ProjectTechnology' },
+    project: { type: Schema.Types.ObjectId }
 });
 
 module.exports.ProjectTechnologyModel = mongoose.model('ProjectTechnology', ProjectTechnology);

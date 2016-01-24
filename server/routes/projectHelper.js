@@ -28,7 +28,6 @@ projectHelper.get = function (req, res) {
 projectHelper.update = function () {
 
 }
-
 projectHelper.add = function (req, res) {
     var project = new ProjectModel({
         name: req.body.newProject.name,
@@ -37,82 +36,76 @@ projectHelper.add = function (req, res) {
         roles: req.body.newProject.roles,
         dateEnd: req.body.newProject.dateEnd
     });
-    for (var i = 0; i < req.body.newProject.tech.length; i++) {
-        var technology = new ProjectTechnologyModel({
+    var projectTech = [];
+    var projectSubTech = [];
+    var addProjectTech = req.body.newProject.tech;
+    for (var i = 0; i < addProjectTech.length; i++) {
+        projectTech.push(new ProjectTechnologyModel({
             techName: req.body.newProject.tech[i].techName,
             project: project._id
-        });
-        project.tech.push(technology._id);
-        var projSubTech = req.body.newProject.tech[i].subTech;
-        for (var j = 0; j < projSubTech.length; j++) {
-            var newSubTech = new ProjectSubTechModel({
-                name: projSubTech[j].name,
-                technology: technology._id
-            });
-            technology.subTech.push(newSubTech._id);
-            newSubTech.save(function (err) {
-                if (err) {
-                    return next(err);
-                }
-            });
+        }));
+        project.tech.push(projectTech[projectTech.length - 1]._id);// add tech in project
+        for (var j = 0; j < addProjectTech[i].subTech.length; j++) {
+            projectSubTech.push(new ProjectSubTechModel({
+                name: addProjectTech[i].subTech[j].name,
+                technology: projectTech[projectTech.length - 1]._id,
+                project: project._id
+            }));
+            projectTech[projectTech.length - 1].subTech.push(projectSubTech[projectSubTech.length - 1]._id);// add subtech in project
         }
-        technology.save(function (err) {
-            if (err) {
-                return next(err);
-            }
-        });
     }
-    project.save(function (err) {
-        if (!err) {
-            log.info('project created');
-            return res.send({ project : project });
-        } else {
-            return next(err);
-        }
+    Promise.all(projectTech.map(projectService.saveTech)).then(function (results) {
+        return Promise.all(projectSubTech.map(projectService.saveSubTech));
+    }).then(function (results) {
+        return projectService.save(project);
+    }).then(function (project) {
+        log.info('project created');
+        return res.send({ project : project });
+    }).catch(function (err) {
+        return next(err);
     });
 }
 
 projectHelper.remove = function (req, res) {
-    return ProjectModel.findById(req.params.id, function (err, project) {
-        return project.remove(function (err) {
-            if (!err){
-                for (var i = 0; i < project.tech.length; i++) {
-                    ProjectTechnologyModel.findById(project.tech[i], function (err, technology) {
-                        if (!err){
-                            for (var j = 0; j < technology.subTech.length; j++) {
-                                ProjectSubTechModel.findById(technology.subTech[j], function (err, subtech) {
-                                    return subtech.remove();
-                                });
-                            }
-                        }
-                        return technology.remove();
-                    });
-                }
-                log.info('project removed');
-                return res.send({ status: 'OK' });
-            } else {
-                return next(err);
-            }
-        });
+    var projectId = req.params.id;
+    projectService.get(projectId).then(function (project) {
+        if (!project) {
+            return next(404);
+        }
+        return projectService.remove(project);
+    }).then(function (project) {
+        return projectService.getTechs(projectId);
+    }).then(function (techs) {
+        return Promise.all(techs.map(projectService.removeTech));
+    }).then(function (removedTechs) {
+        return projectService.getSubTechs(projectId);
+    }).then(function (subtechs) {
+        return Promise.all(subtechs.map(projectService.removeSubTech));
+    }).then(function (removedSubtechs) {
+        log.info('project removed');
+        return res.send({ status: 'OK' });
+    }).catch(function (err) {
+        return next(err);
     });
 }
 
 projectHelper.uploadImages = function (req, res) {
-    ProjectModel.findById(req.body.id, function (err, project) {
+    projectService.get(req.body.id).then(function (project) {
+        if (!project) {
+            return next(404);
+        }
         for (var i = 0; i < req.files.length; i++) {
             project.images.push({
                 data: req.files[i].buffer.toString('base64'),
                 contentType: req.files[i].mimetype
             });
         }
-        project.save(function (err) {
-            if (!err) {
-                log.info('images uploaded');
-                return res.send({ project : project });
-            } else {
-                return next(err);
-            }
-        });
+        return projectService.save(project);
+    }).then(function (project) {
+        log.info('images uploaded');
+        return res.send({ project : project });
+    }).catch(function (err) {
+        return next(err);
     });
 }
 

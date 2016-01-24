@@ -60,7 +60,79 @@ projectService.remove = function (project) {
             if (err) {
                 reject(err);
             } else {
+                resolve(project);
+            }
+        });
+    });
+}
+
+projectService.saveTech = function (technology) {
+    return new Promise(function (resolve, reject) {
+        technology.save(function (err) {
+            if (err) {
+                reject(err);
+            } else {
                 resolve();
+            }
+        });
+    });
+}
+
+projectService.getTechs = function (projectId) {
+    return new Promise(function (resolve, reject) {
+        ProjectTechnologyModel.find({ project : projectId }).exec(function (err, techs) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(techs);
+            }
+        });
+    });
+}
+
+projectService.removeTech = function (tech) {
+    return new Promise(function (resolve, reject) {
+        tech.remove(function (err) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(tech);
+            }
+        });
+    });
+}
+
+projectService.getSubTechs = function (projectId) {
+    return new Promise(function (resolve, reject) {
+        ProjectSubTechModel.find({ project : projectId }).exec(function (err, subTechs) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(subTechs);
+            }
+        });
+    });
+}
+
+projectService.saveSubTech = function (subTech) {
+    return new Promise(function (resolve, reject) {
+        subTech.save(function (err) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(subTech);
+            }
+        });
+    });
+}
+
+projectService.removeSubTech = function (subTech) {
+    return new Promise(function (resolve, reject) {
+        subTech.remove(function (err) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(subTech);
             }
         });
     });
