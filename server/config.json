@@ -1,6 +1,15 @@
 {
-    "port" : 1337,
-    "mongoose": {
-        "uri": "mongodb://localhost:27017/data"
-    }
+    "development": {
+    	"port" : "1337",
+    	"mongoose": {
+	        "uri": "mongodb://localhost:27017/data"
+	    }
+  	},
+  	"production": {
+    	"port" : "1337",
+    	"mongoose": {
+	        "uri": "mongodb://localhost:27017/data"
+	    }
+  	}
+    
 }

@@ -2,7 +2,8 @@ var mongoose = require('mongoose');
 var log = require('./../utils/log')(module);
 var config = require('./config');
 
-mongoose.connect(config.get('mongoose:uri'));
+var appEnv = config.get('NODE_ENV') || 'development';
+mongoose.connect(config.get(appEnv + ':mongoose:uri'));
 var db = mongoose.connection;
 
 db.on('error', function (err) {
@@ -17,3 +18,4 @@ db.once('open', function callback() {
 // Article.path('title').validate(function (v) {
 //     return v.length > 5 && v.length < 70;
 // });
+

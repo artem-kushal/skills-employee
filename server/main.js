@@ -6,6 +6,7 @@ var mongo = require('mongodb');
 var mon = require('./libs/mongoose');
 var middleware = require('./middleware')(app, express);
 
-var server = app.listen(config.get('port'), function () {
-    log.info('Express server listening on port ' + config.get('port'));
+var appEnv = app.get('env');
+var server = app.listen(config.get('development:port'), function () {
+    log.info('Express server listening on port ' + config.get(appEnv + ':port') + ' in ' + appEnv + ' mode');
 })
