@@ -2,16 +2,20 @@ var mongoose = require('mongoose');
 var	Schema = mongoose.Schema;
 
 var ProjectTechnology = new Schema({
-    techName: String,
+    techName: { type: String, required: true },
     techId: String,
     subTech: [{ type: Schema.Types.ObjectId, ref: 'ProjectSubTech' }],
     project: { type: Schema.Types.ObjectId, ref: 'Project' }
 });
 
 var ProjectSubTech = new Schema({
-    name: String,
+    name: { type: String, required: true },
     subTechId: String,
-    technology: { type: Schema.Types.ObjectId, ref: 'ProjectTechnology' },
+    technology: {
+        type: Schema.Types.ObjectId,
+        ref: 'ProjectTechnology',
+        required: true
+    },
     project: { type: Schema.Types.ObjectId }
 });
 

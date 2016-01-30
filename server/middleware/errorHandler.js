@@ -13,6 +13,10 @@ module.exports = function (app, express) {
         if (typeof err === 'number') {
             err = new HttpError(err);
         }
+        if (err.name === 'ValidationError') {
+            log.error(err);
+            err = new HttpError(400, err.message);
+        }
         if (err instanceof HttpError) {
             sendHttpError(err, res);
         } else {

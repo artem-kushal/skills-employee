@@ -5,7 +5,7 @@ var ProjectSubTechModel = require('./../models/projectTech').ProjectSubTechModel
 var projectService = require('./../services/projectService');
 var projectHelper = {};
 
-projectHelper.getAll = function (req, res) {
+projectHelper.getAll = function (req, res, next) {
     projectService.getAll().then(function (projects) {
         return projectService.populate(projects);
     }).then(function (projects) {
@@ -15,7 +15,7 @@ projectHelper.getAll = function (req, res) {
     });
 }
 
-projectHelper.get = function (req, res) {
+projectHelper.get = function (req, res, next) {
     projectService.get(req.params.id).then(function (project) {
         return projectService.populate(project);
     }).then(function (project) {
@@ -28,7 +28,7 @@ projectHelper.get = function (req, res) {
 projectHelper.update = function () {
 
 }
-projectHelper.add = function (req, res) {
+projectHelper.add = function (req, res, next) {
     var project = new ProjectModel({
         name: req.body.newProject.name,
         description: req.body.newProject.description,
@@ -66,7 +66,7 @@ projectHelper.add = function (req, res) {
     });
 }
 
-projectHelper.remove = function (req, res) {
+projectHelper.remove = function (req, res, next) {
     var projectId = req.params.id;
     projectService.get(projectId).then(function (project) {
         if (!project) {
@@ -89,7 +89,7 @@ projectHelper.remove = function (req, res) {
     });
 }
 
-projectHelper.uploadImages = function (req, res) {
+projectHelper.uploadImages = function (req, res, next) {
     projectService.get(req.body.id).then(function (project) {
         if (!project) {
             return next(404);

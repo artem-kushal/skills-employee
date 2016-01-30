@@ -12,10 +12,3 @@ db.on('error', function (err) {
 db.once('open', function callback() {
     log.info('Connected to DB!');
 });
-
-
-// validation
-// Article.path('title').validate(function (v) {
-//     return v.length > 5 && v.length < 70;
-// });
-
