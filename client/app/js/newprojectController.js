@@ -1,10 +1,11 @@
 'use strict';
 
 
-skillsControllers.controller('NewProjectCtrl', ['$scope', '$rootScope', 'Technologies', 'Project', '$location',
+skillsControllers.controller('NewProjectCtrl', ['$scope', 'namesPagesService', 'Technologies', 'Project', '$location',
     'roleService', 'responsibilityService', 'uploadService',
-    function ($scope, $rootScope, Technologies, Project, $location, roleService, responsibilityService, uploadService) {
-    $rootScope.pageName = 'Новый проект';
+    function ($scope, namesPagesService, Technologies, Project, $location, roleService, responsibilityService, uploadService) {
+    $scope.$parent.pageName = namesPagesService.newProject;
+
     $scope.newProject = {
         tech: [],
         roles: [],

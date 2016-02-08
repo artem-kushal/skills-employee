@@ -1,8 +1,8 @@
 'use strict';
 
-skillsControllers.controller('ProjectDetailCtrl', ['$scope', '$rootScope', 'Project', '$routeParams',
-    function ($scope, $rootScope, Project, $routeParams) {
-    $rootScope.pageName = 'Детали проекта';
+skillsControllers.controller('ProjectDetailCtrl', ['$scope', 'namesPagesService', 'Project', '$routeParams',
+    function ($scope, namesPagesService, Project, $routeParams) {
+    $scope.$parent.pageName = namesPagesService.projectDetails;
 
     function getProject() {
         Project.get({ id: $routeParams.projectId }, function (data) {

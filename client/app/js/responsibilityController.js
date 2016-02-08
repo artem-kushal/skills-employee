@@ -1,10 +1,10 @@
 'use strict';
 
 
-skillsControllers.controller('responsibilityCtrl', ['$scope', '$rootScope', 'responsibilityService', '$routeParams',
-	function ($scope, $rootScope, responsibilityService, $routeParams) {
+skillsControllers.controller('responsibilityCtrl', ['$scope', 'namesPagesService', 'responsibilityService', '$routeParams',
+	function ($scope, namesPagesService, responsibilityService, $routeParams) {
 
-    $rootScope.pageName = 'Обязанности';
+    $scope.$parent.pageName = namesPagesService.responsibility;
 
     function getResponsibilities() {
         $scope.responsibilities = [];

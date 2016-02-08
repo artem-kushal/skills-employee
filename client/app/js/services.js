@@ -183,3 +183,15 @@ skillsServices.service('uploadService', ['$http', '$q', 'Upload', function ($htt
     };
 
 }]);
+
+skillsServices.factory('namesPagesService', function() {
+    return {
+        instructions: 'Инструкция',
+        role: 'Роли',
+        tech: 'Технологии',
+        responsibility: 'Обязанности',
+        projectListing: 'Все проекты',
+        projectDetails: 'Детали проекта',
+        newProject: 'Новый проект'
+    };
+});

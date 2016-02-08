@@ -2,10 +2,10 @@
 
 var skillsControllers = angular.module('skillsControllers', []);
 
-skillsControllers.controller('TechnologiesCtrl', ['$scope', '$rootScope', 'Technologies', 'SubTech',
-    function ($scope, $rootScope, Technologies, SubTech) {
+skillsControllers.controller('TechnologiesCtrl', ['$scope', 'namesPagesService', 'Technologies', 'SubTech',
+    function ($scope, namesPagesService, Technologies, SubTech) {
 
-        $rootScope.pageName = 'Технологии';
+        $scope.$parent.pageName = namesPagesService.tech;
         var markedTech;
 
         function getTechnologies() {

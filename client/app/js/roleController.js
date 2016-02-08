@@ -1,10 +1,10 @@
 'use strict';
 
 
-skillsControllers.controller('roleCtrl', ['$scope', '$rootScope', 'roleService', '$routeParams',
-	function ($scope, $rootScope, roleService, $routeParams) {
+skillsControllers.controller('roleCtrl', ['$scope', 'namesPagesService', 'roleService', '$routeParams',
+	function ($scope, namesPagesService, roleService, $routeParams) {
 
-    $rootScope.pageName = 'Роли';
+    $scope.$parent.pageName = namesPagesService.role;
 
     function getRoles() {
         $scope.roles = [];

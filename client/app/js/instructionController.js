@@ -1,9 +1,9 @@
 'use strict';
 
 
-skillsControllers.controller('InstructionCtrl', ['$scope', '$rootScope', 'Project', '$routeParams',
-	function ($scope, $rootScope, Project, $routeParams) {
+skillsControllers.controller('InstructionCtrl', ['$scope', 'namesPagesService', 'Project', '$routeParams',
+	function ($scope, namesPagesService, Project, $routeParams) {
 
-    $rootScope.pageName = 'Инструкция';
+    $scope.$parent.pageName = namesPagesService.instructions;
 
 }]);
