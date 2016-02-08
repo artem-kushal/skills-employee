@@ -12,7 +12,8 @@ var skillsApp = angular.module('skillsApp', [
     'ngFileUpload'
 ]);
 
-skillsApp.config(['$routeProvider', '$provide', function ($routeProvider, $provide) {
+skillsApp.config(['$routeProvider', '$provide', '$logProvider', function ($routeProvider, $provide, $logProvider) {
+    $logProvider.debugEnabled(true);
     $routeProvider.
         when('/', {
             templateUrl: 'partials/technologies.html',

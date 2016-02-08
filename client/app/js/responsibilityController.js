@@ -1,8 +1,8 @@
 'use strict';
 
 
-skillsControllers.controller('responsibilityCtrl', ['$scope', 'namesPagesService', 'responsibilityService', '$routeParams',
-	function ($scope, namesPagesService, responsibilityService, $routeParams) {
+skillsControllers.controller('responsibilityCtrl', ['$scope', 'namesPagesService', 'responsibilityService', '$routeParams', '$log',
+	function ($scope, namesPagesService, responsibilityService, $routeParams, $log) {
 
     $scope.$parent.pageName = namesPagesService.responsibility;
 
@@ -11,7 +11,7 @@ skillsControllers.controller('responsibilityCtrl', ['$scope', 'namesPagesService
         responsibilityService.getAll().then(function (data) {
             $scope.responsibilities = data;
         }, function (error) {
-            console.log(error);
+            $log.debug(error);
         });
     }
     getResponsibilities();
@@ -20,10 +20,10 @@ skillsControllers.controller('responsibilityCtrl', ['$scope', 'namesPagesService
     $scope.addResponsibility = function () {
         if ($scope.responsibilityForm.$valid) {
             responsibilityService.addItem($scope.newResponsibility).then(function (data) {
-                console.log(data);
+                $log.debug(data);
                 $scope.responsibilities.push(data.responsibility);
             }, function (error) {
-                console.log(error);
+                $log.debug(error);
             });
             $scope.newResponsibility = '';
             $scope.isFormSubmit = false;
@@ -40,22 +40,22 @@ skillsControllers.controller('responsibilityCtrl', ['$scope', 'namesPagesService
     $scope.saveEditing = function () {
         if ($scope.editingResponsibility.name !== '' && $scope.editingResponsibility.name !== undefined) {
             responsibilityService.updateItem($scope.editingResponsibility).then(function (data) {
-                console.log(data);
+                $log.debug(data);
                 var savedEditingItem = getById($scope.editingResponsibility._id);
                 savedEditingItem.name = $scope.editingResponsibility.name;
             }, function (error) {
-                console.log(error);
+                $log.debug(error);
             });
         }
     }
 
     $scope.removeResponsibility = function (id) {
         responsibilityService.removeItem(id).then(function (data) {
-            console.log(data);
+            $log.debug(data);
             var removeItem = getById(id);
             $scope.responsibilities.splice($scope.responsibilities.indexOf(removeItem), 1);
         }, function (error) {
-            console.log(error);
+            $log.debug(error);
         });
     }
 

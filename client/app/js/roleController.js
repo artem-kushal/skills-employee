@@ -1,8 +1,8 @@
 'use strict';
 
 
-skillsControllers.controller('roleCtrl', ['$scope', 'namesPagesService', 'roleService', '$routeParams',
-	function ($scope, namesPagesService, roleService, $routeParams) {
+skillsControllers.controller('roleCtrl', ['$scope', 'namesPagesService', 'roleService', '$routeParams', '$log',
+	function ($scope, namesPagesService, roleService, $routeParams, $log) {
 
     $scope.$parent.pageName = namesPagesService.role;
 
@@ -11,7 +11,7 @@ skillsControllers.controller('roleCtrl', ['$scope', 'namesPagesService', 'roleSe
         roleService.getAll().then(function (data) {
             $scope.roles = data;
         }, function (error) {
-            console.log(error);
+            $log.debug(error);
         });
     }
     getRoles();
@@ -20,10 +20,10 @@ skillsControllers.controller('roleCtrl', ['$scope', 'namesPagesService', 'roleSe
     $scope.addRole = function () {
         if ($scope.roleForm.$valid) {
             roleService.addItem($scope.newRole).then(function (data) {
-                console.log(data);
+                $log.debug(data);
                 $scope.roles.push(data);
             }, function (error) {
-                console.log(error);
+                $log.debug(error);
             });
             $scope.newRole = '';
             $scope.isFormSubmit = false;
@@ -40,22 +40,22 @@ skillsControllers.controller('roleCtrl', ['$scope', 'namesPagesService', 'roleSe
     $scope.saveEditing = function () {
         if ($scope.editingRole.name !== '' && $scope.editingRole.name !== undefined) {
             roleService.updateItem($scope.editingRole).then(function (data) {
-                console.log(data);
+                $log.debug(data);
                 var savedEditingItem = getById($scope.editingRole._id);
                 savedEditingItem.name = $scope.editingRole.name;
             }, function (error) {
-                console.log(error);
+                $log.debug(error);
             });
         }
     }
 
     $scope.removeRole = function (id) {
         roleService.removeItem(id).then(function (data) {
-            console.log(data);
+            $log.debug(data);
             var removeItem = getById(id);
             $scope.roles.splice($scope.roles.indexOf(removeItem), 1);
         }, function (error) {
-            console.log(error);
+            $log.debug(error);
         });
     }
 

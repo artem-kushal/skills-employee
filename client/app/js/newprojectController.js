@@ -2,8 +2,8 @@
 
 
 skillsControllers.controller('NewProjectCtrl', ['$scope', 'namesPagesService', 'Technologies', 'Project', '$location',
-    'roleService', 'responsibilityService', 'uploadService',
-    function ($scope, namesPagesService, Technologies, Project, $location, roleService, responsibilityService, uploadService) {
+    'roleService', 'responsibilityService', 'uploadService', '$log',
+    function ($scope, namesPagesService, Technologies, Project, $location, roleService, responsibilityService, uploadService, $log) {
     $scope.$parent.pageName = namesPagesService.newProject;
 
     $scope.newProject = {
@@ -18,10 +18,10 @@ skillsControllers.controller('NewProjectCtrl', ['$scope', 'namesPagesService', '
         $scope.newProject.responsibilities.length !== 0;
         if ($scope.newProjectForm.$valid && isCanAdd) {
             Project.post({ newProject: $scope.newProject }, function (data) {
-                console.log(data.project);
+                $log.debug(data.project);
                 uploadFiles(data.project._id);
             }, function (error) {
-                console.log(error);
+                $log.debug(error);
             });
         } else {
             $scope.isNewProjectForm = true;
@@ -30,21 +30,21 @@ skillsControllers.controller('NewProjectCtrl', ['$scope', 'namesPagesService', '
 
     function uploadFiles(id) {
         uploadService.add($scope.projectImgs, id).then(function (data) {
-            console.log(data);
+            $log.debug(data);
             $scope.isNewProjectForm = false;
             Materialize.toast('Проект успешно добавлен!', 3000);
             $location.path('/projects');
         }, function (error) {
-            console.log(error);
+            $log.debug(error);
         });
     }
 
     function getTechnologies() {
         Technologies.query(function (data) {
-            console.log(data);
+            $log.debug(data);
             $scope.technologies = data;
         }, function (error) {
-            console.log(error);
+            $log.debug(error);
         });
     }
     getTechnologies();
@@ -164,7 +164,7 @@ skillsControllers.controller('NewProjectCtrl', ['$scope', 'namesPagesService', '
         roleService.getAll().then(function (data) {
             $scope.roles = data;
         }, function (error) {
-            console.log(error);
+            $log.debug(error);
         });
     }
     getRoles();
@@ -195,9 +195,9 @@ skillsControllers.controller('NewProjectCtrl', ['$scope', 'namesPagesService', '
         $scope.responsibilities = [];
         responsibilityService.getAll().then(function (data) {
             $scope.responsibilities = data;
-            console.log($scope.responsibilities);
+            $log.debug($scope.responsibilities);
         }, function (error) {
-            console.log(error);
+            $log.debug(error);
         });
     }
     getResponsibilities();
@@ -231,8 +231,6 @@ skillsControllers.controller('NewProjectCtrl', ['$scope', 'namesPagesService', '
 
     $scope.$watch('files', function (newVal, oldVal) {
         if (newVal !== undefined && newVal !== null) {
-            console.log(newVal);
-            console.log(JSON.stringify(newVal));
             $scope.projectImgs = $scope.projectImgs.concat(newVal);
         }
     });
