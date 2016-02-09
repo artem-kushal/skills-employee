@@ -1,6 +1,6 @@
 'use strict';
 
-var role = angular.module('role', []);
+var role = angular.module('role', ['role.service']);
 
 role.controller('RoleCtrl', ['$scope', 'namesPagesService', 'roleService', '$routeParams', '$log',
 	function ($scope, namesPagesService, roleService, $routeParams, $log) {

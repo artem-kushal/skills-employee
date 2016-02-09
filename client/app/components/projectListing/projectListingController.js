@@ -1,7 +1,8 @@
 'use strict';
 
+var projectListing = angular.module('projectListing', ['projectDetail.directive', 'project.service']);
 
-skillsControllers.controller('ProjectListingCtrl', ['$scope', 'namesPagesService', 'Project', '$log',
+projectListing.controller('ProjectListingCtrl', ['$scope', 'namesPagesService', 'Project', '$log',
 	function ($scope, namesPagesService, Project, $log) {
 
     $scope.$parent.pageName = namesPagesService.projectListing;

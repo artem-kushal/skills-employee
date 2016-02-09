@@ -1,7 +1,16 @@
 'use strict';
 
+var newProject = angular.module('newProject', [
+    'newProject.directive',
+    'roleInput',
+    'techInput',
+    'techList',
+    'responsibilityInput',
+    'project.service',
+    'upload.service'
+]);
 
-skillsControllers.controller('NewProjectCtrl', ['$scope', 'namesPagesService', 'Project', '$location', 'uploadService', '$log',
+newProject.controller('NewProjectCtrl', ['$scope', 'namesPagesService', 'Project', '$location', 'uploadService', '$log',
     function ($scope, namesPagesService, Project, $location, uploadService, $log) {
     $scope.$parent.pageName = namesPagesService.newProject;
 
@@ -23,7 +32,6 @@ skillsControllers.controller('NewProjectCtrl', ['$scope', 'namesPagesService', '
                 $log.debug(error);
             });
         } else {
-            $log.debug($scope.newProject);
             $scope.isNewProjectForm = true;
         }
     }

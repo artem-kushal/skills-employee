@@ -1,6 +1,6 @@
 'use strict';
 
-var responsibility = angular.module('responsibility', []);
+var responsibility = angular.module('responsibility', ['responsibility.service']);
 
 responsibility.controller('responsibilityCtrl', ['$scope', 'namesPagesService', 'responsibilityService', '$routeParams', '$log',
 	function ($scope, namesPagesService, responsibilityService, $routeParams, $log) {

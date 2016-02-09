@@ -20,8 +20,8 @@ var path = {
     },
     watch: {
         html: 'app/**/*.html',
-        partials: 'app/partials/**/*.html',
-        js: 'app/js/**/*.js',
+        partials: 'app/components/**/*.html',
+        js: 'app/components/**/*.js',
         style: 'app/css/*.css',
         img: 'app/images/**/*.*',
         fonts: 'app/font/**/*.*'
@@ -47,11 +47,11 @@ gulp.task('server', function () {
     app.use(require('connect-livereload')({
         port: 35729
     }));
-    app.use(express.static(__dirname + '/build')); // для того чтобы смог найтись путь к js, css и т. д.
+    app.use(express.static(__dirname + '/app')); 
     app.use('/*', function (req, res) {
-        res.sendFile(__dirname + '/build/index.html');
+        res.sendFile(__dirname + '/app/index.html');
     });
-    server.listen(5000, function () {
+    server.listen(3000, function () {
         console.log('Server start on port %d', server.address().port);
     });
 });

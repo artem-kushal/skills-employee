@@ -1,47 +1,8 @@
 'use strict';
 
-var skillsDirectives = angular.module('skillsDirectives', []);
+var newProjectDirective = angular.module('newProject.directive', []);
 
-skillsDirectives.directive('navmenuInit', [function () {
-        return {
-            restrict: 'EA',
-            scope: true,
-            link: function (scope, element) {
-                $(element).sideNav({
-                    closeOnClick: false
-                });
-            }
-        };
-    }]);
-
-skillsDirectives.directive('notRemoveChip', [function () {
-    return {
-        link: function (scope, element, attrs) {
-            $(document).off('click.chip');
-        }
-    }
-}]);
-
-skillsDirectives.directive('modalInit', [function () {
-    return {
-        link: function (scope, element, attrs) {
-            $(element).leanModal();
-        }
-    }
-}]);
-
-
-skillsDirectives.directive('tooltippedInit', [function () {
-    return {
-        restrict: 'EA',
-        scope: true,
-        link: function (scope, element) {
-            $(element).tooltip({ delay: 50 });
-        }
-    };
-}]);
-
-skillsDirectives.directive('replaceMaterialIcon', [function () {
+newProjectDirective.directive('replaceMaterialIcon', [function () {
     return {
         restrict: 'EA',
         scope: true,
@@ -82,31 +43,7 @@ skillsDirectives.directive('replaceMaterialIcon', [function () {
     };
 }]);
 
-skillsDirectives.directive('offsetTopTech', [function () {
-    return {
-        restrict: 'EA',
-        scope: true,
-        link: function (scope, element) {
-            // var offset_top = $('.technology-proj').offset().top - $('.main .container').offset().top;
-            // $(element).css('margin-top', offset_top);
-        }
-    };
-}]);
-
-skillsDirectives.directive('collapsibleInit', [function () {
-    return {
-        restrict: 'EA',
-        scope: true,
-        link: function (scope, element) {
-            $(element).collapsible({
-                accordion : false
-            });
-        }
-    };
-}]);
-
-
-skillsDirectives.directive('datepickerInit', [function () {
+newProjectDirective.directive('datepickerInit', [function () {
     return {
         restrict: 'EA',
         scope: true,
@@ -124,12 +61,3 @@ skillsDirectives.directive('datepickerInit', [function () {
         }
     };
 }]);
-
-skillsDirectives.directive('boxedWithOrientable', function () {
-    return {
-        restrict : 'EA',
-        link: function (scope, element, attrs) {
-            $(element).materialbox();
-        }
-    }
-});

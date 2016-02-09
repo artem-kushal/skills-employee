@@ -1,8 +1,8 @@
 'use strict';
 
-var skillsControllers = angular.module('skillsControllers', []);
+var technology = angular.module('technology', ['technology.service']);
 
-skillsControllers.controller('TechnologiesCtrl', ['$scope', 'namesPagesService', 'Technologies', 'SubTech', '$log',
+technology.controller('TechnologiesCtrl', ['$scope', 'namesPagesService', 'Technologies', 'SubTech', '$log',
     function ($scope, namesPagesService, Technologies, SubTech, $log) {
 
         $scope.$parent.pageName = namesPagesService.tech;

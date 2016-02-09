@@ -4,19 +4,17 @@ var skillsApp = angular.module('skillsApp', [
     'ngRoute',
     'ngResource',
     'ngAnimate',
-    'skillsControllers',
-    'skillsDirectives',
-    'skillsServices',
     'ng-sortable',
     'textAngular',
     'ngFileUpload',
-    'roleInput',
-    'techInput',
-    'techList',
+    'main',
+    'newProject',
+    'projectDetail',
+    'projectListing',
     'role',
-    'responsibilityInput',
     'responsibility',
-    'instruction'
+    'instruction',
+    'technology'
 ]);
 
 skillsApp.config(['$routeProvider', '$provide', '$logProvider', function ($routeProvider, $provide, $logProvider) {
@@ -27,15 +25,15 @@ skillsApp.config(['$routeProvider', '$provide', '$logProvider', function ($route
             controller: 'TechnologiesCtrl'
         }).
         when('/newproject', {
-            templateUrl: 'partials/newproject.html',
+            templateUrl: 'components/newproject/newproject.html',
             controller: 'NewProjectCtrl'
         }).
         when('/projects', {
-            templateUrl: 'partials/projectListing.html',
+            templateUrl: 'components/projectListing/projectListing.html',
             controller: 'ProjectListingCtrl'
         }).
         when('/projectdetail/:projectId', {
-            templateUrl: 'partials/projectDetail.html',
+            templateUrl: 'components/projectDetail/projectDetail.html',
             controller: 'ProjectDetailCtrl'
         }).
         when('/instruction', {
