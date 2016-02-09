@@ -1,7 +1,8 @@
 'use strict';
 
+var role = angular.module('role', []);
 
-skillsControllers.controller('roleCtrl', ['$scope', 'namesPagesService', 'roleService', '$routeParams', '$log',
+role.controller('RoleCtrl', ['$scope', 'namesPagesService', 'roleService', '$routeParams', '$log',
 	function ($scope, namesPagesService, roleService, $routeParams, $log) {
 
     $scope.$parent.pageName = namesPagesService.role;

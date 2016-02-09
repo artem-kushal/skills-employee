@@ -9,14 +9,21 @@ var skillsApp = angular.module('skillsApp', [
     'skillsServices',
     'ng-sortable',
     'textAngular',
-    'ngFileUpload'
+    'ngFileUpload',
+    'roleInput',
+    'techInput',
+    'techList',
+    'role',
+    'responsibilityInput',
+    'responsibility',
+    'instruction'
 ]);
 
 skillsApp.config(['$routeProvider', '$provide', '$logProvider', function ($routeProvider, $provide, $logProvider) {
     $logProvider.debugEnabled(true);
     $routeProvider.
         when('/', {
-            templateUrl: 'partials/technologies.html',
+            templateUrl: 'components/technology/technologies.html',
             controller: 'TechnologiesCtrl'
         }).
         when('/newproject', {
@@ -32,16 +39,16 @@ skillsApp.config(['$routeProvider', '$provide', '$logProvider', function ($route
             controller: 'ProjectDetailCtrl'
         }).
         when('/instruction', {
-            templateUrl: 'partials/instruction.html',
+            templateUrl: 'components/instruction/instruction.html',
             controller: 'InstructionCtrl'
         }).
         when('/responsibility', {
-            templateUrl: 'partials/responsibility.html',
+            templateUrl: 'components/responsibility/responsibility.html',
             controller: 'responsibilityCtrl'
         }).
         when('/role', {
-            templateUrl: 'partials/role.html',
-            controller: 'roleCtrl'
+            templateUrl: 'components/role/role.html',
+            controller: 'RoleCtrl'
         }).
         otherwise({
             redirectTo: '/'

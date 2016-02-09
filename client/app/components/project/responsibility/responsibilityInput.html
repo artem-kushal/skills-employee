@@ -1,0 +1,33 @@
+<div class="row responsib_list fade-anim" ng-show="isShowResponsibList">
+	<div class="col s12 grey lighten-3 head">
+		<span class="grey-text">Список обязанностей</span>	
+	</div>
+	<div class="col s12  grey lighten-5">
+		<ul class="collection">
+            <a class="collection-item" ng-repeat="responsibility in responsibilities" ng-click="addResponsibility(responsibility)" ng-hide="isSelectedResponsibility(responsibility)">
+                {{responsibility.name}}
+                <i class="material-icons cyan-text secondary-content">add</i>
+            </a>
+        </ul>
+	</div>
+</div>
+
+<div class="row">
+	<div class="input-field col col s12 m10 l12" ng-class="{invalid: (newProject.responsibilities == undefined || newProject.responsibilities.length == 0) && isNewProjectForm}">
+		<span class="grey-text">Обязанности</span>
+		<button type="button" class="waves-effect waves-light btn btn-small cyan" ng-click="showResponsibility()">
+			<span ng-hide="isShowResponsibList">Открыть список</span>
+			<span ng-show="isShowResponsibList">Закрыть список</span>
+		</button>
+		<a href="#newResponsibility" class="waves-effect waves-light btn btn-small cyan" modal-init><i class="material-icons" >add</i></a>
+		<div class="custom-input-field responsib_list">
+    		<ul class="collection" ng-show="newProject.responsibilities.length !== 0">
+	            <li class="collection-item" ng-repeat="responsibility in newProject.responsibilities">
+	                {{responsibility.name}}
+	                <a href ng-click="removeResponsibility($index)"><i class="material-icons cyan-text secondary-content">close</i></a>
+	            </li>
+	        </ul>
+		</div>
+		<span ng-show="(newProject.responsibilities == undefined || newProject.responsibilities.length == 0) && isNewProjectForm" class="invalid-message">Обязательное поле</span>
+	</div>
+</div>

@@ -1,0 +1,32 @@
+<div class="row roles fade-anim" ng-show="isShowRoleList">
+	<div class="col s12 chips grey lighten-5">
+		<div class="chip" ng-repeat="role in roles" ng-click="addRole(role)" not-remove-chip>
+            {{role.name}}
+            <i class="material-icons">add</i>
+        </div>
+	</div>
+</div>
+
+<div class="row">
+	
+	<div class="input-field col col s12 m10 l12" ng-class="{invalid: (newProject.roles == undefined || newProject.roles.length == 0) && isNewProjectForm}">
+		<span class="grey-text">Роли</span>
+		<button type="button" class="waves-effect waves-light btn btn-small cyan" ng-click="showRoles()">
+			<span ng-hide="isShowRoleList">Открыть список</span>
+			<span ng-show="isShowRoleList">Закрыть список</span>
+		</button>
+		<div class="custom-input-field">
+	        <div class="row chips">
+	        	<div class="col s12">
+	        		<div class="chip role" ng-repeat="role in newProject.roles track by $index" not-remove-chip>
+	                    {{role.name}}
+	                    <span class="new badge" ng-show="role.count > 1">{{role.count}}</span>
+	                    <i class="material-icons" ng-click="removeRole($index)">close</i>
+	                </div>
+	        	</div>
+	        </div>
+		</div>
+		<span ng-show="(newProject.roles == undefined || newProject.roles.length == 0) && isNewProjectForm" class="invalid-message">Обязательное поле</span>
+	</div>
+
+</div>

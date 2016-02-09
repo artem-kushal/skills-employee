@@ -1,0 +1,25 @@
+<div class="input-field col col s12 m10 l12" ng-class="{invalid: (newProject.tech == undefined || newProject.tech.length == 0) && isNewProjectForm}">
+	<span class="grey-text">Технологии</span>
+	<button type="button" class="waves-effect waves-light btn btn-small cyan" ng-click="showTechnologies()">
+		<span ng-hide="isShowTechList">Открыть список</span>
+		<span ng-show="isShowTechList">Закрыть список</span>
+	</button>
+	<div class="custom-input-field">
+		<div ng-repeat="tech in newProject.tech">
+			<a class="btn-flat waves-effect btn-tech active">
+	            <i class="material-icons left arrow">keyboard_arrow_right</i>
+	            {{tech.techName}}
+	            <i class="material-icons right" ng-click="removeTechFromProj($index)">close</i>
+	        </a>
+	        <div class="row">
+	            <div class="col s12 chips" ng-sortable="subTechConfig">
+	                <div class="chip" ng-repeat="subTech in tech.subTech" not-remove-chip>
+	                    {{subTech.name}}
+	                    <i class="material-icons" ng-click="removeSubTechFromProject($index, $parent.$index)">close</i>
+	                </div>
+	            </div>
+	        </div>
+	     </div>
+	</div>
+	<span ng-show="(newProject.tech == undefined || newProject.tech.length == 0) && isNewProjectForm" class="invalid-message">Обязательное поле</span>
+</div>

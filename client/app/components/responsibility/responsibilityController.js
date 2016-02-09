@@ -1,7 +1,8 @@
 'use strict';
 
+var responsibility = angular.module('responsibility', []);
 
-skillsControllers.controller('responsibilityCtrl', ['$scope', 'namesPagesService', 'responsibilityService', '$routeParams', '$log',
+responsibility.controller('responsibilityCtrl', ['$scope', 'namesPagesService', 'responsibilityService', '$routeParams', '$log',
 	function ($scope, namesPagesService, responsibilityService, $routeParams, $log) {
 
     $scope.$parent.pageName = namesPagesService.responsibility;
