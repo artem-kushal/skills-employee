@@ -12,8 +12,8 @@ var express = require('express'),
 var path = {
     src: { 
         html: 'app/*.html', 
-        partials: 'app/partials/*.html',
-        js: 'app/js/*.js',
+        partials: 'app/components/**/*.html',
+        js: 'app/components/**/*.js',
         style: 'app/css/style.css',
         img: 'app/images/**/*.*', 
         fonts: ['app/bower_components/materialize/font/**/*.*', 'app/font/*.*']
@@ -28,7 +28,7 @@ var path = {
     },
     build: { 
         html: 'build/',
-        partials: 'build/partials/',
+        partials: 'build/components/',
         js: 'build/js/',
         style: 'build/css/',
         img: 'build/images/',
