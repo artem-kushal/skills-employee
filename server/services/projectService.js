@@ -1,6 +1,5 @@
 var ProjectModel = require('./../models/project').ProjectModel;
 var ProjectTechnologyModel = require('./../models/projectTech').ProjectTechnologyModel;
-var ProjectSubTechModel = require('./../models/projectTech').ProjectSubTechModel;
 var projectService = {};
 
 projectService.getAll = function () {
@@ -22,21 +21,6 @@ projectService.get = function (id) {
                 reject(err);
             } else {
                 resolve(project);
-            }
-        });
-    });
-}
-
-projectService.populate = function (projects) {
-    return new Promise(function (resolve, reject) {
-        ProjectTechnologyModel.populate(projects, {
-            path: 'tech.subTech',
-            model: 'ProjectSubTech'
-        }, function (err, projects) {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(projects);
             }
         });
     });
@@ -97,42 +81,6 @@ projectService.removeTech = function (tech) {
                 reject(err);
             } else {
                 resolve(tech);
-            }
-        });
-    });
-}
-
-projectService.getSubTechs = function (projectId) {
-    return new Promise(function (resolve, reject) {
-        ProjectSubTechModel.find({ project : projectId }).exec(function (err, subTechs) {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(subTechs);
-            }
-        });
-    });
-}
-
-projectService.saveSubTech = function (subTech) {
-    return new Promise(function (resolve, reject) {
-        subTech.save(function (err) {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(subTech);
-            }
-        });
-    });
-}
-
-projectService.removeSubTech = function (subTech) {
-    return new Promise(function (resolve, reject) {
-        subTech.remove(function (err) {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(subTech);
             }
         });
     });

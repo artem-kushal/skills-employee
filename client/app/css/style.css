@@ -173,6 +173,11 @@ nav .nav-wrapper .button-collapse i
     padding: 20px;
 }
 
+.projdetail-content .edit-proj .btn {
+    margin-top: 15px;
+    float: right;
+}
+
 .newproject-content .row
 {
     margin-bottom: 0;

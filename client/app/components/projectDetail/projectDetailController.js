@@ -2,8 +2,8 @@
 
 var projectDetail = angular.module('projectDetail', ['projectDetail.directive', 'project.service']);
 
-projectDetail.controller('ProjectDetailCtrl', ['$scope', 'namesPagesService', 'Project', '$routeParams', '$log',
-    function ($scope, namesPagesService, Project, $routeParams, $log) {
+projectDetail.controller('ProjectDetailCtrl', ['$scope', 'namesPagesService', 'Project', '$routeParams', '$log', '$location',
+    function ($scope, namesPagesService, Project, $routeParams, $log, $location) {
     $scope.$parent.pageName = namesPagesService.projectDetails;
 
     function getProject() {
@@ -39,4 +39,10 @@ projectDetail.controller('ProjectDetailCtrl', ['$scope', 'namesPagesService', 'P
     $scope.isActiveTech = function (index) {
         return !(activeTech.indexOf(index) == -1);
     }
+
+    $scope.edit = function () {
+        $location.path('/editproject/' + $scope.project._id);
+    }
+
+
 }]);

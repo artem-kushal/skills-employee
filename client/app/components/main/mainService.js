@@ -3,7 +3,7 @@
 var mainService = angular.module('main.service', []);
 
 
-mainService.factory('namesPagesService', function() {
+mainService.factory('namesPagesService', function () {
     return {
         instructions: 'Инструкция',
         role: 'Роли',
@@ -11,10 +11,11 @@ mainService.factory('namesPagesService', function() {
         responsibility: 'Обязанности',
         projectListing: 'Все проекты',
         projectDetails: 'Детали проекта',
-        newProject: 'Новый проект'
+        newProject: 'Новый проект',
+        editProject: 'Изменение проекта'
     };
 });
 
-mainService.factory('restApiUrl', function() {
+mainService.factory('restApiUrl', function () {
     return 'http://localhost:1337/';
 });

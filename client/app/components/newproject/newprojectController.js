@@ -7,11 +7,13 @@ var newProject = angular.module('newProject', [
     'techList',
     'responsibilityInput',
     'project.service',
-    'upload.service'
+    'upload.service',
+    'blobConverter'
 ]);
 
-newProject.controller('NewProjectCtrl', ['$scope', 'namesPagesService', 'Project', '$location', 'uploadService', '$log', '$routeParams', '$timeout',
-    function ($scope, namesPagesService, Project, $location, uploadService, $log, $routeParams, $timeout) {
+newProject.controller('NewProjectCtrl', ['$scope', 'namesPagesService', 'Project', '$location', 'uploadService', '$log',
+    '$routeParams', '$timeout', 'blobConverterService',
+    function ($scope, namesPagesService, Project, $location, uploadService, $log, $routeParams, $timeout, blobConverterService) {
     $scope.$parent.pageName = namesPagesService.newProject;
 
     $scope.isEdit = false;
@@ -25,10 +27,11 @@ newProject.controller('NewProjectCtrl', ['$scope', 'namesPagesService', 'Project
     if ($routeParams.projectId) {
         getProject();
         $scope.isEdit = true;
+        $scope.$parent.pageName = namesPagesService.editProject
     }
 
     function getProject() {
-        Project.get({ id: '56b9d4729e09b2b81501141d' }, function (data) {
+        Project.get({ id: $routeParams.projectId }, function (data) {
             $log.debug(data);
             $scope.newProject = data;
             $scope.projectImgs = data.images;
@@ -68,17 +71,31 @@ newProject.controller('NewProjectCtrl', ['$scope', 'namesPagesService', 'Project
     function editProject() {
         Project.update({ newProject: $scope.newProject }, function (data) {
             $log.debug(data);
+            createFileList();
+            uploadFiles($scope.newProject._id);
         }, function (error) {
             $log.debug(error);
         });
+    }
+
+    function createFileList() {
+        for (var i = 0;i < $scope.projectImgs.length; i++) {
+            if ($scope.projectImgs[i].contentType !== undefined) {
+                $scope.projectImgs[i] = blobConverterService.parse($scope.projectImgs[i].data, $scope.projectImgs[i].contentType);
+            }
+        }
     }
 
     function uploadFiles(id) {
         uploadService.add($scope.projectImgs, id).then(function (data) {
             $log.debug(data);
             $scope.isNewProjectForm = false;
-            Materialize.toast('Проект успешно добавлен!', 3000);
-            $location.path('/projects');
+            if ($scope.isEdit) {
+                Materialize.toast('Ваши изменения сохранены!', 3000);
+            } else {
+                Materialize.toast('Проект успешно добавлен!', 3000);
+                $location.path('/projects');
+            }
         }, function (error) {
             $log.debug(error);
         });

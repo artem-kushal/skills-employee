@@ -1,6 +1,7 @@
 <div class="row white z-depth-1 newproject-content" >
     <div class="col s12">
-        <h5>Создание нового проекта</h5>
+        <h5 ng-if="!isEdit">Создание нового проекта</h5>
+        <h5 ng-if="isEdit">Изменение проекта</h5>
     </div>
     <div class="col s12">
     	
