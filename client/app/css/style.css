@@ -444,6 +444,13 @@ i.smaller
     right: 5px;
 }
 
+.card .edit
+{
+    position: absolute;
+    top: 5px;
+    right: 30px;
+}
+
 .head-btn
 {
     position: relative;

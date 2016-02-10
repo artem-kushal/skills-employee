@@ -22,6 +22,7 @@ module.exports = function (app) {
     app.post('/projects', projects.add);
     app.post('/upload', upload.array('files'), projects.uploadImages);
     app.delete('/projects/:id', projects.remove);
+    app.put('/projects', projects.update);
 
     app.get('/responsibilities', responsibility.getAll);
     app.post('/responsibilities', responsibility.add);

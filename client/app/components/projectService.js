@@ -6,7 +6,7 @@ angular.module('project.service', [])
             getAll:  { method:'GET', params:{ id:'' }, isArray:true },
             get: { method:'GET', params:{ id: '@id' }},
             post:   { method:'POST' },
-            update: { method:'PUT', params: { id: '@id' }},
+            update: { method:'PUT' },
             remove: { method:'DELETE', params: { id: '@id' }}
         });
     }]);
@@ -14,22 +14,22 @@ angular.module('project.service', [])
 angular.module('upload.service', [])
 	.service('uploadService', ['$http', '$q', 'Upload', 'restApiUrl', function ($http, $q, Upload, restApiUrl) {
 
-	    this.add = function (files, id) {
-	        var deferred = $q.defer();
-	        Upload.upload({
-	            url: restApiUrl + 'upload',
-	            method: 'POST',
-	            arrayKey: '',
-	            data: {
-	                files: files,
-	                id: id
-	            }
-	        }).then(function (response) {
-	            deferred.resolve(response.data);
-	        }, function (response) {
-	            deferred.reject(response);
-	        });
-	        return deferred.promise;
-	    };
+    this.add = function (files, id) {
+        var deferred = $q.defer();
+        Upload.upload({
+            url: restApiUrl + 'upload',
+            method: 'POST',
+            arrayKey: '',
+            data: {
+                files: files,
+                id: id
+            }
+        }).then(function (response) {
+            deferred.resolve(response.data);
+        }, function (response) {
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    };
 
-	}]);
+}]);

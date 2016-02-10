@@ -25,7 +25,23 @@ projectHelper.get = function (req, res, next) {
     });
 }
 
-projectHelper.update = function () {
+projectHelper.update = function (req, res, next) {
+    projectService.get(req.body.newProject._id).then(function (project) {
+        if (!project) {
+            return next(404);
+        }
+        project.name = req.body.newProject.name;
+        project.description = req.body.newProject.description;
+        project.responsibilities = req.body.newProject.responsibilities;
+        project.roles = req.body.newProject.roles;
+        project.dateEnd = req.body.newProject.dateEnd;
+        return projectService.save(project);
+    }).then(function (project) {
+        log.info('project updated');
+        return res.send({ project : project });
+    }).catch(function (err) {
+        return next(err);
+    });
 
 }
 projectHelper.add = function (req, res, next) {

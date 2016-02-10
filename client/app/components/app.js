@@ -36,6 +36,10 @@ skillsApp.config(['$routeProvider', '$provide', '$logProvider', function ($route
             templateUrl: 'components/projectDetail/projectDetail.html',
             controller: 'ProjectDetailCtrl'
         }).
+        when('/editproject/:projectId', {
+            templateUrl: 'components/newproject/newproject.html',
+            controller: 'NewProjectCtrl'
+        }).
         when('/instruction', {
             templateUrl: 'components/instruction/instruction.html',
             controller: 'InstructionCtrl'

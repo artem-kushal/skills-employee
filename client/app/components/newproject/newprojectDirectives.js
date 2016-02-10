@@ -58,6 +58,9 @@ newProjectDirective.directive('datepickerInit', [function () {
                 ngModelCtrl.$setViewValue($(element).parent().find('.datepicker').val());
                 ngModelCtrl.$render();
             });
+            scope.$on("initDate", function(e, args) {
+                $(element).parent().find('.datepicker').val(args)
+            });
         }
     };
 }]);

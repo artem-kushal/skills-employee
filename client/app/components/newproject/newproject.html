@@ -4,13 +4,13 @@
     </div>
     <div class="col s12">
     	
-    	<form name="newProjectForm" novalidate ng-submit="addProject()">
+    	<form name="newProjectForm" novalidate ng-submit="sendProject()">
     		<div class="row">
     			<div class="col s12 l8">
     				<div class="row">
 				    	<div class="input-field col s12 m10 l12" ng-class="{invalid: (newProject.name == undefined || newProject.name == '') && isNewProjectForm}">
 				    		<input id="name" type="text" class="validate" required ng-model="newProject.name">
-				          	<label for="name">Наименование</label>
+				          	<label for="name" ng-class='{active: newProject.name !== undefined}'>Наименование</label>
 				          	<span ng-show="(newProject.name == undefined || newProject.name == '') && isNewProjectForm" class="invalid-message">Обязательное поле</span>
 				    	</div>
 				    </div>
@@ -54,14 +54,17 @@
 					<div class="row">
 					    <div class="input-field col s12 m10 l12">
 	                        <input id="dateEnd" type="date" class="datepicker ss">
-	                        <label for="dateEnd">Дата окончания проекта</label>
+	                        <label for="dateEnd" ng-class='{active: newProject.dateEnd !== undefined}'>Дата окончания проекта</label>
 	                        <input type="text" ng-model="newProject.dateEnd" class="customdate"  datepicker-init>
 	                    </div>
                     </div>
 
 				    <div class="row">
 				    	<div class="input-field col col s12 m10 l12">
-				    		<button class="waves-effect waves-light btn-large blue darken-2" type="submit"><i class="material-icons left">add</i>Создать</button>
+				    		<button class="waves-effect waves-light btn-large blue darken-2" 
+				    			type="submit" ng-if="!isEdit"><i class="material-icons left">add</i>Создать</button>
+				    		<button class="waves-effect waves-light btn-large blue darken-2" 
+				    			type="submit" ng-if="isEdit"><i class="material-icons left">edit</i>Изменить</button>
 				    	</div>
 				    </div>
 				    
