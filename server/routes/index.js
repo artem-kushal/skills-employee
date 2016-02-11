@@ -6,12 +6,19 @@ var subtech = require('./subtechHelper');
 var projects = require('./projectHelper');
 var responsibility = require('./responsibilityHelper');
 var role = require('./roleHelper');
+var employee = require('./employeeHelper');
 
 module.exports = function (app) {
     app.get('/technologies', technology.getAll);
     app.post('/technologies', technology.add);
     app.put('/technologies/:id', technology.update);
     app.delete('/technologies/:id', technology.remove);
+
+    app.get('/employees/', employee.getAll);
+    app.get('/employee/:id', employee.get);
+    app.post('/employee', employee.add);
+    app.put('/employee/:id', employee.update);
+    app.delete('/employee/:id', employee.remove);
 
     app.post('/subtech', subtech.add);
     app.put('/subtech/:id', subtech.update);

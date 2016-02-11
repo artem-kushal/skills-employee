@@ -1,0 +1,97 @@
+<div class="row white z-depth-1 newemployee-content" >
+    <div class="col s12">
+        <h5 ng-if="!isEdit">Создание новой анкеты сотрудника</h5>
+        <h5 ng-if="isEdit">Изменение анкеты сотрудника</h5>
+    </div>
+
+	<div class="col s12">
+		<form name="newEmployeeForm" novalidate ng-submit="sendEmployee()">
+			<div class="row">
+    			<div class="col s12 l8">
+
+					<div class="row">
+						<span class="section">Общая информация</span>
+					</div>
+
+    				<div class="row">
+				    	<div class="input-field col s12 m10 l12" ng-class="{invalid: (newemployee.firstname == undefined || newemployee.firstname == '') && isNewEmployeeForm}">
+				    		<input id="firstname" type="text" class="validate" required ng-model="newemployee.firstname">
+				          	<label for="firstname" ng-class='{active: newemployee.firstname !== undefined}'>Имя</label>
+				          	<span ng-show="(newemployee.firstname == undefined || newemployee.firstname == '') && isNewEmployeeForm" class="invalid-message">Обязательное поле</span>
+				    	</div>
+				    </div>
+
+    				<div class="row">
+				    	<div class="input-field col s12 m10 l12" ng-class="{invalid: (newemployee.lastname == undefined || newemployee.lastname == '') && isNewEmployeeForm}">
+				    		<input id="lastname" type="text" class="validate" required ng-model="newemployee.lastname">
+				          	<label for="lastname" ng-class='{active: newemployee.lastname !== undefined}'>Фамилия</label>
+				          	<span ng-show="(newemployee.lastname == undefined || newemployee.lastname == '') && isNewEmployeeForm" class="invalid-message">Обязательное поле</span>
+				    	</div>
+				    </div>
+
+    				<div class="row">
+				    	<div class="input-field col s12 m10 l12" ng-class="{invalid: (newemployee.patronymic == undefined || newemployee.patronymic == '') && isNewEmployeeForm}">
+				    		<input id="patronymic" type="text" class="validate" required ng-model="newemployee.patronymic">
+				          	<label for="patronymic" ng-class='{active: newemployee.patronymic !== undefined}'>Отчество</label>
+				          	<span ng-show="(newemployee.patronymic == undefined || newemployee.patronymic == '') && isNewEmployeeForm" class="invalid-message">Обязательное поле</span>
+				    	</div>
+				    </div>
+
+					<div class="row">
+					    <div class="input-field col s12 m10 l12">
+	                        <input id="birthday" type="date" class="datepicker ss">
+	                        <label for="birthday" ng-class='{active: newemployee.birthday !== undefined}'>Дата рождения</label>
+	                        <input type="text" ng-model="newemployee.birthday" class="customdate"  datepicker-init>
+	                    </div>
+	                </div>
+
+					<div class="row">
+						<span class="section">Корпоративная информация</span>
+					</div>
+
+					<div class="row">
+				    	<div class="input-field col s12 m10 l12" ng-class="{invalid: (newemployee.department == undefined || newemployee.department == '') && isNewEmployeeForm}">
+				    		<input id="department" type="text" class="validate" required ng-model="newemployee.department">
+				          	<label for="department" ng-class='{active: newemployee.department !== undefined}'>Департамент</label>
+				          	<span ng-show="(newemployee.department == undefined || newemployee.department == '') && isNewEmployeeForm" class="invalid-message">Обязательное поле</span>
+				    	</div>
+				    </div>
+
+				    <div class="row">
+				    	<div class="input-field col s12 m10 l12">
+				    		<input id="group" type="text" class="validate" ng-model="newemployee.group">
+				          	<label for="group" ng-class='{active: newemployee.group !== undefined}'>Группа</label>
+				    	</div>
+				    </div>
+
+				    <div class="row">
+				    	<div class="input-field col s12 m10 l12" ng-class="{invalid: (newemployee.room == undefined || newemployee.room == '') && isNewEmployeeForm}">
+				    		<input id="room" type="text" class="validate" required ng-model="newemployee.room">
+				          	<label for="room" ng-class='{active: newemployee.room !== undefined}'>Комната</label>
+				          	<span ng-show="(newemployee.room == undefined || newemployee.room == '') && isNewEmployeeForm" class="invalid-message">Обязательное поле</span>
+				    	</div>
+				    </div>
+
+				    <div class="row">
+					    <div class="input-field col s12 m10 l12">
+	                        <input id="employment" type="date" class="datepicker ss">
+	                        <label for="employment" ng-class='{active: newemployee.dateEmployment !== undefined}'>Дата трудоустройства</label>
+	                        <input type="text" ng-model="newemployee.dateEmployment" class="customdate"  datepicker-init>
+	                    </div>
+	                </div>
+
+					<div class="row">
+				    	<div class="input-field col s12 m10 l12">
+				    		<button class="waves-effect waves-light btn-large blue darken-2" 
+				    		type="submit" ng-if="!isEdit"><i class="material-icons left">add</i>Создать</button>
+				    		<button class="waves-effect waves-light btn-large blue darken-2" 
+				    			type="submit" ng-if="isEdit"><i class="material-icons left">edit</i>Изменить</button>
+				    	</div>
+				    </div>
+			    </div>
+			</div>
+		</form>
+	</div>
+
+
+</div>

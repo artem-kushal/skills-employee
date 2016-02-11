@@ -14,7 +14,10 @@ var skillsApp = angular.module('skillsApp', [
     'role',
     'responsibility',
     'instruction',
-    'technology'
+    'technology',
+    'newEmployee',
+    'employeelist',
+    'employeeDetail'
 ]);
 
 skillsApp.config(['$routeProvider', '$provide', '$logProvider', function ($routeProvider, $provide, $logProvider) {
@@ -51,6 +54,22 @@ skillsApp.config(['$routeProvider', '$provide', '$logProvider', function ($route
         when('/role', {
             templateUrl: 'components/role/role.html',
             controller: 'RoleCtrl'
+        }).
+        when('/newemployee', {
+            templateUrl: 'components/newEmployee/newemployee.html',
+            controller: 'NewEmployeeCtrl'
+        }).
+        when('/employees', {
+            templateUrl: 'components/employeeList/employeelist.html',
+            controller: 'EmployeeListCtrl'
+        }).
+        when('/employee/:employeeId', {
+            templateUrl: 'components/employeeDetail/employeedetail.html',
+            controller: 'EmployeeDetailCtrl'
+        }).
+        when('/editemployee/:employeeId', {
+            templateUrl: 'components/newEmployee/newemployee.html',
+            controller: 'NewEmployeeCtrl'
         }).
         otherwise({
             redirectTo: '/'

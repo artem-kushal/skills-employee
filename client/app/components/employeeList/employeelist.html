@@ -1,0 +1,33 @@
+<div class="row white z-depth-1 employee-content" >
+	<div class="col s12 head-btn">
+        <h5>Список анкет сотрудников</h5>
+        <a href="#/newemployee" class="waves-effect waves-light btn blue darken-2"><i class="material-icons left">add</i>Создать</a>
+    </div>
+    <div class="col s12" ng-if="projects.length === 0">
+        <p>Анкеты сотрудников отсутствуют. Перейдите на страницу добавления анкеты сотрудника воспользовавшись кнопкой выше.</p>
+    </div>
+    <div class="row">
+    	<div class="col s12">
+    		<table class="bordered highlight">
+				<thead>
+					<tr>
+						<th>ФИО</th>
+						<th>Департамент</th>
+						<th>Группа</th>
+						<th colspan="2">Комната</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="employee in employees" ng-click="employeeDetail(employee._id)">
+						<td>{{employee.lastname}} {{employee.firstname}}</td>
+						<td>{{employee.department}}</td>
+						<td>{{employee.group}}</td>
+						<td>{{employee.room}}</td>
+						<td><a href ng-click="removeEmployee($index, employee._id)" class="waves-effect waves-red btn btn-icon cyan"><i class="material-icons">close</i></a></td>
+					</tr>
+				</tbody>
+			</table>
+    	</div>
+		
+    </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="row white z-depth-1 employeedetail-content" >
+    <div class="col s11">
+        <h5>Детали анкеты сотрудника</h5>
+    </div>
+	
+	<div class="col s1 edit-employee">
+        <a class="waves-effect waves-light btn btn-icon cyan " href="#/editemployee/{{employee._id}}"><i class="material-icons">edit</i></a>
+    </div>
+
+	<div class="col s12">
+		<span class="section">Имя</span>
+		<p ng-bind="employee.firstname"></p>
+	</div>
+
+	<div class="col s12">
+		<span class="section">Фамилия</span>
+		<p ng-bind="employee.lastname"></p>
+	</div>
+
+	<div class="col s12">
+		<span class="section">Отчество</span>
+		<p ng-bind="employee.patronymic"></p>
+	</div>
+
+	<div class="col s12">
+		<span class="section">Дата рождения</span>
+		<p ng-bind="employee.birthday"></p>
+	</div>
+
+	<div class="col s12">
+		<span class="section">Департамент</span>
+		<p ng-bind="employee.department"></p>
+	</div>
+
+	<div class="col s12">
+		<span class="section">Группа</span>
+		<p ng-bind="employee.group"></p>
+	</div>
+
+	<div class="col s12">
+		<span class="section">Комната</span>
+		<p ng-bind="employee.room"></p>
+	</div>
+
+	<div class="col s12">
+		<span class="section">Дата трудоустройства</span>
+		<p ng-bind="employee.dateEmployment"></p>
+	</div>
+
+
+</div>

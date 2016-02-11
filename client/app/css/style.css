@@ -168,7 +168,10 @@ nav .nav-wrapper .button-collapse i
 /*-------------newproject page--------------------*/
 .newproject-content,
 .projects-content,
-.projdetail-content
+.projdetail-content,
+.newemployee-content,
+.employee-content,
+.employeedetail-content
 {
     padding: 20px;
 }
@@ -180,7 +183,8 @@ nav .nav-wrapper .button-collapse i
     margin-top: 15px;
 }
 
-.newproject-content .row
+.newproject-content .row,
+.newemployee-content .row
 {
     margin-bottom: 0;
 }
@@ -574,6 +578,46 @@ img.center
     position: relative;
     top: 6px;
 }
+
+/*-----------------.newemployee-content-------------------*/
+
+.newemployee-content .section,
+.employeedetail-content .section
+{
+    font-size: 1rem;
+
+    display: block;
+
+    margin: .5rem .75rem;
+    padding: 10px;
+
+    color: #727272;
+    background-color: #eee;
+}
+
+.employee-content table tr:hover
+{
+    cursor: pointer;
+}
+
+.employeedetail-content .section
+{
+    margin-left: 0;
+}
+
+.employeedetail-content p
+{
+    padding-left: 20px;
+}
+
+.edit-employee .btn
+{
+    float: right;
+
+    margin-top: 5px;
+    margin-right: 15px;
+}
+
 /*------------------------------------------------*/
 
 /* input-field focus color */

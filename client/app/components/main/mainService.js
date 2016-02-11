@@ -12,7 +12,11 @@ mainService.factory('namesPagesService', function () {
         projectListing: 'Все проекты',
         projectDetails: 'Детали проекта',
         newProject: 'Новый проект',
-        editProject: 'Изменение проекта'
+        editProject: 'Изменение проекта',
+        newEmployee: 'Новый сотрудник',
+        employeeList: 'Все сотрудники',
+        employeeDetail: 'Детали анкеты',
+        editEmployee: 'Изменение анкеты',
     };
 });
 
