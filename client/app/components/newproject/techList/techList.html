@@ -7,11 +7,11 @@
         <a class="btn-flat waves-effect btn-tech" ng-class="{active: isActiveTech($index)}">
             <i class="material-icons left arrow" ng-click="setActiveTech($index)">keyboard_arrow_right</i>
             <span ng-click="setActiveTech($index)">{{tech.techName}}</span>
-            <i class="material-icons right smaller" ng-click="addTechInProject($index)">add</i>
+            <i class="material-icons right smaller" ng-click="addTechInProject(tech._id)">add</i>
         </a>
         <div class="row sub-tech-row fade-anim" ng-show="isActiveTech($index)">
             <div class="col s12 chips" ng-sortable="subTechConfig">
-                <div class="chip" ng-repeat="subTech in tech.subTech" not-remove-chip  ng-click="addSubTechInProject($index,$parent.$index)" ng-hide="isSelectedSubTech(tech._id, subTech._id)">
+                <div class="chip" ng-repeat="subTech in tech.subTech" not-remove-chip  ng-click="addSubTechInProject(tech._id, subTech._id, $index, $parent.$index)" ng-hide="isSelectedSubTech(tech._id, subTech._id)">
                     {{subTech.name}}
                 </div>
             </div>

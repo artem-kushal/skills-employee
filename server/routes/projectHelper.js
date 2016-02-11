@@ -43,7 +43,7 @@ projectHelper.update = function (req, res, next) {
             for (var j = 0; j < addProjectTech[i].subTech.length; j++) {
                 projectTech[projectTech.length - 1].subTech.push({// add subtech in project
                     name: addProjectTech[i].subTech[j].name,
-                    subTechId: addProjectTech[i].subTech[j]._id
+                    subTechId: addProjectTech[i].subTech[j].subTechId
                 });
             }
         }
@@ -75,7 +75,8 @@ projectHelper.add = function (req, res, next) {
     for (var i = 0; i < addProjectTech.length; i++) {
         projectTech.push(new ProjectTechnologyModel({
             techName: req.body.newProject.tech[i].techName,
-            project: project._id
+            project: project._id,
+            techId: req.body.newProject.tech[i].techId
         }));
         project.tech.push(projectTech[projectTech.length - 1]._id);// add tech in project
         for (var j = 0; j < addProjectTech[i].subTech.length; j++) {
