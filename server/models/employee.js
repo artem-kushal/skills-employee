@@ -9,7 +9,15 @@ var Employee = new Schema({
     department: { type: String, required: true },
     group: { type: String },
     room: { type: String, required: true },
-    dateEmployment: { type: String }
+    dateEmployment: { type: String },
+    projects: [{
+        projId: { type: String },
+        name: { type: String }
+    }],
+    technologies: [{
+        tech: { type: Schema.Types.ObjectId, ref: 'Technology' },
+        subTech: [{ type: Schema.Types.ObjectId, ref: 'SubTech' }]
+    }]
 });
 
 

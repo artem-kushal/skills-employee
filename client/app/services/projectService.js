@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('project.service', [])
+angular.module('project.service', ['project.search'])
     .factory('Project', ['$resource', 'restApiUrl', function ($resource, restApiUrl) {
         return $resource(restApiUrl + 'projects/:id', {}, {
             getAll:  { method:'GET', params:{ id:'' }, isArray:true },
@@ -10,6 +10,20 @@ angular.module('project.service', [])
             remove: { method:'DELETE', params: { id: '@id' }}
         });
     }]);
+
+angular.module('project.search', []).service('projectSearchService', ['$http', '$q', 'restApiUrl', function ($http, $q, restApiUrl) {
+
+    this.find = function (searchString) {
+        var deferred = $q.defer();
+        $http.get(restApiUrl + 'projects/search/' + searchString).then(function (response) {
+            deferred.resolve(response.data);
+        }, function (response) {
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    }
+
+}]);
 
 angular.module('upload.service', [])
 	.service('uploadService', ['$http', '$q', 'Upload', 'restApiUrl', function ($http, $q, Upload, restApiUrl) {

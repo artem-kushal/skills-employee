@@ -5,10 +5,7 @@ var newProject = angular.module('newProject', [
     'roleInput',
     'techInput',
     'techList',
-    'responsibilityInput',
-    'project.service',
-    'upload.service',
-    'blobConverter'
+    'responsibilityInput'
 ]);
 
 newProject.controller('NewProjectCtrl', ['$scope', 'namesPagesService', 'Project', '$location', 'uploadService', '$log',

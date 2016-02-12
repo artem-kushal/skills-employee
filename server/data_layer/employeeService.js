@@ -3,7 +3,7 @@ var employeeService = {};
 
 employeeService.getAll = function () {
     return new Promise(function (resolve, reject) {
-        EmployeeModel.find().populate('tech').exec(function (err, employees) {
+        EmployeeModel.find().exec(function (err, employees) {
             if (err) {
                 reject(err);
             } else {
@@ -15,7 +15,7 @@ employeeService.getAll = function () {
 
 employeeService.get = function (id) {
     return new Promise(function (resolve, reject) {
-        EmployeeModel.findById(id).exec(function (err, employee) {
+        EmployeeModel.findById(id).populate('technologies.tech').populate('technologies.subTech').exec(function (err, employee) {
             if (err) {
                 reject(err);
             } else {

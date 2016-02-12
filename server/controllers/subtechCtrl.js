@@ -1,11 +1,11 @@
 var log = require('./../utils/log')(module);
 var TechnologyModel = require('./../models/tech').TechnologyModel;
 var SubTechModel = require('./../models/tech').SubTechModel;
-var subtechService = require('./../services/subtechService');
-var techService = require('./../services/technologyService');
-var subtechHelper = {};
+var subtechService = require('./../data_layer/subtechService');
+var techService = require('./../data_layer/technologyService');
+var subtechCtrl = {};
 
-subtechHelper.update = function (req, res, next) {
+subtechCtrl.update = function (req, res, next) {
     subtechService.get(req.params.id).then(function (subtech) {
         if (!subtech) {
             return next(404);
@@ -21,7 +21,7 @@ subtechHelper.update = function (req, res, next) {
     });
 }
 
-subtechHelper.add = function (req, res, next) {
+subtechCtrl.add = function (req, res, next) {
     techService.get(req.body.parentId).then(function (technology) {
         if (!technology) {
             return next(404);
@@ -40,7 +40,7 @@ subtechHelper.add = function (req, res, next) {
     });
 }
 
-subtechHelper.remove = function (req, res, next) {
+subtechCtrl.remove = function (req, res, next) {
     subtechService.get(req.params.id).then(function (subtech) {
         if (!subtech) {
             return next(404);
@@ -56,4 +56,4 @@ subtechHelper.remove = function (req, res, next) {
     });
 }
 
-module.exports = subtechHelper;
+module.exports = subtechCtrl;

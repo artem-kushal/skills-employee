@@ -1,6 +1,6 @@
 'use strict';
 
-var projectListing = angular.module('projectListing', ['projectDetail.directive', 'project.service']);
+var projectListing = angular.module('projectListing', ['projectDetail.directive']);
 
 projectListing.controller('ProjectListingCtrl', ['$scope', 'namesPagesService', 'Project', '$log',
 	function ($scope, namesPagesService, Project, $log) {

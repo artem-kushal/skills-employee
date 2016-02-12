@@ -1,11 +1,11 @@
 var log = require('./../utils/log')(module);
 var TechnologyModel = require('./../models/tech').TechnologyModel;
 var SubTechModel = require('./../models/tech').SubTechModel;
-var techService = require('./../services/technologyService');
-var subtechService = require('./../services/subtechService');
-var technologyHelper = {};
+var techService = require('./../data_layer/technologyService');
+var subtechService = require('./../data_layer/subtechService');
+var technologyCtrl = {};
 
-technologyHelper.getAll = function (req, res, next) {
+technologyCtrl.getAll = function (req, res, next) {
     return techService.getAll().then(function (technologies) {
         return res.send(technologies);
     }, function (err) {
@@ -13,7 +13,7 @@ technologyHelper.getAll = function (req, res, next) {
     });
 }
 
-technologyHelper.update = function (req, res, next) {
+technologyCtrl.update = function (req, res, next) {
     techService.get(req.params.id).then(function (technology) {
         if (!technology) {
             return next(404);
@@ -29,7 +29,7 @@ technologyHelper.update = function (req, res, next) {
     });
 }
 
-technologyHelper.add = function (req, res, next) {
+technologyCtrl.add = function (req, res, next) {
     var technology = new TechnologyModel({
         techName: req.body.techName
     });
@@ -41,7 +41,7 @@ technologyHelper.add = function (req, res, next) {
     });
 }
 
-technologyHelper.remove = function (req, res, next) {
+technologyCtrl.remove = function (req, res, next) {
     techService.get(req.params.id).then(function (technology) {
         if (!technology) {
             return next(404);
@@ -60,4 +60,4 @@ technologyHelper.remove = function (req, res, next) {
     });
 }
 
-module.exports = technologyHelper;
+module.exports = technologyCtrl;

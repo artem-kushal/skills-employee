@@ -1,9 +1,10 @@
 'use strict';
 
-var mainService = angular.module('main.service', []);
+var services = angular.module('services', ['blobConverter', 'employee.service', 'project.service',
+    'responsibility.service', 'role.service', 'technology.service', 'upload.service']);
 
 
-mainService.factory('namesPagesService', function () {
+services.factory('namesPagesService', function () {
     return {
         instructions: 'Инструкция',
         role: 'Роли',
@@ -20,6 +21,6 @@ mainService.factory('namesPagesService', function () {
     };
 });
 
-mainService.factory('restApiUrl', function () {
+services.factory('restApiUrl', function () {
     return 'http://localhost:1337/';
 });

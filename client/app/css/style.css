@@ -610,6 +610,32 @@ img.center
     padding-left: 20px;
 }
 
+.employeedetail-content .row
+{
+    margin-bottom: 0;
+}
+
+.employeedetail-content .search-proj input
+{
+    margin-bottom: 0;
+}
+
+.employeedetail-content .search-proj .collection
+{
+    margin-top: 0;
+    margin-left: 3rem;
+}
+
+.employeedetail-content .proj-list
+{
+    margin: 10px 0;
+}
+
+.employeedetail-content .proj-list .chip
+{
+    margin-right: 5px;
+}
+
 .edit-employee .btn
 {
     float: right;

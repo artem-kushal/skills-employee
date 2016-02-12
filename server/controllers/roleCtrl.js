@@ -1,9 +1,9 @@
 var log = require('./../utils/log')(module);
 var RoleModel = require('./../models/role').RoleModel;
-var roleService = require('./../services/roleService');
-var roleHelper = {};
+var roleService = require('./../data_layer/roleService');
+var roleCtrl = {};
 
-roleHelper.getAll = function (req, res, next) {
+roleCtrl.getAll = function (req, res, next) {
     return roleService.getAll().then(function (roles) {
         return res.send(roles);
     }, function (err) {
@@ -11,7 +11,7 @@ roleHelper.getAll = function (req, res, next) {
     });
 }
 
-roleHelper.update = function (req, res, next) {
+roleCtrl.update = function (req, res, next) {
     roleService.get(req.params.id).then(function (role) {
         role.name = req.body.name;
         return roleService.save(role);
@@ -23,7 +23,7 @@ roleHelper.update = function (req, res, next) {
     });
 }
 
-roleHelper.add = function (req, res, next) {
+roleCtrl.add = function (req, res, next) {
     var role = new RoleModel({
         name: req.body.name
     });
@@ -35,7 +35,7 @@ roleHelper.add = function (req, res, next) {
     });
 }
 
-roleHelper.remove = function (req, res, next) {
+roleCtrl.remove = function (req, res, next) {
     roleService.get(req.params.id).then(function (role) {
         return roleService.remove(role);
     }).then(function () {
@@ -47,4 +47,4 @@ roleHelper.remove = function (req, res, next) {
 
 }
 
-module.exports = roleHelper;
+module.exports = roleCtrl;

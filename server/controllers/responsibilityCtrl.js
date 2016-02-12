@@ -1,9 +1,9 @@
 var log = require('./../utils/log')(module);
 var ResponsibilityModel = require('./../models/responsibility').ResponsibilityModel;
-var responsibilityService = require('./../services/responsibilityService');
-var responsibilityHelper = {};
+var responsibilityService = require('./../data_layer/responsibilityService');
+var responsibilityCtrl = {};
 
-responsibilityHelper.getAll = function (req, res, next) {
+responsibilityCtrl.getAll = function (req, res, next) {
     return responsibilityService.getAll().then(function (responsibilities) {
         return res.send(responsibilities);
     }, function (err) {
@@ -11,7 +11,7 @@ responsibilityHelper.getAll = function (req, res, next) {
     });
 }
 
-responsibilityHelper.update = function (req, res, next) {
+responsibilityCtrl.update = function (req, res, next) {
     responsibilityService.get(req.params.id).then(function (responsibility) {
         if (!responsibility) {
             return next(404);
@@ -26,7 +26,7 @@ responsibilityHelper.update = function (req, res, next) {
     });
 }
 
-responsibilityHelper.add = function (req, res, next) {
+responsibilityCtrl.add = function (req, res, next) {
     var responsibility = new ResponsibilityModel({
         name: req.body.name
     });
@@ -38,7 +38,7 @@ responsibilityHelper.add = function (req, res, next) {
     });
 }
 
-responsibilityHelper.remove = function (req, res, next) {
+responsibilityCtrl.remove = function (req, res, next) {
     responsibilityService.get(req.params.id).then(function (responsibility) {
         return responsibilityService.remove(responsibility);
     }).then(function () {
@@ -50,4 +50,4 @@ responsibilityHelper.remove = function (req, res, next) {
 
 }
 
-module.exports = responsibilityHelper;
+module.exports = responsibilityCtrl;

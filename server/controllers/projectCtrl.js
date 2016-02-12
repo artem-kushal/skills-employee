@@ -1,10 +1,10 @@
 var log = require('./../utils/log')(module);
 var ProjectModel = require('./../models/project').ProjectModel;
 var ProjectTechnologyModel = require('./../models/projectTech').ProjectTechnologyModel;
-var projectService = require('./../services/projectService');
-var projectHelper = {};
+var projectService = require('./../data_layer/projectService');
+var projectCtrl = {};
 
-projectHelper.getAll = function (req, res, next) {
+projectCtrl.getAll = function (req, res, next) {
     projectService.getAll().then(function (projects) {
         return res.send(projects);
     }).catch(function (err) {
@@ -12,7 +12,7 @@ projectHelper.getAll = function (req, res, next) {
     });
 }
 
-projectHelper.get = function (req, res, next) {
+projectCtrl.get = function (req, res, next) {
     projectService.get(req.params.id).then(function (project) {
         return res.send(project);
     }).catch(function (err) {
@@ -20,7 +20,15 @@ projectHelper.get = function (req, res, next) {
     });
 }
 
-projectHelper.update = function (req, res, next) {
+projectCtrl.search = function (req, res, next) {
+    projectService.find(req.params.searchString).then(function (projects) {
+        return res.send(projects);
+    }).catch(function (err) {
+        return next(err);
+    });
+}
+
+projectCtrl.update = function (req, res, next) {
     var projectId = req.body.newProject._id;
     var projectTech = [];
     projectService.get(projectId).then(function (project) {
@@ -62,7 +70,7 @@ projectHelper.update = function (req, res, next) {
     });
 
 }
-projectHelper.add = function (req, res, next) {
+projectCtrl.add = function (req, res, next) {
     var project = new ProjectModel({
         name: req.body.newProject.name,
         description: req.body.newProject.description,
@@ -96,7 +104,7 @@ projectHelper.add = function (req, res, next) {
     });
 }
 
-projectHelper.remove = function (req, res, next) {
+projectCtrl.remove = function (req, res, next) {
     var projectId = req.params.id;
     projectService.get(projectId).then(function (project) {
         if (!project) {
@@ -115,7 +123,7 @@ projectHelper.remove = function (req, res, next) {
     });
 }
 
-projectHelper.uploadImages = function (req, res, next) {
+projectCtrl.uploadImages = function (req, res, next) {
     projectService.get(req.body.id).then(function (project) {
         if (!project) {
             return next(404);
@@ -136,4 +144,4 @@ projectHelper.uploadImages = function (req, res, next) {
     });
 }
 
-module.exports = projectHelper;
+module.exports = projectCtrl;

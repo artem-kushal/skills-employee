@@ -35,6 +35,17 @@ employeeService.service('employeeService', ['$http', '$q', 'restApiUrl', functio
         return deferred.promise;
     }
 
+    this.addProject = function (employee) {
+        var deferred = $q.defer();
+        $http.post(restApiUrl + 'employee/addproject/', { employee: employee })
+        .then(function (response) {
+            deferred.resolve(response.data);
+        }, function (response) {
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    }
+
     this.removeItem = function (id) {
         var deferred = $q.defer();
         $http.delete(restApiUrl + 'employee/' + id)

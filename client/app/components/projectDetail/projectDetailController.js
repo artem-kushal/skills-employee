@@ -1,6 +1,6 @@
 'use strict';
 
-var projectDetail = angular.module('projectDetail', ['projectDetail.directive', 'project.service']);
+var projectDetail = angular.module('projectDetail', ['projectDetail.directive']);
 
 projectDetail.controller('ProjectDetailCtrl', ['$scope', 'namesPagesService', 'Project', '$routeParams', '$log', '$location',
     function ($scope, namesPagesService, Project, $routeParams, $log, $location) {

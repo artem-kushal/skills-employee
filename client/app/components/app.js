@@ -17,7 +17,8 @@ var skillsApp = angular.module('skillsApp', [
     'technology',
     'newEmployee',
     'employeelist',
-    'employeeDetail'
+    'employeeDetail',
+    'services'
 ]);
 
 skillsApp.config(['$routeProvider', '$provide', '$logProvider', function ($routeProvider, $provide, $logProvider) {

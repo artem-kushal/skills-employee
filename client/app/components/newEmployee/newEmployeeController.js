@@ -1,6 +1,6 @@
 'use strict';
 
-var newEmployee = angular.module('newEmployee', ['employee.service']);
+var newEmployee = angular.module('newEmployee', []);
 
 newEmployee.controller('NewEmployeeCtrl', ['$scope', 'namesPagesService', 'employeeService', '$log', '$location', '$routeParams',
     function ($scope, namesPagesService, employeeService, $log, $location, $routeParams) {

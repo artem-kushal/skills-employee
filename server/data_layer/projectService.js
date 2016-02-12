@@ -26,6 +26,18 @@ projectService.get = function (id) {
     });
 }
 
+projectService.find = function (searchString) {
+    return new Promise(function (resolve, reject) {
+        ProjectModel.find({ name: new RegExp('.*' + searchString + '.*') }).populate('tech').exec(function (err, projects) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(projects);
+            }
+        });
+    });
+}
+
 projectService.save = function (project) {
     return new Promise(function (resolve, reject) {
         project.save(function (err) {

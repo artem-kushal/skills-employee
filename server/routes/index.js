@@ -1,12 +1,12 @@
 var log = require('./../utils/log')(module);
 var multer  = require('multer')
 var upload = multer({ storage: multer.memoryStorage() })
-var technology = require('./technologyHelper');
-var subtech = require('./subtechHelper');
-var projects = require('./projectHelper');
-var responsibility = require('./responsibilityHelper');
-var role = require('./roleHelper');
-var employee = require('./employeeHelper');
+var technology = require('../controllers/technologyCtrl');
+var subtech = require('../controllers/subtechCtrl');
+var projects = require('../controllers/projectCtrl');
+var responsibility = require('../controllers/responsibilityCtrl');
+var role = require('../controllers/roleCtrl');
+var employee = require('../controllers/employeeCtrl');
 
 module.exports = function (app) {
     app.get('/technologies', technology.getAll);
@@ -19,6 +19,7 @@ module.exports = function (app) {
     app.post('/employee', employee.add);
     app.put('/employee/:id', employee.update);
     app.delete('/employee/:id', employee.remove);
+    app.post('/employee/addproject/', employee.addProject);
 
     app.post('/subtech', subtech.add);
     app.put('/subtech/:id', subtech.update);
@@ -30,6 +31,7 @@ module.exports = function (app) {
     app.post('/upload', upload.array('files'), projects.uploadImages);
     app.delete('/projects/:id', projects.remove);
     app.put('/projects', projects.update);
+    app.get('/projects/search/:searchString', projects.search);
 
     app.get('/responsibilities', responsibility.getAll);
     app.post('/responsibilities', responsibility.add);

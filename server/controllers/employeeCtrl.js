@@ -1,9 +1,9 @@
 var log = require('./../utils/log')(module);
 var EmployeeModel = require('./../models/employee');
-var employeeService = require('./../services/employeeService');
-var employeeHelper = {};
+var employeeService = require('./../data_layer/employeeService');
+var employeeCtrl = {};
 
-employeeHelper.getAll = function (req, res, next) {
+employeeCtrl.getAll = function (req, res, next) {
     return employeeService.getAll().then(function (employees) {
         return res.send(employees);
     }, function (err) {
@@ -11,7 +11,7 @@ employeeHelper.getAll = function (req, res, next) {
     });
 }
 
-employeeHelper.get = function (req, res, next) {
+employeeCtrl.get = function (req, res, next) {
     employeeService.get(req.params.id).then(function (employee) {
         return res.send(employee);
     }).catch(function (err) {
@@ -19,7 +19,7 @@ employeeHelper.get = function (req, res, next) {
     });
 }
 
-employeeHelper.update = function (req, res, next) {
+employeeCtrl.update = function (req, res, next) {
     employeeService.get(req.params.id).then(function (employee) {
         employee.firstname = req.body.newEmployee.firstname;
         employee.lastname = req.body.newEmployee.lastname;
@@ -38,7 +38,7 @@ employeeHelper.update = function (req, res, next) {
     });
 }
 
-employeeHelper.add = function (req, res, next) {
+employeeCtrl.add = function (req, res, next) {
     var employee = new EmployeeModel({
         firstname : req.body.newEmployee.firstname,
         lastname : req.body.newEmployee.lastname,
@@ -57,7 +57,20 @@ employeeHelper.add = function (req, res, next) {
     });
 }
 
-employeeHelper.remove = function (req, res, next) {
+employeeCtrl.addProject = function (req, res, next) {
+    employeeService.get(req.body.employee._id).then(function (employee) {
+        employee.projects = req.body.employee.projects;
+        employee.technologies = req.body.employee.technologies;
+        return employeeService.save(employee);
+    }).then(function (employee) {
+        log.info('project added to employee');
+        return res.send({ employee: employee });
+    }).catch(function (err) {
+        return next(err);
+    });
+}
+
+employeeCtrl.remove = function (req, res, next) {
     employeeService.get(req.params.id).then(function (employee) {
         return employeeService.remove(employee);
     }).then(function () {
@@ -69,4 +82,4 @@ employeeHelper.remove = function (req, res, next) {
 
 }
 
-module.exports = employeeHelper;
+module.exports = employeeCtrl;

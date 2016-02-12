@@ -4,18 +4,18 @@ var gulp = require('gulp');
 var gulpLoadPlugins = require('gulp-load-plugins')
 var plugins = gulpLoadPlugins();
 var imageminPngquant = require('imagemin-pngquant');
-var express = require('express'),
-    app = express(),
-    server = require('http').Server(app),
-    bodyParser = require('body-parser');
+var express = require('express');
+var app = express();
+var server = require('http').Server(app);
+var bodyParser = require('body-parser');
 
 var path = {
-    src: { 
-        html: 'app/*.html', 
+    src: {
+        html: 'app/*.html',
         partials: 'app/components/**/*.html',
         js: 'app/components/**/*.js',
         style: 'app/css/style.css',
-        img: 'app/images/**/*.*', 
+        img: 'app/images/**/*.*',
         fonts: ['app/bower_components/materialize/font/**/*.*', 'app/font/*.*']
     },
     watch: {
@@ -26,13 +26,13 @@ var path = {
         img: 'app/images/**/*.*',
         fonts: 'app/font/**/*.*'
     },
-    build: { 
+    build: {
         html: 'build/',
         partials: 'build/components/',
         js: 'build/js/',
         style: 'build/css/',
         img: 'build/images/',
-        fonts: 'build/font/'        
+        fonts: 'build/font/'
     },
     clean: 'build'
 };
@@ -47,7 +47,7 @@ gulp.task('server', function () {
     app.use(require('connect-livereload')({
         port: 35729
     }));
-    app.use(express.static(__dirname + '/app')); 
+    app.use(express.static(__dirname + '/app'));
     app.use('/*', function (req, res) {
         res.sendFile(__dirname + '/app/index.html');
     });
@@ -83,13 +83,13 @@ gulp.task('start', ['server', 'livereload', 'watch']);
 // ---------------------- task for build --------------------------
 
 gulp.task('html:build', function () {
-    gulp.src(path.src.html) 
-        .pipe(gulp.dest(path.build.html)); 
+    gulp.src(path.src.html)
+        .pipe(gulp.dest(path.build.html));
 });
 
 gulp.task('js:build', function () {
-    gulp.src(path.src.js) 
-        .pipe(plugins.uglify()) 
+    gulp.src(path.src.js)
+        .pipe(plugins.uglify())
         .pipe(gulp.dest(path.build.js));
 });
 
@@ -101,36 +101,36 @@ gulp.task('libs:build', function () {
 });
 
 gulp.task('style:build', function () {
-    gulp.src(path.src.style) 
-        .pipe(plugins.minifyCss({rebase: false, keepSpecialComments: 0}))
-        .pipe(plugins.autoprefixer({browsers: ['last 2 versions'], cascade: false})) 
+    gulp.src(path.src.style)
+        .pipe(plugins.minifyCss({ rebase: false, keepSpecialComments: 0 }))
+        .pipe(plugins.autoprefixer({ browsers: ['last 2 versions'], cascade: false }))
         // .pipe(plugins.csso())
         .pipe(gulp.dest(path.build.style));
 });
 
 gulp.task('image:build', function () {
-    gulp.src(path.src.img) //Выберем наши картинки
-        .pipe(plugins.imagemin({ //Сожмем их
+    gulp.src(path.src.img) // Выберем наши картинки
+        .pipe(plugins.imagemin({ // Сожмем их
             progressive: true,
-            svgoPlugins: [{removeViewBox: false}],
+            svgoPlugins: [{ removeViewBox: false }],
             use: [imageminPngquant()],
             interlaced: true
         }))
         .pipe(gulp.dest(path.build.img));
 });
 
-gulp.task('fonts:build', function() {
+gulp.task('fonts:build', function () {
     gulp.src(path.src.fonts)
         .pipe(gulp.dest(path.build.fonts));
 });
 
-gulp.task('partials:build', function() {
+gulp.task('partials:build', function () {
     gulp.src(path.src.partials)
         .pipe(gulp.dest(path.build.partials));
 });
 
 gulp.task('clean', function (cb) {
-    return gulp.src(path.clean, {read: false}).pipe(plugins.clean());
+    return gulp.src(path.clean, { read: false }).pipe(plugins.clean());
 });
 
 gulp.task('build', [
