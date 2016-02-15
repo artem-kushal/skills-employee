@@ -56,7 +56,8 @@ nav .nav-wrapper .button-collapse i
 
 
 .chip.ng-hide-remove,
-.fade-anim.ng-hide-remove
+.fade-anim.ng-hide-remove,
+.collection.ng-hide-remove
 {
     -webkit-animation-name: fadeIn;
             animation-name: fadeIn;
@@ -65,7 +66,8 @@ nav .nav-wrapper .button-collapse i
 }
 
 .chip.ng-hide-add,
-.fade-anim.ng-hide-add
+.fade-anim.ng-hide-add,
+.collection.ng-hide-add
 {
     -webkit-animation-name: fadeOut;
             animation-name: fadeOut;
@@ -623,7 +625,12 @@ img.center
 .employeedetail-content .search-proj .collection
 {
     margin-top: 0;
-    margin-left: 3rem;
+    position: absolute;
+    margin: 0 5%;
+    width: 90%;
+    z-index: 10;
+    max-height: 200px;
+    overflow-y: auto;
 }
 
 .employeedetail-content .proj-list

@@ -79,25 +79,25 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="input-field col s6 search-proj">
+		<div class="input-field col s8 l6 search-proj">
         	<i class="material-icons prefix">search</i>
-        	<input id="icon_prefix" type="text" class="validate" ng-model="searchStringProject">
-        	<label for="icon_prefix">Введите название проекта</label>
-        	<div class="collection" ng-hide="findedProject.length === 0">
-				<a href class="collection-item" ng-repeat="project in findedProject" ng-click="setFindProject(project)">{{project.name}}</a>
+        	<input id="icon_prefix" type="text" class="validate" ng-model="searchStringProject" ng-focus="focus=true;blur=false;" ng-blur="blur=true;focus=false;">
+        	<label for="icon_prefix" ng-class="{'active': searchStringProject !== undefined && searchStringProject !== ''}">Введите название проекта</label>
+        	<div class="collection" ng-hide="blur || findedProject.length === 0">
+				<a href class="collection-item" ng-repeat="project in findedProject | filter:{ name: searchStringProject }" ng-click="setFindProject(project)">{{project.name}}</a>
 			</div>
         </div>
-        <div class="input-field col s6">
-        	<button class="waves-effect waves-light btn btn-large  blue darken-1" ng-click="addProject()" type="button"><i class="material-icons left">add</i>Добавить</button>
+        <div class="input-field col s4 l6">
+        	<button class="waves-effect waves-light btn btn-large blue darken-1" ng-click="addProject()" type="button"><i class="material-icons">add</i></button>
         </div>
 	</div>
 	<div class="row">
-		<div class="col s6">
+		<div class="col s12 l6">
 			<span class="section">Проекты</span>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col s6 proj-list">
+		<div class="col s12 l6 proj-list">
 			<p ng-hide="employee.projects.length !== 0">Отсутствуют</p>
 			<div class="chip cyan white-text" ng-repeat="project in employee.projects" not-remove-chip>
                 {{project.name}}<i class="material-icons" ng-click="removeProject(project)">close</i>
@@ -106,12 +106,12 @@
 	</div>
 
 	<div class="row">
-		<div class="col s6">
+		<div class="col s12 l6">
 			<span class="section">Навыки</span>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col s6">
+		<div class="col s12 l6">
 			<p ng-hide="employee.technologies.length !== 0">Отсутствуют</p>
 			<div ng-repeat="skills in employee.technologies">
 				<a class="btn-flat waves-effect btn-tech active cyan-text">

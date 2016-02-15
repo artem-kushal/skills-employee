@@ -3,11 +3,14 @@
 var employeeDetail = angular.module('employeeDetail', []);
 
 employeeDetail.controller('EmployeeDetailCtrl', ['$scope', 'namesPagesService', 'employeeService',
-    '$log', '$location', '$routeParams', 'projectSearchService', '$timeout',
-    function ($scope, namesPagesService, employeeService, $log, $location, $routeParams, projectSearchService, $timeout) {
+    '$log', '$location', '$routeParams', 'projectSearchService', '$timeout', 'Project',
+    function ($scope, namesPagesService, employeeService, $log, $location, $routeParams, projectSearchService, $timeout, Project) {
 
         $scope.$parent.pageName = namesPagesService.employeeDetail;
         var addingProject;
+
+        $scope.focus = false;
+        $scope.blur = true;
 
         function getEmployee() {
             employeeService.get($routeParams.employeeId).then(function (data) {
@@ -19,13 +22,23 @@ employeeDetail.controller('EmployeeDetailCtrl', ['$scope', 'namesPagesService', 
         }
         getEmployee();
         $scope.findedProject = [];
-        $scope.$watch('searchStringProject', function (newVal, oldVal) {
-            if (newVal !== '' && newVal !== undefined) {
-                searchProject();
-            } else {
-                $scope.findedProject = [];
-            }
-        });
+        // $scope.$watch('searchStringProject', function (newVal, oldVal) {
+        //     if (newVal !== '' && newVal !== undefined) {
+        //         searchProject();
+        //     } else {
+        //         $scope.findedProject = [];
+        //     }
+        // });
+
+        function getProjects() {
+            Project.getAll(function (data) {
+                $log.debug(data);
+                $scope.findedProject = data;
+            }, function (error) {
+                $log.debug(error);
+            });
+        }
+        getProjects();
 
         function searchProject() {
             projectSearchService.find($scope.searchStringProject).then(function (data) {
@@ -38,7 +51,6 @@ employeeDetail.controller('EmployeeDetailCtrl', ['$scope', 'namesPagesService', 
 
         $scope.setFindProject = function (project) {
             $scope.searchStringProject = project.name;
-            $scope.findedProject = [];
             addingProject = project;
             delete addingProject.images;
         }
@@ -49,6 +61,7 @@ employeeDetail.controller('EmployeeDetailCtrl', ['$scope', 'namesPagesService', 
                     $log.debug(data);
                     $scope.employee = data.employee;
                     addingProject = undefined;
+                    $scope.searchStringProject = '';
                     Materialize.toast('Изменения успешно сохранены!', 3000);
                 }, function (error) {
                     $log.debug(error);
@@ -60,6 +73,7 @@ employeeDetail.controller('EmployeeDetailCtrl', ['$scope', 'namesPagesService', 
             employeeService.removeProject($scope.employee._id, project).then(function (data) {
                 $log.debug(data);
                 $scope.employee = data.employee;
+                $scope.searchStringProject = '';
                 Materialize.toast('Изменения успешно сохранены!', 3000);
             }, function (error) {
                 $log.debug(error);
