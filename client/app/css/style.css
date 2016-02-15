@@ -57,7 +57,8 @@ nav .nav-wrapper .button-collapse i
 
 .chip.ng-hide-remove,
 .fade-anim.ng-hide-remove,
-.collection.ng-hide-remove
+.collection.ng-hide-remove,
+.project-form-employee.ng-hide-remove
 {
     -webkit-animation-name: fadeIn;
             animation-name: fadeIn;
@@ -67,7 +68,8 @@ nav .nav-wrapper .button-collapse i
 
 .chip.ng-hide-add,
 .fade-anim.ng-hide-add,
-.collection.ng-hide-add
+.collection.ng-hide-add,
+.project-form-employee.ng-hide-add
 {
     -webkit-animation-name: fadeOut;
             animation-name: fadeOut;
@@ -624,13 +626,15 @@ img.center
 
 .employeedetail-content .search-proj .collection
 {
-    margin-top: 0;
     position: absolute;
-    margin: 0 5%;
-    width: 90%;
     z-index: 10;
-    max-height: 200px;
+
     overflow-y: auto;
+
+    width: 90%;
+    max-height: 200px;
+    margin: 0 5%;
+    margin-top: 0;
 }
 
 .employeedetail-content .proj-list
@@ -649,6 +653,18 @@ img.center
 
     margin-top: 5px;
     margin-right: 15px;
+}
+
+.employeedetail-content .employee-project
+{
+    position: relative;
+}
+
+.employeedetail-content .employee-project .btn
+{
+    position: absolute;
+    top: 15px;
+    right: 2rem;
 }
 
 /*------------------------------------------------*/

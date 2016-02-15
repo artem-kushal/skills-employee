@@ -12,7 +12,9 @@ var Employee = new Schema({
     dateEmployment: { type: String },
     projects: [{
         projId: { type: String },
-        name: { type: String }
+        name: { type: String },
+        startDate: { type: Date, default: Date.now },
+        endDate: { type: Date }
     }],
     technologies: [{
         tech: { type: Schema.Types.ObjectId, ref: 'Technology' },

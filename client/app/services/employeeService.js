@@ -35,9 +35,9 @@ employeeService.service('employeeService', ['$http', '$q', 'restApiUrl', functio
         return deferred.promise;
     }
 
-    this.addProject = function (id, addProject) {
+    this.addProject = function (id, addProject, projectDate) {
         var deferred = $q.defer();
-        $http.post(restApiUrl + 'employee/addproject/' + id, { addProject: addProject })
+        $http.post(restApiUrl + 'employee/addproject/' + id, { addProject: addProject, projectDate: projectDate })
         .then(function (response) {
             deferred.resolve(response.data);
         }, function (response) {

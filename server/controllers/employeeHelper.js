@@ -1,8 +1,15 @@
 var employeeHelper = {};
 
-employeeHelper.addProject = function (employee, addingProject) {
+employeeHelper.addProject = function (employee, addingProject, projectDate) {
     if (!checkProjectConsist(employee, addingProject._id)) {
-        employee.projects.push({ projId: addingProject._id, name: addingProject.name });
+        console.log(projectDate);
+        var endDate = (projectDate.endDate) ? getNewDate(projectDate.endDate) : undefined;
+        employee.projects.push({
+            projId: addingProject._id,
+            name: addingProject.name,
+            startDate: getNewDate(projectDate.startDate),
+            endDate: endDate
+        });
         addProjectTechInEmployee(employee, addingProject);
     }
     return employee;
@@ -63,6 +70,11 @@ function addSubTechInEmployee(emplyeeTech, id) {
     if (!isEqual) {
         emplyeeTech.subTech.push(id);
     }
+}
+
+function getNewDate(date) {
+    var datePart = date.split('/');
+    return new Date(datePart[1] + '/' + datePart[0] + '/' + datePart[2]);
 }
 
 module.exports = employeeHelper;

@@ -61,7 +61,7 @@ employeeCtrl.add = function (req, res, next) {
 
 employeeCtrl.addProject = function (req, res, next) {
     employeeService.getWithoutPopulate(req.params.id).then(function (employee) {
-        employee = employeeHelper.addProject(employee, req.body.addProject);
+        employee = employeeHelper.addProject(employee, req.body.addProject, req.body.projectDate);
         return employeeService.save(employee);
     }).then(function (employee) {
         return employeeService.get(req.params.id);

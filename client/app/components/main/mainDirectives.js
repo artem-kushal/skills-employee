@@ -36,6 +36,9 @@ mainDirective.directive('tooltippedInit', [function () {
         scope: true,
         link: function (scope, element) {
             $(element).tooltip({ delay: 50 });
+            scope.$on('$destroy', function () {
+                element.tooltip('remove');
+            });
         }
     };
 }]);

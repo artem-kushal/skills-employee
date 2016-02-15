@@ -1,16 +1,20 @@
 'use strict';
 
-var employeeDetail = angular.module('employeeDetail', []);
+var employeeDetail = angular.module('employeeDetail', ['newProject.directive']);
 
 employeeDetail.controller('EmployeeDetailCtrl', ['$scope', 'namesPagesService', 'employeeService',
-    '$log', '$location', '$routeParams', 'projectSearchService', '$timeout', 'Project',
-    function ($scope, namesPagesService, employeeService, $log, $location, $routeParams, projectSearchService, $timeout, Project) {
+    '$log', '$location', '$routeParams', 'projectSearchService', '$filter', 'Project',
+    function ($scope, namesPagesService, employeeService, $log, $location, $routeParams, projectSearchService, $filter, Project) {
 
         $scope.$parent.pageName = namesPagesService.employeeDetail;
         var addingProject;
 
         $scope.focus = false;
         $scope.blur = true;
+        $scope.projectDate = {
+            startDate: undefined,
+            endDate : undefined
+        };
 
         function getEmployee() {
             employeeService.get($routeParams.employeeId).then(function (data) {
@@ -55,18 +59,27 @@ employeeDetail.controller('EmployeeDetailCtrl', ['$scope', 'namesPagesService', 
             delete addingProject.images;
         }
 
+        $scope.isSubmit = false;
         $scope.addProject = function () {
-            if (addingProject !== undefined) {
-                employeeService.addProject($scope.employee._id, addingProject).then(function (data) {
+            if (addingProject !== undefined && $scope.projectDate.startDate !== undefined) {
+                employeeService.addProject($scope.employee._id, addingProject, $scope.projectDate).then(function (data) {
                     $log.debug(data);
                     $scope.employee = data.employee;
                     addingProject = undefined;
                     $scope.searchStringProject = '';
+                    $scope.isSubmit = false;
+                    $scope.projectDate.startDate = undefined;
+                    $scope.projectDate.endDate = undefined;
+                    $scope.$broadcast('initDate', $scope.projectDate.startDate);
+                    $scope.$broadcast('initDate', $scope.projectDate.endDate);
                     Materialize.toast('Изменения успешно сохранены!', 3000);
                 }, function (error) {
                     $log.debug(error);
                 });
+            } else {
+                $scope.isSubmit = true;
             }
+            console.log($scope.projectDate.endDate);
         }
 
         $scope.removeProject = function (project) {
@@ -78,6 +91,19 @@ employeeDetail.controller('EmployeeDetailCtrl', ['$scope', 'namesPagesService', 
             }, function (error) {
                 $log.debug(error);
             });
+        }
+
+        $scope.getProjectDate = function (project) {
+            if (project.endDate === undefined) {
+                return $filter('date')(project.startDate, 'dd/MM/yyyy');
+            } else {
+                return $filter('date')(project.startDate, 'dd/MM/yyyy') + ' - ' + $filter('date')(project.endDate, 'dd/MM/yyyy');
+            }
+        }
+
+        $scope.isShowProjectForm = false;
+        $scope.showAddProjectForm = function () {
+            $scope.isShowProjectForm = ($scope.isShowProjectForm) ? false : true;
         }
 
     }]);
