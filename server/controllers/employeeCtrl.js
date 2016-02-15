@@ -1,6 +1,8 @@
 var log = require('./../utils/log')(module);
 var EmployeeModel = require('./../models/employee');
 var employeeService = require('./../data_layer/employeeService');
+var projectService = require('../data_layer/projectService');
+var employeeHelper = require('./employeeHelper')
 var employeeCtrl = {};
 
 employeeCtrl.getAll = function (req, res, next) {
@@ -58,12 +60,41 @@ employeeCtrl.add = function (req, res, next) {
 }
 
 employeeCtrl.addProject = function (req, res, next) {
-    employeeService.get(req.body.employee._id).then(function (employee) {
-        employee.projects = req.body.employee.projects;
-        employee.technologies = req.body.employee.technologies;
+    employeeService.getWithoutPopulate(req.params.id).then(function (employee) {
+        employee = employeeHelper.addProject(employee, req.body.addProject);
         return employeeService.save(employee);
     }).then(function (employee) {
+        return employeeService.get(req.params.id);
+    }).then(function (employee) {
         log.info('project added to employee');
+        return res.send({ employee: employee });
+    }).catch(function (err) {
+        return next(err);
+    });
+}
+
+employeeCtrl.removeProject = function (req, res, next) {
+    var editEmployee;
+    employeeService.getWithoutPopulate(req.params.id).then(function (employee) {
+        var projectsId = [];
+        var removedIndex;
+        for (var i = 0; i < employee.projects.length; i++) { // удаляем проект у сотрудника
+            if (employee.projects[i]._id.equals(req.body.project._id)) {
+                removedIndex = i;
+            } else {
+                projectsId.push(employee.projects[i].projId);
+            }
+        }
+        employee.projects.splice(removedIndex, 1);
+        editEmployee = employee;
+        return projectService.getEmployeeProject(projectsId);
+    }).then(function (projectsEmployee) {
+        editEmployee = employeeHelper.removeProject(editEmployee, projectsEmployee);
+        return employeeService.save(editEmployee);
+    }).then(function (employee) {
+        return employeeService.get(req.params.id);
+    }).then(function (employee) {
+        log.info('project removed from employee');
         return res.send({ employee: employee });
     }).catch(function (err) {
         return next(err);

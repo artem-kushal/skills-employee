@@ -628,12 +628,12 @@ img.center
 
 .employeedetail-content .proj-list
 {
-    margin: 10px 0;
+    /*margin: 10px 0;*/
 }
 
 .employeedetail-content .proj-list .chip
 {
-    margin-right: 5px;
+    margin: 5px;
 }
 
 .edit-employee .btn

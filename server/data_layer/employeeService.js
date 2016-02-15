@@ -25,6 +25,18 @@ employeeService.get = function (id) {
     });
 }
 
+employeeService.getWithoutPopulate = function (id) { // нужно для добавления проекта
+    return new Promise(function (resolve, reject) {
+        EmployeeModel.findById(id).exec(function (err, employee) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(employee);
+            }
+        });
+    });
+}
+
 employeeService.save = function (employee) {
     return new Promise(function (resolve, reject) {
         employee.save(function (err) {

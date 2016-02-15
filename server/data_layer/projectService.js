@@ -26,6 +26,18 @@ projectService.get = function (id) {
     });
 }
 
+projectService.getEmployeeProject = function (projectsId) {
+    return new Promise(function (resolve, reject) {
+        ProjectModel.find({ _id : { $in: projectsId }}).populate('tech').exec(function (err, project) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(project);
+            }
+        });
+    });
+}
+
 projectService.find = function (searchString) {
     return new Promise(function (resolve, reject) {
         ProjectModel.find({ name: new RegExp('.*' + searchString + '.*') }).populate('tech').exec(function (err, projects) {

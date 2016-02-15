@@ -23,7 +23,6 @@ newEmployee.controller('NewEmployeeCtrl', ['$scope', 'namesPagesService', 'emplo
                 $log.debug(error);
             });
         }
-        getEmployee();
 
         $scope.isNewEmployeeForm = false;
         $scope.sendEmployee = function () {

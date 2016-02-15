@@ -19,7 +19,8 @@ module.exports = function (app) {
     app.post('/employee', employee.add);
     app.put('/employee/:id', employee.update);
     app.delete('/employee/:id', employee.remove);
-    app.post('/employee/addproject/', employee.addProject);
+    app.post('/employee/addproject/:id', employee.addProject);
+    app.post('/employee/removeproject/:id', employee.removeProject);
 
     app.post('/subtech', subtech.add);
     app.put('/subtech/:id', subtech.update);
