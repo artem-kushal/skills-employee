@@ -61,4 +61,16 @@ employeeService.remove = function (employee) {
     });
 }
 
+employeeService.getEmpoyeeByProjectDate = function (date) {
+    return new Promise(function (resolve, reject) {
+        EmployeeModel.find({}, 'firstname lastname patronymic projects').exec(function (err, employees) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(employees);
+            }
+        });
+    });
+}
+
 module.exports = employeeService;

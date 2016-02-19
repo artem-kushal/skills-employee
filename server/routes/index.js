@@ -7,6 +7,7 @@ var projects = require('../controllers/projectCtrl');
 var responsibility = require('../controllers/responsibilityCtrl');
 var role = require('../controllers/roleCtrl');
 var employee = require('../controllers/employeeCtrl');
+var docs = require('../controllers/documentCtrl');
 
 module.exports = function (app) {
     app.get('/technologies', technology.getAll);
@@ -43,4 +44,7 @@ module.exports = function (app) {
     app.post('/roles', role.add);
     app.delete('/roles/:id', role.remove);
     app.put('/roles/:id', role.update);
+
+    app.get('/bydate/pdf', docs.getByDatePdf);
+    app.get('/history/pdf', docs.getHistoryProjectPdf);
 };

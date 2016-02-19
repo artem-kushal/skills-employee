@@ -2,8 +2,8 @@
 
 var employeelist = angular.module('employeelist', []);
 
-employeelist.controller('EmployeeListCtrl', ['$scope', 'namesPagesService', 'employeeService', '$log', '$location',
-    function ($scope, namesPagesService, employeeService, $log, $location) {
+employeelist.controller('EmployeeListCtrl', ['$scope', 'namesPagesService', 'employeeService', '$log', '$location', 'docService',
+    function ($scope, namesPagesService, employeeService, $log, $location, docService) {
 
         $scope.$parent.pageName = namesPagesService.employeeList;
 
@@ -29,6 +29,15 @@ employeelist.controller('EmployeeListCtrl', ['$scope', 'namesPagesService', 'emp
         $scope.employeeDetail = function (id) {
             $location.path('/employee/' + id);
         }
+
+        // $scope.getDoc = function () {
+        //     docService.getPdf().then(function (data) {
+        //         $log.debug('docs', data);
+        //         $scope.docs = data;
+        //     }, function (error) {
+        //         $log.debug(error);
+        //     });
+        // }
 
 
     }]);

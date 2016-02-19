@@ -1,7 +1,7 @@
 'use strict';
 
 var services = angular.module('services', ['blobConverter', 'employee.service', 'project.service',
-    'responsibility.service', 'role.service', 'technology.service', 'upload.service']);
+    'responsibility.service', 'role.service', 'technology.service', 'upload.service', 'docs.service']);
 
 
 services.factory('namesPagesService', function () {
