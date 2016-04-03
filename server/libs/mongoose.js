@@ -3,7 +3,6 @@ var log = require('./../utils/log')(module);
 var config = require('./config');
 
 var appEnv = config.get('NODE_ENV') || 'development';
-
 mongoose.connect(config.get(appEnv + ':mongoose:uri'));
 
 

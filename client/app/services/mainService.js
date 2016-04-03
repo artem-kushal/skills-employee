@@ -21,6 +21,8 @@ services.factory('namesPagesService', function () {
     };
 });
 
-services.factory('restApiUrl', function () {
-    return 'http://localhost:1337/';
-});
+services.factory('restApiUrl', ['$location', function ($location) {
+    // 'http://localhost:1337/'
+    var domain = $location.absUrl().split('#')[0];
+    return domain;
+}]);

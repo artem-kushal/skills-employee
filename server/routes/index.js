@@ -1,5 +1,6 @@
 var log = require('./../utils/log')(module);
 var multer  = require('multer')
+var path = require('path');
 var upload = multer({ storage: multer.memoryStorage() })
 var technology = require('../controllers/technologyCtrl');
 var subtech = require('../controllers/subtechCtrl');
@@ -10,6 +11,11 @@ var employee = require('../controllers/employeeCtrl');
 var docs = require('../controllers/documentCtrl');
 
 module.exports = function (app) {
+
+    app.get('/', function(req, res){
+       res.sendFile(path.resolve(__dirname + '/../../client/app/index.html'));
+    });
+
     app.get('/technologies', technology.getAll);
     app.post('/technologies', technology.add);
     app.put('/technologies/:id', technology.update);
