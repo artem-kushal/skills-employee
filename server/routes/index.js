@@ -9,7 +9,6 @@ var responsibility = require('../controllers/responsibilityCtrl');
 var role = require('../controllers/roleCtrl');
 var employee = require('../controllers/employeeCtrl');
 var docs = require('../controllers/documentCtrl');
-var secDocs = require('../controllers/secDocumentCtrl');
 
 module.exports = function (app) {
 
@@ -52,8 +51,6 @@ module.exports = function (app) {
     app.delete('/roles/:id', role.remove);
     app.put('/roles/:id', role.update);
 
-    app.get('/bydate/pdf', docs.getByDatePdf);
-    app.get('/history/pdf', docs.getHistoryProjectPdf);
-    app.get('/report/bydate', secDocs.getEmploymentReport);
-    app.get('/report/history', secDocs.getHistoryProjectsReport);
+    app.get('/report/bydate', docs.getEmploymentReport);
+    app.get('/report/history', docs.getHistoryProjectsReport);
 };

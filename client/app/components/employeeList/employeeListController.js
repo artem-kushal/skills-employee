@@ -30,14 +30,4 @@ employeelist.controller('EmployeeListCtrl', ['$scope', 'namesPagesService', 'emp
             $location.path('/employee/' + id);
         }
 
-        // $scope.getDoc = function () {
-        //     docService.getPdf().then(function (data) {
-        //         $log.debug('docs', data);
-        //         $scope.docs = data;
-        //     }, function (error) {
-        //         $log.debug(error);
-        //     });
-        // }
-
-
     }]);

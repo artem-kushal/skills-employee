@@ -1,0 +1,58 @@
+<div class="row white z-depth-1 report" >
+    <div class="row">
+        <div class="col s12 head-btn">
+            <h5>Создание отчетов</h5>
+        </div>
+    </div>
+
+    <div class="row">
+        <span class="section">Создание отчета о занятости сотрудников по заданному промежутку дат.</span>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <div class="row">
+                <div class="input-field col s4" ng-class="{invalid: dateReport.startDate === undefined && isSubmit}">
+                    <input id="from" type="date" class="datepicker ss">
+                    <label for="from" ng-class='{active: dateReport.startDate !== undefined}'>От</label>
+                    <input type="text" ng-model="dateReport.startDate" class="customdate"  datepicker-init>
+                    <span ng-show="dateReport.startDate === undefined && isSubmit" class="invalid-message">Обязательное поле</span>
+                </div>
+                <div class="input-field col s4"  ng-class="{invalid: dateReport.endDate === undefined && isSubmit}">
+                    <input id="before" type="date" class="datepicker ss">
+                    <label for="before" ng-class='{active: dateReport.endDate !== undefined}'>До</label>
+                    <input type="text" ng-model="dateReport.endDate" class="customdate"  datepicker-init>
+                    <span ng-show="dateReport.endDate === undefined && isSubmit" class="invalid-message">Обязательное поле</span>
+                </div>
+                <div class="input-field col s4">
+                    <button class="waves-effect waves-light btn blue darken-2"
+                             ng-click="getDateReport()">Скачать отчет</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <span class="section">Создание отчета о занятости заданного сотрудника за время работы в компании.</span>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <div class="row">
+                <div class="input-field col s4" ng-class="{invalid: selectedEmployee === undefined && isSubmitHistoryReport}">
+                    <a class='dropdown-button btn grey' href='#' data-activates='employee' dropdown-init>
+                        {{selectedEmployee.fio || "Выберите сотрудника"}}<i class="material-icons left">keyboard_arrow_down</i>
+                    </a>
+                    <ul id='employee' class='dropdown-content'>
+                        <li ng-repeat="employee in employees"><a href ng-click="selectEmployee(employee)">{{employee.fio}}</a></li>
+                    </ul>
+                    <span ng-show="selectedEmployee === undefined && isSubmitHistoryReport" class="invalid-message position_none">Обязательное поле</span>
+                </div>
+
+                <div class="input-field col s4">
+                    <button class="waves-effect waves-light btn blue darken-2"
+                             ng-click="getHistoryReport()">Скачать отчет</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

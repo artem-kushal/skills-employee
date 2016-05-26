@@ -175,7 +175,8 @@ nav .nav-wrapper .button-collapse i
 .projdetail-content,
 .newemployee-content,
 .employee-content,
-.employeedetail-content
+.employeedetail-content,
+.report
 {
     padding: 20px;
 }
@@ -586,7 +587,8 @@ img.center
 /*-----------------.newemployee-content-------------------*/
 
 .newemployee-content .section,
-.employeedetail-content .section
+.employeedetail-content .section,
+.report .section
 {
     font-size: 1rem;
 
@@ -697,6 +699,10 @@ img.center
     color: #ff9800 ;
 }
 
+.invalid .invalid-message.position_none {
+    position: static;
+}
+
 .invalid input,
 .invalid .custom-input-field
 {
@@ -751,4 +757,14 @@ img.center
     {
         padding-bottom: 40%;
     }
+}
+
+/*-----------------report --------------------*/
+
+.report {
+    padding-bottom: 35px;
+}
+
+.report .row {
+    margin-bottom: 0;
 }

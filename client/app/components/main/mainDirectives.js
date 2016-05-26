@@ -42,3 +42,13 @@ mainDirective.directive('tooltippedInit', [function () {
         }
     };
 }]);
+
+mainDirective.directive('dropdownInit', [function () {
+    return {
+        restrict: 'EA',
+        scope: true,
+        link: function (scope, element) {
+            $(element).dropdown();
+        }
+    };
+}]);

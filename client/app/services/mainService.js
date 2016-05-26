@@ -18,6 +18,7 @@ services.factory('namesPagesService', function () {
         employeeList: 'Все сотрудники',
         employeeDetail: 'Детали анкеты',
         editEmployee: 'Изменение анкеты',
+        report: 'Отчеты'
     };
 });
 
