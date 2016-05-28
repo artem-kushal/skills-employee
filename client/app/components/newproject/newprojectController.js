@@ -14,8 +14,10 @@ newProject.controller('NewProjectCtrl', ['$scope', 'namesPagesService', 'Project
     $scope.$parent.pageName = namesPagesService.newProject;
 
     $scope.isEdit = false;
+    $scope.selectedTech = [];
+
     $scope.newProject = {
-        tech: [],
+        tech: $scope.selectedTech,
         roles: [],
         responsibilities: []
     };
@@ -31,6 +33,7 @@ newProject.controller('NewProjectCtrl', ['$scope', 'namesPagesService', 'Project
         Project.get({ id: $routeParams.projectId }, function (data) {
             $log.debug(data);
             $scope.newProject = data;
+            $scope.selectedTech = $scope.newProject.tech;
             $scope.projectImgs = data.images;
             angular.forEach($scope.projectImgs, function (image, i) {
                 image.$ngfDataUrl = 'data:' + image.contentType + ';base64,' + image.data;

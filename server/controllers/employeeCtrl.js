@@ -113,4 +113,13 @@ employeeCtrl.remove = function (req, res, next) {
 
 }
 
+employeeCtrl.getWithFilter = function (req, res, next) {
+    employeeService.getWithFilter(req.params.filtersTech).then(function (employee) {
+        console.log(employee);
+        return res.send(employee);
+    }).catch(function (err) {
+        return next(err);
+    });
+}
+
 module.exports = employeeCtrl;

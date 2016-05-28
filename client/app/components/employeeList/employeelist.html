@@ -3,12 +3,39 @@
         <h5>Список анкет сотрудников</h5>
         <a href="#/newemployee" class="waves-effect waves-light btn blue darken-2"><i class="material-icons left">add</i>Создать</a>
     </div>
-    <div class="col s12" ng-if="projects.length === 0">
-        <p>Анкеты сотрудников отсутствуют. Перейдите на страницу добавления анкеты сотрудника воспользовавшись кнопкой выше.</p>
-    </div>
+    <div class="row  margin-bottom_none">
+		<button type="button" class="waves-effect waves-light btn btn-icon cyan btn-small" ng-click="toggleFilterSection()">
+			<i class="material-icons left" ng-if="isFilterSectionShow">keyboard_arrow_up</i>
+			<i class="material-icons left" ng-if="!isFilterSectionShow">keyboard_arrow_down</i>Фильтрация
+		</button>
+        <span>Сортировка:</span>
+        <button type="button" class="waves-effect waves-light btn btn-icon cyan btn-small tooltipped"
+                ng-click="toggleSorting()"
+                data-position="bottom"
+                data-delay="50"
+                data-tooltip="{{isDecreaseEmployee ? 'По убыванию' : 'По возрастанию'}}"
+                tooltipped-init>
+            <i class="material-icons left" ng-if="!isDecreaseEmployee">trending_up</i>
+            <i class="material-icons left" ng-if="isDecreaseEmployee">trending_down</i>Кол-во компетенций
+        </button>
+		<div class="col s12 section fade-anim" ng-show="isFilterSectionShow">
+			<div class="row">
+				<div class="col m10">
+					<span>Выберите технологии для фильтрации</span>
+					<button type="button" class="waves-effect waves-light btn btn-icon cyan" ng-click="showFilteringEmployee()">
+						Применить
+					</button>
+                    <button type="button" class="waves-effect waves-light btn btn-icon cyan" ng-click="cancelFilteringEmployee()">
+                        Отмена
+                    </button>
+				</div>
+			</div>
+			<div class="row report-tech" ng-controller="TechListCtrl" ng-include="'../components/newproject/techList/techList.html'"></div>
+		</div>
+	</div>
     <div class="row">
 	    <div class="col s12" ng-if="employees.length === 0">
-	        <p>Анкеты сотрудников отсутствуют. Воспользуйтесь формой выше для добавления новой анкеты.</p>
+	        <p>Анкеты сотрудников отсутствуют. Перейдите на страницу добавления анкеты сотрудника воспользовавшись кнопкой выше.</p>
 	    </div>
     	<div class="col s12" ng-if="employees.length !== 0">
     		<table class="bordered highlight">

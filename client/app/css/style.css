@@ -585,7 +585,7 @@ img.center
 }
 
 /*-----------------.newemployee-content-------------------*/
-
+.employee-content .section,
 .newemployee-content .section,
 .employeedetail-content .section,
 .report .section
@@ -766,5 +766,30 @@ img.center
 }
 
 .report .row {
+    margin-bottom: 0;
+}
+
+.margin-bottom_none {
+    margin-bottom: 0;
+}
+
+.employee-content .report-tech {
+    margin: 0;
+}
+
+.employee-content .tech_list.col {
+    border: none;
+    background: #eee !important;
+}
+
+.employee-content .tech_list .tech-panel {
+    margin-bottom: 5px;
+}
+
+.employee-content .tech_list .btn-tech {
+    margin-bottom: 5px;
+}
+
+.employee-content .tech_list .sub-tech-row {
     margin-bottom: 0;
 }

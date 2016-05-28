@@ -46,22 +46,52 @@ techList.controller('TechListCtrl', ['$scope', 'Technologies', '$log',
                 $log.debug('getTechById', addingItem);
                 addingItem.subTech = [];
                 addingItem.techId = addingItem._id;
-                $scope.newProject.tech.push(addingItem);
+                $scope.selectedTech.push(addingItem);
             }
-        }
+        };
 
         $scope.addSubTechInProject = function (techId, subtechId, index, parentIndex) {
             $log.debug(techId, subtechId);
             $scope.addTechInProject(techId);
+            var tech = getProjectTechById(techId);
             if (!isSubTechContains(techId, subtechId)) {
                 var addingSubItem = angular.copy($scope.technologies[parentIndex].subTech[index]);
                 addingSubItem.subTechId = $scope.technologies[parentIndex].subTech[index]._id;
-                var tech = getProjectTechById(techId);
                 tech.subTech.push(addingSubItem);
+            } else {
+                if ($scope.isFilterTechlist && isSubTechContains(techId, subtechId)) { // its for filter list tech on employee page
+                    var selectedSubtechIndex = tech.subTech.findIndex(function (subtech) {
+                        return subtech._id === subtechId;
+                    });
+                    tech.subTech.splice(selectedSubtechIndex, 1);
+                    if (tech.subTech.length === 0) {
+                        var selectedTechIndex = $scope.selectedTech.findIndex(function (tech) {
+                            return tech._id === techId;
+                        });
+                        $scope.selectedTech.splice(selectedTechIndex, 1);
+                    }
+                }
             }
-        }
+
+        };
 
         $scope.isSelectedSubTech = function (techId, subtechId) {
+            if ($scope.isFilterTechlist) {
+                return false;
+            } else {
+                return executeIsSelectedSubtech(techId, subtechId);
+            }
+        };
+
+        $scope.isSelectedFilterSubTech = function (techId, subtechId) {
+            if ($scope.isFilterTechlist) {
+                return executeIsSelectedSubtech(techId, subtechId);
+            } else {
+                return false;
+            }
+        };
+
+        function executeIsSelectedSubtech (techId, subtechId) {
             var findTech = getProjectTechById(techId);
             if (findTech) {
 
@@ -82,9 +112,9 @@ techList.controller('TechListCtrl', ['$scope', 'Technologies', '$log',
         }
 
         function getProjectTechById(techId) {
-            for (var i = 0; i < $scope.newProject.tech.length; i++) {
-                if ($scope.newProject.tech[i].techId === techId) {
-                    return $scope.newProject.tech[i];
+            for (var i = 0; i < $scope.selectedTech.length; i++) {
+                if ($scope.selectedTech[i].techId === techId) {
+                    return $scope.selectedTech[i];
                 }
             }
             return undefined;
@@ -100,8 +130,8 @@ techList.controller('TechListCtrl', ['$scope', 'Technologies', '$log',
         }
 
         function isTechContains(id) {
-            for (var i = 0; i < $scope.newProject.tech.length; i++) {
-                if ($scope.newProject.tech[i].techId === id) {
+            for (var i = 0; i < $scope.selectedTech.length; i++) {
+                if ($scope.selectedTech[i].techId === id) {
                     return i;
                 }
             }
@@ -110,12 +140,24 @@ techList.controller('TechListCtrl', ['$scope', 'Technologies', '$log',
 
         function isSubTechContains(techId, subtechId) {
             var index = isTechContains(techId);
-            for (var i = 0; i < $scope.newProject.tech[index].subTech.length; i++) {
-                if ($scope.newProject.tech[index].subTech[i].subTechId === subtechId) {
+            for (var i = 0; i < $scope.selectedTech[index].subTech.length; i++) {
+                if ($scope.selectedTech[index].subTech[i].subTechId === subtechId) {
                     return true;
                 }
             }
             return false;
         }
+
+        $scope.isAllSubtechSelected = function (techIndex) {
+            var techId = $scope.technologies[techIndex]._id;
+            if ($scope.isFilterTechlist && isTechContains(techId) !== undefined) {
+                var selectedTech = $scope.selectedTech.find(function (selected) {
+                    return selected.techId === techId;
+                });
+                return $scope.technologies[techIndex].subTech.length === selectedTech.subTech.length;
+            } else {
+                return false;
+            }
+        };
 
     }]);
