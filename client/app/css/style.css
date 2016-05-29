@@ -699,6 +699,11 @@ img.center
     color: #ff9800 ;
 }
 
+.custom-invalid-message {
+    font-size: 12px;
+    color: #ff9800 ;
+}
+
 .invalid .invalid-message.position_none {
     position: static;
 }
@@ -792,4 +797,13 @@ img.center
 
 .employee-content .tech_list .sub-tech-row {
     margin-bottom: 0;
+}
+
+.row-tech-col {
+    margin-top: 10px;
+}
+
+.collection.role-list .role-name{
+    width: 80%;
+    display: inline-block;
 }

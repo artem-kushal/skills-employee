@@ -2,10 +2,14 @@
 
 var newEmployee = angular.module('newEmployee', []);
 
-newEmployee.controller('NewEmployeeCtrl', ['$scope', 'namesPagesService', 'employeeService', '$log', '$location', '$routeParams',
-    function ($scope, namesPagesService, employeeService, $log, $location, $routeParams) {
+newEmployee.controller('NewEmployeeCtrl', ['$scope', 'namesPagesService', 'employeeService', '$log', '$location', '$routeParams', 'roleService',
+    function ($scope, namesPagesService, employeeService, $log, $location, $routeParams, roleService) {
 
         $scope.$parent.pageName = namesPagesService.newEmployee;
+
+        $scope.newemployee = {
+            role: ''
+        };
 
         $scope.isEdit = false;
         if ($routeParams.employeeId) {
@@ -26,7 +30,7 @@ newEmployee.controller('NewEmployeeCtrl', ['$scope', 'namesPagesService', 'emplo
 
         $scope.isNewEmployeeForm = false;
         $scope.sendEmployee = function () {
-            if ($scope.newEmployeeForm.$valid) {
+            if ($scope.newEmployeeForm.$valid && $scope.newemployee.role !== '') {
                 $log.debug($scope.newemployee);
                 if ($scope.isEdit) {
                     editEmployee();
@@ -59,5 +63,25 @@ newEmployee.controller('NewEmployeeCtrl', ['$scope', 'namesPagesService', 'emplo
             });
         }
 
+        function getRoles() {
+            $scope.roles = [];
+            roleService.getAll().then(function (data) {
+                $scope.roles = data;
+            }, function (error) {
+                $log.debug(error);
+            });
+        }
+        getRoles();
+
+        $scope.addRole = function (id) {
+            $scope.newemployee.role = id;
+        };
+
+        $scope.getRoleName = function (id) {
+            var role = $scope.roles.find(function (role) {
+                return role._id === id;
+            });
+            return (role) ? role.name : 'Выберите роль';
+        }
 
     }]);

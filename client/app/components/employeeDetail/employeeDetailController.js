@@ -3,8 +3,8 @@
 var employeeDetail = angular.module('employeeDetail', ['newProject.directive']);
 
 employeeDetail.controller('EmployeeDetailCtrl', ['$scope', 'namesPagesService', 'employeeService',
-    '$log', '$location', '$routeParams', 'projectSearchService', '$filter', 'Project',
-    function ($scope, namesPagesService, employeeService, $log, $location, $routeParams, projectSearchService, $filter, Project) {
+    '$log', '$location', '$routeParams', 'projectSearchService', '$filter', 'Project', 'roleService',
+    function ($scope, namesPagesService, employeeService, $log, $location, $routeParams, projectSearchService, $filter, Project, roleService) {
 
         $scope.$parent.pageName = namesPagesService.employeeDetail;
         var addingProject;
@@ -19,6 +19,7 @@ employeeDetail.controller('EmployeeDetailCtrl', ['$scope', 'namesPagesService', 
         function getEmployee() {
             employeeService.get($routeParams.employeeId).then(function (data) {
                 $scope.employee = data;
+                getRoleName($scope.employee.role);
                 $log.debug($scope.employee);
             }, function (error) {
                 $log.debug(error);
@@ -104,6 +105,17 @@ employeeDetail.controller('EmployeeDetailCtrl', ['$scope', 'namesPagesService', 
         $scope.isShowProjectForm = false;
         $scope.showAddProjectForm = function () {
             $scope.isShowProjectForm = ($scope.isShowProjectForm) ? false : true;
+        }
+
+         function getRoleName(id) {
+             if (id !== undefined) {
+                 roleService.get(id).then(function (data) {
+                     $scope.employee.role = data.name;
+                 }, function (error) {
+                     $log.debug(error);
+                 });
+             }
+
         }
 
     }]);

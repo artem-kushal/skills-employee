@@ -73,10 +73,4 @@ employeeService.getEmpoyeeByProjectDate = function (date) {
     });
 }
 
-employeeService.getWithFilter = function (filtersTech) {
-    //filtersTech
-    return EmployeeModel.find({"technologies":  {$eq: ["57016beac8fc8b679f1a24f2", "57016c01c8fc8b679f1a24f5"]}  })
-            .populate('technologies.tech').populate('technologies.subTech').exec();
-}
-
 module.exports = employeeService;

@@ -31,6 +31,7 @@ employeeCtrl.update = function (req, res, next) {
         employee.group = req.body.newEmployee.group;
         employee.room = req.body.newEmployee.room;
         employee.dateEmployment = req.body.newEmployee.dateEmployment;
+        employee.role = req.body.newEmployee.role;
         return employeeService.save(employee);
     }).then(function (employee) {
         log.info('employee updated');
@@ -49,6 +50,7 @@ employeeCtrl.add = function (req, res, next) {
         department : req.body.newEmployee.department,
         group : req.body.newEmployee.group,
         room : req.body.newEmployee.room,
+        role : req.body.newEmployee.role,
         dateEmployment : req.body.newEmployee.dateEmployment
     });
     employeeService.save(employee).then(function (employee) {
@@ -111,15 +113,6 @@ employeeCtrl.remove = function (req, res, next) {
         return next(err);
     });
 
-}
-
-employeeCtrl.getWithFilter = function (req, res, next) {
-    employeeService.getWithFilter(req.params.filtersTech).then(function (employee) {
-        console.log(employee);
-        return res.send(employee);
-    }).catch(function (err) {
-        return next(err);
-    });
 }
 
 module.exports = employeeCtrl;

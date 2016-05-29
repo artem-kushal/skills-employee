@@ -3,6 +3,16 @@ var RoleModel = require('./../models/role').RoleModel;
 var roleService = require('./../data_layer/roleService');
 var roleCtrl = {};
 
+roleCtrl.get = function (req, res, next) {
+    console.log(req.params.id);
+    return roleService.get(req.params.id).then(function (role) {
+        console.log(role);
+        return res.send(role);
+    }, function (err) {
+        return next(err);
+    });
+}
+
 roleCtrl.getAll = function (req, res, next) {
     return roleService.getAll().then(function (roles) {
         return res.send(roles);
@@ -14,6 +24,7 @@ roleCtrl.getAll = function (req, res, next) {
 roleCtrl.update = function (req, res, next) {
     roleService.get(req.params.id).then(function (role) {
         role.name = req.body.name;
+        role.technologies = req.body.technologies;
         return roleService.save(role);
     }).then(function (role) {
         log.info('role updated');
@@ -25,8 +36,10 @@ roleCtrl.update = function (req, res, next) {
 
 roleCtrl.add = function (req, res, next) {
     var role = new RoleModel({
-        name: req.body.name
+        name: req.body.name,
+        technologies: req.body.technologies
     });
+    console.log(role);
     roleService.save(role).then(function (role) {
         log.info('role created');
         return res.send(role);

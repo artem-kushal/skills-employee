@@ -34,7 +34,7 @@
 		</div>
 	</div>
 
-	<div class="row">
+	<div class="row" ng-show="employee.birthday">
 		<div class="col s12 m5 l3">
 			<span class="section">Дата рождения</span>
 		</div>
@@ -45,6 +45,15 @@
 
 	<div class="row">
 		<div class="col s12 m5 l3">
+			<span class="section">Роль</span>
+		</div>
+		<div class="col s12  m7 l9">
+			<p ng-bind="employee.role"></p>
+		</div>
+	</div>
+
+	<div class="row" ng-show="employee.department">
+		<div class="col s12 m5 l3">
 			<span class="section">Департамент</span>
 		</div>
 		<div class="col s12  m7 l9">
@@ -52,7 +61,7 @@
 		</div>
 	</div>
 
-	<div class="row">
+	<div class="row" ng-show="employee.group">
 		<div class="col s12 m5 l3">
 			<span class="section">Группа</span>
 		</div>
@@ -70,7 +79,7 @@
 		</div>
 	</div>
 
-	<div class="row">
+	<div class="row" ng-show="employee.dateEmployment">
 		<div class="col s12 m5 l3">
 			<span class="section">Дата трудоустройства</span>
 		</div>

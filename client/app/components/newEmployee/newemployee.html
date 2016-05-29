@@ -50,6 +50,18 @@
 					</div>
 
 					<div class="row">
+						<div class="input-field col s12" ng-class="{invalid: (newemployee.role == undefined || newemployee.role == '') && isNewEmployeeForm}">
+							<a class='dropdown-button btn grey' href='#' data-activates='roles' dropdown-init>
+								{{getRoleName(newemployee.role)}}<i class="material-icons left">keyboard_arrow_down</i>
+							</a>
+							<ul id='roles' class='dropdown-content'>
+								<li ng-repeat="role in roles"><a href ng-click="addRole(role._id)">{{role.name}}</a></li>
+							</ul>
+							<span ng-show="(newemployee.role == undefined || newemployee.role == '') && isNewEmployeeForm" class="invalid-message position_none">Обязательное поле</span>
+						</div>
+					</div>
+
+					<div class="row">
 				    	<div class="input-field col s12 m10 l12" ng-class="{invalid: (newemployee.department == undefined || newemployee.department == '') && isNewEmployeeForm}">
 				    		<input id="department" type="text" class="validate" required ng-model="newemployee.department">
 				          	<label for="department" ng-class='{active: newemployee.department !== undefined}'>Департамент</label>

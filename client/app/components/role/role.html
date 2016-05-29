@@ -1,13 +1,26 @@
 <div class="row white z-depth-1 tech-top">
     <form name="roleForm" novalidate ng-submit="addRole()">
-        <div class="input-field col s12 m6" ng-class="{invalid: (newRole == undefined || newRole == '') && isFormSubmit}">
-            <input id="role_name" name="role_name" type="text" class="validate" required ng-model="newRole">
+        <div class="input-field col s12 m6" ng-class="{invalid: (newRole.name == undefined || newRole.name == '') && isFormSubmit}">
+            <input id="role_name" name="role_name" type="text" class="validate" required ng-model="newRole.name">
             <label for="role_name">Имя новой роли</label>
-            <span ng-show="(newRole == undefined || newRole == '') && isFormSubmit" class="invalid-message">Обязательное поле</span>
+            <span ng-show="(newRole.name == undefined || newRole.name == '') && isFormSubmit" class="invalid-message">Обязательное поле</span>
         </div>
         <div class="input-field col s12 m6">
             <button class="waves-effect waves-light btn  blue darken-1" type="submit"><i class="material-icons left">add</i>Добавить</button>
         </div>
+        <div class="col s12 row-tech-col">
+            <span class="grey-text">Технологии</span>
+            <span class="custom-invalid-message position_none" ng-show="newRole.technologies.length === 0 && isFormSubmit">Обязательное поле</span>
+        </div>
+        <div class="col s12 chips">
+            <div class="chip" not-remove-chip
+                 ng-repeat="tech in technologies"
+                 ng-click="toggleTechInRole(tech._id)"
+                 ng-class="{'orange accent-2': isSelectedTech(tech._id)}">
+                {{tech.name}}
+            </div>
+        </div>
+
     </form>
 </div>
 
@@ -17,11 +30,15 @@
     </div>
     
     <div class="col s8" ng-show="roles.length !== 0">
-        <ul class="collection">
+        <ul class="collection role-list">
             <li class="collection-item" ng-repeat="role in roles">
-                {{role.name}}
-                <a href ng-click="removeRole(role._id)" class="secondary-content"><i class="material-icons cyan-text">close</i></a>
-                <a href="#editRole" ng-click="editRole(role)" class="secondary-content" modal-init><i class="material-icons cyan-text">edit</i></a>
+                <span class="role-name">{{role.name}}
+                    <span class="grey-text">{{getTechRow(role.technologies)}}</span>
+                </span>
+                <span class="secondary-content">
+                    <a href="#editRole" ng-click="editRole(role)" modal-init><i class="material-icons cyan-text">edit</i></a>
+                    <a href ng-click="removeRole(role._id)" ><i class="material-icons cyan-text">close</i></a>
+                </span>
             </li>
         </ul>
     </div>    
@@ -36,6 +53,18 @@
                 <input id="edit_name" name="edit_name" type="text" class="validate" required ng-model="editingRole.name" tabindex="1">
                 <label for="edit_name" class="active" ng-class="{active: editingRole.name !== '' && editingRole.name !== undefined}" >Измените имя обязанности</label>
                 <span ng-show="editingRole.name == undefined || editingRole.name == ''" class="invalid-message">Обязательное поле</span>
+            </div>
+            <div class="col s12">
+                <span class="grey-text">Измените технологии</span>
+                <span class="custom-invalid-message position_none" ng-show="editingRole.technologies.length === 0">Обязательное поле</span>
+            </div>
+            <div class="col s12 chips">
+                <div class="chip" not-remove-chip
+                     ng-repeat="tech in technologies"
+                     ng-click="toggleTechInRole(tech._id, true)"
+                     ng-class="{'orange accent-2': isSelectedTech(tech._id, true)}">
+                    {{tech.name}}
+                </div>
             </div>
         </div>
     </div>

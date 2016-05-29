@@ -46,6 +46,7 @@ module.exports = function (app) {
     app.delete('/responsibilities/:id', responsibility.remove);
     app.put('/responsibilities/:id', responsibility.update);
 
+    app.get('/roles/:id', role.get);
     app.get('/roles', role.getAll);
     app.post('/roles', role.add);
     app.delete('/roles/:id', role.remove);

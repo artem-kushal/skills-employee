@@ -6,6 +6,7 @@ var Employee = new Schema({
     lastname: { type: String, required: true },
     patronymic: { type: String, required: true },
     birthday: { type: String },
+    role: { type: Schema.Types.ObjectId, required: true },
     department: { type: String, required: true },
     group: { type: String },
     room: { type: String, required: true },
