@@ -6,7 +6,6 @@ employeeHelper.addProject = function (employee, addingProject, projectDate) {
         roleService.get(employee.role).then(function (role) {
 
             if (!checkProjectConsist(employee, addingProject._id)) {
-                console.log(projectDate);
                 var endDate = (projectDate.endDate) ? getNewDate(projectDate.endDate) : undefined;
                 employee.projects.push({
                     projId: addingProject._id,
