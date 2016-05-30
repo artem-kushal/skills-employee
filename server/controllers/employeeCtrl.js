@@ -63,7 +63,8 @@ employeeCtrl.add = function (req, res, next) {
 
 employeeCtrl.addProject = function (req, res, next) {
     employeeService.getWithoutPopulate(req.params.id).then(function (employee) {
-        employee = employeeHelper.addProject(employee, req.body.addProject, req.body.projectDate);
+        return employeeHelper.addProject(employee, req.body.addProject, req.body.projectDate);
+    }).then(function (employee) {
         return employeeService.save(employee);
     }).then(function (employee) {
         return employeeService.get(req.params.id);
@@ -91,7 +92,8 @@ employeeCtrl.removeProject = function (req, res, next) {
         editEmployee = employee;
         return projectService.getEmployeeProject(projectsId);
     }).then(function (projectsEmployee) {
-        editEmployee = employeeHelper.removeProject(editEmployee, projectsEmployee);
+        return employeeHelper.removeProject(editEmployee, projectsEmployee);
+    }).then(function (employee) {
         return employeeService.save(editEmployee);
     }).then(function (employee) {
         return employeeService.get(req.params.id);

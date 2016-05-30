@@ -66,6 +66,7 @@ employeeDetail.controller('EmployeeDetailCtrl', ['$scope', 'namesPagesService', 
                 employeeService.addProject($scope.employee._id, addingProject, $scope.projectDate).then(function (data) {
                     $log.debug(data);
                     $scope.employee = data.employee;
+                    getRoleName($scope.employee.role);
                     addingProject = undefined;
                     $scope.searchStringProject = '';
                     $scope.isSubmit = false;

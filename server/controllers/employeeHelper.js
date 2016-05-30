@@ -1,27 +1,43 @@
+var roleService = require('../data_layer/roleService');
 var employeeHelper = {};
 
 employeeHelper.addProject = function (employee, addingProject, projectDate) {
-    if (!checkProjectConsist(employee, addingProject._id)) {
-        console.log(projectDate);
-        var endDate = (projectDate.endDate) ? getNewDate(projectDate.endDate) : undefined;
-        employee.projects.push({
-            projId: addingProject._id,
-            name: addingProject.name,
-            startDate: getNewDate(projectDate.startDate),
-            endDate: endDate
+    return new Promise(function (resolve, reject) {
+        roleService.get(employee.role).then(function (role) {
+
+            if (!checkProjectConsist(employee, addingProject._id)) {
+                console.log(projectDate);
+                var endDate = (projectDate.endDate) ? getNewDate(projectDate.endDate) : undefined;
+                employee.projects.push({
+                    projId: addingProject._id,
+                    name: addingProject.name,
+                    startDate: getNewDate(projectDate.startDate),
+                    endDate: endDate
+                });
+                addProjectTechInEmployee(employee, addingProject, role.technologies);
+            }
+
+            resolve(employee);
+        }).catch(function (err) {
+            reject(err);
         });
-        addProjectTechInEmployee(employee, addingProject);
-    }
-    return employee;
+    });
 }
 
 employeeHelper.removeProject = function (employee, projectsEmployee, removeProject) {
-    employee.technologies = [];
-    console.log(projectsEmployee.length);
-    for (var i = 0; i < projectsEmployee.length; i++) {
-        addProjectTechInEmployee(employee, projectsEmployee[i]);
-    }
-    return employee;
+    return new Promise(function (resolve, reject) {
+        roleService.get(employee.role).then(function (role) {
+
+            employee.technologies = [];
+            for (var i = 0; i < projectsEmployee.length; i++) {
+                addProjectTechInEmployee(employee, projectsEmployee[i], role.technologies);
+            }
+
+            resolve(employee);
+        }).catch(function (err) {
+            reject(err);
+        });
+    });
 }
 
 function checkProjectConsist(employee, id) {
@@ -33,18 +49,20 @@ function checkProjectConsist(employee, id) {
     return false;
 }
 
-function addProjectTechInEmployee(employee, addingProject) {
+function addProjectTechInEmployee(employee, addingProject, roleTech) {
     for (var i = 0; i < addingProject.tech.length; i++) {
-        var employeeTech = getTechFromEmployee(employee, addingProject.tech[i].techId);
-        if (employeeTech) {
-            for (var j = 0; j < addingProject.tech[i].subTech.length; j++) {
-                addSubTechInEmployee(employeeTech, addingProject.tech[i].subTech[j].subTechId);
-            }
-        } else { // если технологии нет то добавляем ее и подтехнологии сотруднику
-            employee.technologies.push({ tech: addingProject.tech[i].techId, subTech: [] });
-            var lastIndex = employee.technologies.length - 1;
-            for (var j = 0; j < addingProject.tech[i].subTech.length; j++) {
-                employee.technologies[lastIndex].subTech.push(addingProject.tech[i].subTech[j].subTechId);
+        if (roleTech.indexOf(addingProject.tech[i].techId) !== -1) {
+            var employeeTech = getTechFromEmployee(employee, addingProject.tech[i].techId);
+            if (employeeTech) {
+                for (var j = 0; j < addingProject.tech[i].subTech.length; j++) {
+                    addSubTechInEmployee(employeeTech, addingProject.tech[i].subTech[j].subTechId);
+                }
+            } else { // если технологии нет то добавляем ее и подтехнологии сотруднику
+                employee.technologies.push({ tech: addingProject.tech[i].techId, subTech: [] });
+                var lastIndex = employee.technologies.length - 1;
+                for (var j = 0; j < addingProject.tech[i].subTech.length; j++) {
+                    employee.technologies[lastIndex].subTech.push(addingProject.tech[i].subTech[j].subTechId);
+                }
             }
         }
     }
