@@ -8,7 +8,7 @@
   	"production": {
     	"port" : "1337",
     	"mongoose": {
-	        "uri": "mongodb://localhost:27017/data"
+	        "uri": "mongodb://localhost:Gmx8wTZf61w@ds015690.mlab.com:15690/skills"
 	    }
   	}
     
