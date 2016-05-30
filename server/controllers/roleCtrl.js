@@ -4,9 +4,7 @@ var roleService = require('./../data_layer/roleService');
 var roleCtrl = {};
 
 roleCtrl.get = function (req, res, next) {
-    console.log(req.params.id);
     return roleService.get(req.params.id).then(function (role) {
-        console.log(role);
         return res.send(role);
     }, function (err) {
         return next(err);
