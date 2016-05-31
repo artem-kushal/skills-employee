@@ -20,5 +20,22 @@
     "nconf": "^0.8.2",
     "winston": "^2.1.1"
   },
-  "main": "server/main.js"
+  "main": "server/main.js",
+  "devDependencies": {
+    "connect-livereload": "^0.5.3",
+    "csscomb": "^3.1.8",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-clean": "^0.3.1",
+    "gulp-imagemin": "^2.4.0",
+    "gulp-load-plugins": "^1.1.0",
+    "gulp-minify-css": "^1.2.3",
+    "gulp-useref": "^3.0.5",
+    "gulp-watch": "^4.3.5",
+    "http-server": "^0.6.1",
+    "imagemin-pngquant": "^4.2.0",
+    "jscs": "^2.8.0",
+    "jshint": "^2.8.0",
+    "tiny-lr": "^0.2.1"
+  }
 }
