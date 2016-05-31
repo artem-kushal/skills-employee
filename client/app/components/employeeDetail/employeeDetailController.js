@@ -2,20 +2,22 @@
 
 var employeeDetail = angular.module('employeeDetail', ['newProject.directive']);
 
+// модуль для работы с данными о сотруднике
 employeeDetail.controller('EmployeeDetailCtrl', ['$scope', 'namesPagesService', 'employeeService',
     '$log', '$location', '$routeParams', 'projectSearchService', '$filter', 'Project', 'roleService',
     function ($scope, namesPagesService, employeeService, $log, $location, $routeParams, projectSearchService, $filter, Project, roleService) {
 
         $scope.$parent.pageName = namesPagesService.employeeDetail;
-        var addingProject;
+        var addingProject; // объект для хранения информации о добавляемом проекте
 
-        $scope.focus = false;
-        $scope.blur = true;
-        $scope.projectDate = {
+        $scope.focus = false; // поле для хранения информации находится ли фокус в поле ввода
+        $scope.blur = true; // поле для хранения информации потеряло ли фокус в поле ввода
+        $scope.projectDate = { // объект для хранения информации о датах добавляемого проекта
             startDate: undefined,
             endDate : undefined
         };
 
+        // получение записи о сотруднике от сервера
         function getEmployee() {
             employeeService.get($routeParams.employeeId).then(function (data) {
                 $scope.employee = data;
@@ -35,6 +37,7 @@ employeeDetail.controller('EmployeeDetailCtrl', ['$scope', 'namesPagesService', 
         //     }
         // });
 
+        // получение списка всех проектов от сервера
         function getProjects() {
             Project.getAll(function (data) {
                 $log.debug(data);
@@ -45,6 +48,7 @@ employeeDetail.controller('EmployeeDetailCtrl', ['$scope', 'namesPagesService', 
         }
         getProjects();
 
+        // поиск проекта по заданному имени
         function searchProject() {
             projectSearchService.find($scope.searchStringProject).then(function (data) {
                 $log.debug(data);
@@ -54,12 +58,14 @@ employeeDetail.controller('EmployeeDetailCtrl', ['$scope', 'namesPagesService', 
             });
         }
 
+        // сохранение выбранного проекта в объект сотрудника
         $scope.setFindProject = function (project) {
             $scope.searchStringProject = project.name;
             addingProject = project;
             delete addingProject.images;
         }
 
+        // метод вызывающийся при нажатии на кнопку "Добавить проект"
         $scope.isSubmit = false;
         $scope.addProject = function () {
             if (addingProject !== undefined && $scope.projectDate.startDate !== undefined) {
@@ -84,6 +90,7 @@ employeeDetail.controller('EmployeeDetailCtrl', ['$scope', 'namesPagesService', 
             console.log($scope.projectDate.endDate);
         }
 
+        // метод вызывающийся при нажатии на кнопку "Удалить проект"
         $scope.removeProject = function (project) {
             employeeService.removeProject($scope.employee._id, project).then(function (data) {
                 $log.debug(data);
@@ -95,6 +102,7 @@ employeeDetail.controller('EmployeeDetailCtrl', ['$scope', 'namesPagesService', 
             });
         }
 
+        // форматирование даты к формату 'dd/MM/yyyy'
         $scope.getProjectDate = function (project) {
             if (project.endDate === undefined) {
                 return $filter('date')(project.startDate, 'dd/MM/yyyy');
@@ -103,11 +111,13 @@ employeeDetail.controller('EmployeeDetailCtrl', ['$scope', 'namesPagesService', 
             }
         }
 
+        // показать все проекты
         $scope.isShowProjectForm = false;
         $scope.showAddProjectForm = function () {
             $scope.isShowProjectForm = ($scope.isShowProjectForm) ? false : true;
         }
 
+        // получение имени роли по полю "id"
          function getRoleName(id) {
              if (id !== undefined) {
                  roleService.get(id).then(function (data) {

@@ -1,6 +1,7 @@
 var EmployeeModel = require('./../models/employee');
 var employeeService = {};
 
+// получение массива записей о сотрудниках из базы данных
 employeeService.getAll = function () {
     return new Promise(function (resolve, reject) {
         EmployeeModel.find().exec(function (err, employees) {
@@ -13,6 +14,7 @@ employeeService.getAll = function () {
     });
 }
 
+// получение записи о сотруднике по полю 'id' из базы данных
 employeeService.get = function (id) {
     return new Promise(function (resolve, reject) {
         EmployeeModel.findById(id).populate('technologies.tech').populate('technologies.subTech').exec(function (err, employee) {
@@ -25,7 +27,8 @@ employeeService.get = function (id) {
     });
 }
 
-employeeService.getWithoutPopulate = function (id) { // нужно для добавления проекта
+// получение записи о сотруднике по полю 'id' из базы данных
+employeeService.getWithoutPopulate = function (id) {
     return new Promise(function (resolve, reject) {
         EmployeeModel.findById(id).exec(function (err, employee) {
             if (err) {
@@ -37,6 +40,7 @@ employeeService.getWithoutPopulate = function (id) { // нужно для доб
     });
 }
 
+// сохранение записи о сотруднике в базу данных
 employeeService.save = function (employee) {
     return new Promise(function (resolve, reject) {
         employee.save(function (err) {
@@ -49,6 +53,7 @@ employeeService.save = function (employee) {
     });
 }
 
+// удаление записи о сотруднике из базы данных
 employeeService.remove = function (employee) {
     return new Promise(function (resolve, reject) {
         employee.remove(function (err) {
@@ -61,6 +66,7 @@ employeeService.remove = function (employee) {
     });
 }
 
+// удаление записи о проектах сотрудника из базы данных
 employeeService.getEmpoyeeByProjectDate = function (date) {
     return new Promise(function (resolve, reject) {
         EmployeeModel.find({}, 'firstname lastname patronymic projects').exec(function (err, employees) {

@@ -1,10 +1,11 @@
-var log = require('./../utils/log')(module);
-var EmployeeModel = require('./../models/employee');
-var employeeService = require('./../data_layer/employeeService');
-var projectService = require('../data_layer/projectService');
-var employeeHelper = require('./employeeHelper')
+var log = require('./../utils/log')(module); // импорт модуля для логирования
+var EmployeeModel = require('./../models/employee'); // импорт модели для создания записи о сотруднике
+var employeeService = require('./../data_layer/employeeService'); // импорт модуля для получения записей сотрудников из бд
+var projectService = require('../data_layer/projectService'); // импорт модуля для получения записей о проектах из бд
+var employeeHelper = require('./employeeHelper');
 var employeeCtrl = {};
 
+// получение массива записей о сотрудниках
 employeeCtrl.getAll = function (req, res, next) {
     return employeeService.getAll().then(function (employees) {
         return res.send(employees);
@@ -13,6 +14,7 @@ employeeCtrl.getAll = function (req, res, next) {
     });
 }
 
+// получение записей о сотруднике по полю 'id'
 employeeCtrl.get = function (req, res, next) {
     employeeService.get(req.params.id).then(function (employee) {
         return res.send(employee);
@@ -21,6 +23,7 @@ employeeCtrl.get = function (req, res, next) {
     });
 }
 
+// обновление записи о сотруднике
 employeeCtrl.update = function (req, res, next) {
     employeeService.get(req.params.id).then(function (employee) {
         employee.firstname = req.body.newEmployee.firstname;
@@ -41,6 +44,7 @@ employeeCtrl.update = function (req, res, next) {
     });
 }
 
+// добавление записи о сотруднике
 employeeCtrl.add = function (req, res, next) {
     var employee = new EmployeeModel({
         firstname : req.body.newEmployee.firstname,
@@ -61,6 +65,7 @@ employeeCtrl.add = function (req, res, next) {
     });
 }
 
+// добавление записи о проекте в запись о сотруднике
 employeeCtrl.addProject = function (req, res, next) {
     employeeService.getWithoutPopulate(req.params.id).then(function (employee) {
         return employeeHelper.addProject(employee, req.body.addProject, req.body.projectDate);
@@ -76,6 +81,7 @@ employeeCtrl.addProject = function (req, res, next) {
     });
 }
 
+// удаление записи о проекте из записи о сотруднике
 employeeCtrl.removeProject = function (req, res, next) {
     var editEmployee;
     employeeService.getWithoutPopulate(req.params.id).then(function (employee) {
@@ -105,6 +111,7 @@ employeeCtrl.removeProject = function (req, res, next) {
     });
 }
 
+// удаление записи о сотруднике
 employeeCtrl.remove = function (req, res, next) {
     employeeService.get(req.params.id).then(function (employee) {
         return employeeService.remove(employee);
