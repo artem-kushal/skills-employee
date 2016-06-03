@@ -17,5 +17,11 @@ var SubTech = new Schema({
     }
 });
 
+var SubTechSorting = new Schema({
+    techId: { type: Schema.Types.ObjectId, required: true} ,
+    sortOrder: []
+});
+
 module.exports.TechnologyModel = mongoose.model('Technology', Technology);
 module.exports.SubTechModel = mongoose.model('SubTech', SubTech);
+module.exports.SubTechSortingModel = mongoose.model('SubTechSorting', SubTechSorting);

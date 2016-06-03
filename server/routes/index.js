@@ -32,6 +32,7 @@ module.exports = function (app) {
     app.post('/subtech', subtech.add);
     app.put('/subtech/:id', subtech.update);
     app.delete('/subtech/:id', subtech.remove);
+    app.post('/subtech/change-sort-order', subtech.changeSortOrder);
 
     app.get('/projects/', projects.getAll);
     app.get('/projects/:id', projects.get);

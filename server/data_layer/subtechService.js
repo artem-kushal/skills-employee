@@ -1,4 +1,5 @@
 var SubTechModel = require('./../models/tech').SubTechModel;
+var SubTechSortingModel = require('./../models/tech').SubTechSortingModel;
 var subtechService = {};
 
 subtechService.get = function (id) {
@@ -36,5 +37,14 @@ subtechService.remove = function (subtech) {
         });
     });
 }
+
+subtechService.changeSortOrder = function (sortOrder) {
+    return sortOrder.save();
+}
+
+subtechService.getSortOrder = function (techId) {
+    return SubTechSortingModel.findOne({ techId: techId }).exec();
+}
+
 
 module.exports = subtechService;

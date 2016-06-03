@@ -3,6 +3,7 @@ var TechnologyModel = require('./../models/tech').TechnologyModel;
 var SubTechModel = require('./../models/tech').SubTechModel;
 var subtechService = require('./../data_layer/subtechService');
 var techService = require('./../data_layer/technologyService');
+var SubTechSortingModel = require('./../models/tech').SubTechSortingModel;
 var subtechCtrl = {};
 
 subtechCtrl.update = function (req, res, next) {
@@ -50,6 +51,26 @@ subtechCtrl.remove = function (req, res, next) {
         return techService.updateSubtech(subtech);
     }).then(function () {
         log.info('subtech removed');
+        return res.send({ status: 'OK' });
+    }).catch(function (err) {
+        return next(err);
+    });
+}
+
+subtechCtrl.changeSortOrder = function (req, res, next) {
+    subtechService.getSortOrder(req.body.techId).then(function (sortOrder) {
+        if (!sortOrder) {
+            sortOrder = new SubTechSortingModel({
+                techId: req.body.techId,
+                sortOrder: req.body.sortOrder
+            });
+        } else {
+            sortOrder.techId = req.body.techId;
+            sortOrder.sortOrder = req.body.sortOrder;
+        }
+        return subtechService.changeSortOrder(sortOrder);
+    }).then(function () {
+        log.info('update or added sort order for subtech');
         return res.send({ status: 'OK' });
     }).catch(function (err) {
         return next(err);

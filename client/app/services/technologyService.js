@@ -18,3 +18,18 @@ technologyService.factory('SubTech', ['$resource', 'restApiUrl', function ($reso
         remove: { method:'DELETE', params: { id: '@id' }}
     });
 }]);
+
+technologyService.service('subTechSortOrderService', ['$http', '$q', 'restApiUrl', function ($http, $q, restApiUrl) {
+
+    this.changeSortOrder = function (techId, sortOrderArray) {
+        var deferred = $q.defer();
+        $http.post(restApiUrl + 'subtech/change-sort-order', { techId: techId, sortOrderArray: sortOrderArray })
+        .then(function (response) {
+            deferred.resolve(response.data);
+        }, function (response) {
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    };
+
+}]);

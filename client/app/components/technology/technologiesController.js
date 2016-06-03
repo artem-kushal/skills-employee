@@ -2,8 +2,8 @@
 
 var technology = angular.module('technology', ['technology.service']);
 
-technology.controller('TechnologiesCtrl', ['$scope', 'namesPagesService', 'Technologies', 'SubTech', '$log',
-    function ($scope, namesPagesService, Technologies, SubTech, $log) {
+technology.controller('TechnologiesCtrl', ['$scope', 'namesPagesService', 'Technologies', 'SubTech', '$log', 'subTechSortOrderService',
+    function ($scope, namesPagesService, Technologies, SubTech, $log, subTechSortOrderService) {
 
         $scope.$parent.pageName = namesPagesService.tech;
         var markedTech;
@@ -13,6 +13,7 @@ technology.controller('TechnologiesCtrl', ['$scope', 'namesPagesService', 'Techn
             Technologies.query(function (data) {
                 $log.debug(data);
                 $scope.technologies = data;
+                addIndexSort($scope.technologies);
             }, function (error) {
                 $log.debug(error);
             });
@@ -30,8 +31,8 @@ technology.controller('TechnologiesCtrl', ['$scope', 'namesPagesService', 'Techn
                         $log.debug(error);
                     });
                 } else {
-                    SubTech.post({ parentId: $scope.technologies[markedTech]._id,
-                    name: $scope.newTechName }, function (data) {
+                    var parentId = $scope.technologies[markedTech]._id;
+                    SubTech.post({ parentId: parentId, name: $scope.newTechName }, function (data) {
                         $log.debug(data.newSubTech);
                         $scope.technologies[markedTech].subTech.push(data.newSubTech);
                     }, function (error) {
@@ -132,8 +133,36 @@ technology.controller('TechnologiesCtrl', ['$scope', 'namesPagesService', 'Techn
 
         $scope.subTechConfig = {
             group: 'subTech',
-            animation: 150
+            animation: 150,
+            onAdd: function (e) {
+                SubTech.post({ parentId: e.model.technology, name: e.model.name }, function (data) {
+                    $log.debug("move adding subtech", data.newSubTech);
+                }, function (error) {
+                    $log.debug(error);
+                });
+            },
+            onRemove: function (e) {
+                SubTech.remove({ id : e.model._id }, function (data) {
+                    $log.debug("move removed subtech", data);
+                }, function (error) {
+                    $log.debug(error);
+                });
+            },
         };
 
+
+        // remove after adding indexSort
+        function addIndexSort (technologies) {
+            technologies.forEach(function (tech) {
+                var sortOrder = tech.subTech.map(function (subTech) {
+                    return subTech._id;
+                });
+                subTechSortOrderService.changeSortOrder(tech._id, sortOrder).catch(function(error) {  
+                    $log.debug(error);
+                });
+            });
+
+            
+        }
 
     }]);
