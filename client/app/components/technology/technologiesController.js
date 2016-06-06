@@ -13,7 +13,7 @@ technology.controller('TechnologiesCtrl', ['$scope', 'namesPagesService', 'Techn
             Technologies.query(function (data) {
                 $log.debug(data);
                 $scope.technologies = data;
-                addIndexSort($scope.technologies);
+                //addIndexSort($scope.technologies);
             }, function (error) {
                 $log.debug(error);
             });
@@ -135,8 +135,15 @@ technology.controller('TechnologiesCtrl', ['$scope', 'namesPagesService', 'Techn
             group: 'subTech',
             animation: 150,
             onAdd: function (e) {
-                SubTech.post({ parentId: e.model.technology, name: e.model.name }, function (data) {
+                var parentId = (e.newIndex === 0) ? e.models[e.newIndex + 1].technology : e.models[e.newIndex - 1].technology;
+                SubTech.post({ parentId: parentId, name: e.model.name }, function (data) {
                     $log.debug("move adding subtech", data.newSubTech);
+                    e.models[e.newIndex] = data.newSubTech;
+                    var parentTech = $scope.technologies.find(function(tech) {
+                        return tech._id == parentId;
+                    });
+                    parentTech.subTech[e.newIndex] = data.newSubTech;
+                    changeSortOrder(parentId, e.models);
                 }, function (error) {
                     $log.debug(error);
                 });
@@ -144,25 +151,42 @@ technology.controller('TechnologiesCtrl', ['$scope', 'namesPagesService', 'Techn
             onRemove: function (e) {
                 SubTech.remove({ id : e.model._id }, function (data) {
                     $log.debug("move removed subtech", data);
+                    changeSortOrder(e.model.technology, e.models);
                 }, function (error) {
                     $log.debug(error);
                 });
             },
+            onSort: function (e) {
+                if (e.model !== undefined) {
+                    changeSortOrder(e.model.technology, e.models);
+                }
+            }
         };
+
+
+        function changeSortOrder (techId, subTech) {
+            console.log('1');
+            var names = [];
+            var sortOrder = subTech.map(function (subTech) {
+                names.push(subTech.name);
+                return subTech._id;
+            });
+            $log.debug(names.join(', '));
+            $log.debug(sortOrder.join(', '));
+            subTechSortOrderService.changeSortOrder(techId, sortOrder).then(function (data) {
+                $log.debug("changed sort order");
+            }, function (error) {
+                $log.debug(error);
+            });
+        }
 
 
         // remove after adding indexSort
         function addIndexSort (technologies) {
             technologies.forEach(function (tech) {
-                var sortOrder = tech.subTech.map(function (subTech) {
-                    return subTech._id;
-                });
-                subTechSortOrderService.changeSortOrder(tech._id, sortOrder).catch(function(error) {  
-                    $log.debug(error);
-                });
+                $log.debug("index", tech);
+                changeSortOrder(tech._id, tech.subTech);
             });
-
-            
         }
 
     }]);

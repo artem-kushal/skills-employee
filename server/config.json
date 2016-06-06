@@ -2,8 +2,9 @@
     "development": {
     	"port" : "1337",
     	"mongoose": {
-	        "uri": "mongodb://user:qweasdcvb1E@ds021343.mlab.com:21343/skills-dev"
-	    }
+		  "uri": "mongodb://localhost:Gmx8wTZf61w@ds015690.mlab.com:15690/skills"
+	    },
+	  	"defaultUri": "mongodb://dev:fsefsdcWlJ4@ds021943.mlab.com:21943/skills-dev"
   	},
   	"production": {
     	"port" : "1337",

@@ -75,6 +75,6 @@ subtechCtrl.changeSortOrder = function (req, res, next) {
     }).catch(function (err) {
         return next(err);
     });
-}
+};
 
 module.exports = subtechCtrl;

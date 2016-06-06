@@ -6,9 +6,26 @@ var subtechService = require('./../data_layer/subtechService');
 var technologyCtrl = {};
 
 technologyCtrl.getAll = function (req, res, next) {
-    return techService.getAll().then(function (technologies) {
+    var allSortOrder = undefined;
+    subtechService.getAllSortOrders().then(function (sortOrders) {
+        allSortOrder = sortOrders;
+        return techService.getAll();
+    }).then(function (technologies) {
+        if (allSortOrder != undefined && allSortOrder.length !== 0) {
+            technologies = technologies.map(function (tech) {
+                var sortTech = allSortOrder.find(function (sortTech) {
+                    return sortTech.techId.toString() == tech._id.toString();
+                });
+                tech.subTech = sortTech.sortOrder.map(function (subTechSortId) {
+                    return tech.subTech.find(function (subTech) {
+                        return subTech._id == subTechSortId;
+                    });
+                });
+                return tech;
+            });
+        }
         return res.send(technologies);
-    }, function (err) {
+    }).catch(function (err) {
         return next(err);
     });
 }

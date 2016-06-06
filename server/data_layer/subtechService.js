@@ -46,5 +46,8 @@ subtechService.getSortOrder = function (techId) {
     return SubTechSortingModel.findOne({ techId: techId }).exec();
 }
 
+subtechService.getAllSortOrders = function (techId) {
+    return SubTechSortingModel.find().exec();
+}
 
 module.exports = subtechService;

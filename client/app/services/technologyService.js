@@ -23,7 +23,7 @@ technologyService.service('subTechSortOrderService', ['$http', '$q', 'restApiUrl
 
     this.changeSortOrder = function (techId, sortOrderArray) {
         var deferred = $q.defer();
-        $http.post(restApiUrl + 'subtech/change-sort-order', { techId: techId, sortOrderArray: sortOrderArray })
+        $http.post(restApiUrl + 'subtech/change-sort-order', { techId: techId, sortOrder: sortOrderArray })
         .then(function (response) {
             deferred.resolve(response.data);
         }, function (response) {
