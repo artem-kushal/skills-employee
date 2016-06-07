@@ -14,6 +14,7 @@ newProject.controller('NewProjectCtrl', ['$scope', 'namesPagesService', 'Project
     $scope.$parent.pageName = namesPagesService.newProject;
 
     $scope.isEdit = false;
+    $scope.isLoadData = false;
     $scope.selectedTech = [];
 
     $scope.newProject = {
@@ -24,8 +25,8 @@ newProject.controller('NewProjectCtrl', ['$scope', 'namesPagesService', 'Project
     $scope.projectImgs = [];
 
     if ($routeParams.projectId) {
-        getProject();
         $scope.isEdit = true;
+        getProject();
         $scope.$parent.pageName = namesPagesService.editProject
     }
 
@@ -42,6 +43,7 @@ newProject.controller('NewProjectCtrl', ['$scope', 'namesPagesService', 'Project
             $scope.$broadcast('initDate', $scope.newProject.dateEnd);
             delete $scope.newProject.$promise;
             delete $scope.newProject.images;
+            $scope.isLoadData = true;
         }, function (error) {
             $log.debug(error);
         });

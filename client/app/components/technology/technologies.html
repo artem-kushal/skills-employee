@@ -18,7 +18,21 @@
     </form>
 </div>
 
-<div class="row white z-depth-1 tech-content">
+<div class="row center-align" ng-show="technologies === undefined">
+    <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div><div class="gap-patch">
+            <div class="circle"></div>
+        </div><div class="circle-clipper right">
+            <div class="circle"></div>
+        </div>
+        </div>
+    </div>
+</div>
+
+<div class="row white z-depth-1 tech-content" ng-hide="technologies === undefined">
     <div class="col s12" ng-if="technologies.length === 0">
         <p>Техноологии отсутствуют. Воспользуйтесь формой выше для добавления новой технологии.</p>
     </div>

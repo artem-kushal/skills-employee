@@ -2,6 +2,10 @@ var ProjectModel = require('./../models/project').ProjectModel;
 var ProjectTechnologyModel = require('./../models/projectTech').ProjectTechnologyModel;
 var projectService = {};
 
+projectService.getBriefAll = function () {
+    return ProjectModel.find({}, 'name').exec();
+};
+
 projectService.getAll = function () {
     return new Promise(function (resolve, reject) {
         ProjectModel.find().populate('tech').exec(function (err, projects) {

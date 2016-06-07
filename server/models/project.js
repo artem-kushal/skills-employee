@@ -9,9 +9,11 @@ var Project = new Schema({
         ref: 'ProjectTechnology'
     }],
     roles: [{
+        roleId: Schema.Types.ObjectId,
         name: String,
-        count: Number
-    }],
+        count: Number,
+        addingCount: {type: Number, default: 0}
+}],
     responsibilities: [{
         name: String,
         responsibId: String

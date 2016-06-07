@@ -9,7 +9,7 @@ technology.controller('TechnologiesCtrl', ['$scope', 'namesPagesService', 'Techn
         var markedTech;
 
         function getTechnologies() {
-            $scope.technologies = [];
+            $scope.technologies = undefined;
             Technologies.query(function (data) {
                 $log.debug(data);
                 $scope.technologies = data;
@@ -35,6 +35,7 @@ technology.controller('TechnologiesCtrl', ['$scope', 'namesPagesService', 'Techn
                     SubTech.post({ parentId: parentId, name: $scope.newTechName }, function (data) {
                         $log.debug(data.newSubTech);
                         $scope.technologies[markedTech].subTech.push(data.newSubTech);
+                        changeSortOrder($scope.technologies[markedTech]._id, $scope.technologies[markedTech].subTech);
                     }, function (error) {
                         $log.debug(error);
                     });
@@ -74,6 +75,7 @@ technology.controller('TechnologiesCtrl', ['$scope', 'namesPagesService', 'Techn
             SubTech.remove({ id : $scope.technologies[parentIndex].subTech[index]._id }, function (data) {
                 $log.debug(data);
                 $scope.technologies[parentIndex].subTech.splice(index, 1);
+                changeSortOrder($scope.technologies[parentIndex]._id, $scope.technologies[parentIndex].subTech);
             }, function (error) {
                 $log.debug(error);
             });

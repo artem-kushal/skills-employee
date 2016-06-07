@@ -33,7 +33,22 @@
 			<div class="row report-tech" ng-controller="TechListCtrl" ng-include="'../components/newproject/techList/techList.html'"></div>
 		</div>
 	</div>
-    <div class="row">
+
+    <div class="row center-align" ng-show="employees === undefined">
+        <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div><div class="gap-patch">
+                <div class="circle"></div>
+            </div><div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-hide="employees === undefined">
 	    <div class="col s12" ng-if="employees.length === 0">
 	        <p>Анкеты сотрудников отсутствуют. Перейдите на страницу добавления анкеты сотрудника воспользовавшись кнопкой выше.</p>
 	    </div>

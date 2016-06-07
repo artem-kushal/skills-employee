@@ -35,6 +35,7 @@ module.exports = function (app) {
     app.post('/subtech/change-sort-order', subtech.changeSortOrder);
 
     app.get('/projects/', projects.getAll);
+    app.get('/projects/brief/', projects.getBriefAll);
     app.get('/projects/:id', projects.get);
     app.post('/projects', projects.add);
     app.post('/upload', upload.array('files'), projects.uploadImages);

@@ -6,6 +6,19 @@
     <div class="col s12" ng-if="projects.length === 0">
         <p>Проекты отсутствуют. Перейдите на страницу добавления проекта воспользовавшись кнопкой выше.</p>
     </div>
+    <div class="row center-align" ng-show="projects === undefined">
+        <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div><div class="gap-patch">
+                <div class="circle"></div>
+            </div><div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
 		<div class="col s12 m4 proj-list" ng-repeat="project in projects">
 			<div class="card blue lighten-5">

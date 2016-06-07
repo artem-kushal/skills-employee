@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('project.service', ['project.search'])
+angular.module('project.service', ['project.search', 'project.brief'])
     .factory('Project', ['$resource', 'restApiUrl', function ($resource, restApiUrl) {
         return $resource(restApiUrl + 'projects/:id', {}, {
             getAll:  { method:'GET', params:{ id:'' }, isArray:true },
@@ -16,6 +16,20 @@ angular.module('project.search', []).service('projectSearchService', ['$http', '
     this.find = function (searchString) {
         var deferred = $q.defer();
         $http.get(restApiUrl + 'projects/search/' + searchString).then(function (response) {
+            deferred.resolve(response.data);
+        }, function (response) {
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    }
+
+}]);
+
+angular.module('project.brief', []).service('projectBriefService', ['$http', '$q', 'restApiUrl', function ($http, $q, restApiUrl) {
+
+    this.getAll = function () {
+        var deferred = $q.defer();
+        $http.get(restApiUrl + 'projects/brief/').then(function (response) {
             deferred.resolve(response.data);
         }, function (response) {
             deferred.reject(response);

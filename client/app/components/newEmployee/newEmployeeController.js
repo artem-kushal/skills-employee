@@ -12,9 +12,10 @@ newEmployee.controller('NewEmployeeCtrl', ['$scope', 'namesPagesService', 'emplo
         };
 
         $scope.isEdit = false;
+        $scope.isLoadData = false;
         if ($routeParams.employeeId) {
-            getEmployee();
             $scope.isEdit = true;
+            getEmployee();
             $scope.$parent.pageName = namesPagesService.editEmployee
         }
 
@@ -23,6 +24,7 @@ newEmployee.controller('NewEmployeeCtrl', ['$scope', 'namesPagesService', 'emplo
                 $scope.newemployee = data;
                 $scope.$broadcast('initDate', $scope.newemployee.birthday);
                 $scope.$broadcast('initDate', $scope.newemployee.dateEmployment);
+                $scope.isLoadData = true;
             }, function (error) {
                 $log.debug(error);
             });

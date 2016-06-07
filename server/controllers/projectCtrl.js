@@ -4,6 +4,14 @@ var ProjectTechnologyModel = require('./../models/projectTech').ProjectTechnolog
 var projectService = require('./../data_layer/projectService');
 var projectCtrl = {};
 
+projectCtrl.getBriefAll = function (req, res, next) {
+    projectService.getBriefAll().then(function (projects) {
+        return res.send(projects);
+    }).catch(function (err) {
+        return next(err);
+    });
+};
+
 projectCtrl.getAll = function (req, res, next) {
     projectService.getAll().then(function (projects) {
         return res.send(projects);

@@ -30,7 +30,7 @@ roleInput.controller('RoleInputCtrl', ['$scope', 'roleService', '$log',
                 }
             }
             if (!isConsist) {
-                $scope.newProject.roles.push({ name: role.name, count: 1 });
+                $scope.newProject.roles.push({ roleId: role._id, name: role.name, count: 1 });
             }
         }
 

@@ -1,4 +1,18 @@
-<div class="row white z-depth-1 employeedetail-content" >
+<div class="row center-align" ng-show="employee === undefined">
+    <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div><div class="gap-patch">
+            <div class="circle"></div>
+        </div><div class="circle-clipper right">
+            <div class="circle"></div>
+        </div>
+        </div>
+    </div>
+</div>
+
+<div class="row white z-depth-1 employeedetail-content" ng-hide="employee === undefined">
     <div class="col s11">
         <h5>Детали анкеты сотрудника</h5>
     </div>

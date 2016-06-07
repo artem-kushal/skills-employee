@@ -3,7 +3,22 @@
         <h5 ng-if="!isEdit">Создание нового проекта</h5>
         <h5 ng-if="isEdit">Изменение проекта</h5>
     </div>
-    <div class="col s12">
+
+    <div class="col s12 center-align" ng-show="isEdit && !isLoadData">
+        <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div><div class="gap-patch">
+                <div class="circle"></div>
+            </div><div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col s12" ng-hide="isEdit && !isLoadData">
     	
     	<form name="newProjectForm" novalidate ng-submit="sendProject()">
     		<div class="row">
