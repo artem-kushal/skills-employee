@@ -71,7 +71,7 @@ employeeCtrl.addProject = function (req, res, next) {
         return employeeHelper.addProject(employee, req.body.addProject, req.body.projectDate);
     }).then(function (employee) {
         return employeeService.save(employee);
-    }).then(function (employee) {
+    }).then(function () {
         return employeeService.get(req.params.id);
     }).then(function (employee) {
         log.info('project added to employee');

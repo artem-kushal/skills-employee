@@ -37,6 +37,16 @@ angular.module('project.brief', []).service('projectBriefService', ['$http', '$q
         return deferred.promise;
     }
 
+    this.getProjectByRole = function (roleId) {
+        var deferred = $q.defer();
+        $http.get(restApiUrl + 'projects/byrole/' + roleId).then(function (response) {
+            deferred.resolve(response.data);
+        }, function (response) {
+            deferred.reject(response);
+        });
+        return deferred.promise;
+    }
+
 }]);
 
 angular.module('upload.service', [])

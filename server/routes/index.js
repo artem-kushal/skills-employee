@@ -37,6 +37,7 @@ module.exports = function (app) {
     app.get('/projects/', projects.getAll);
     app.get('/projects/brief/', projects.getBriefAll);
     app.get('/projects/:id', projects.get);
+    app.get('/projects/byrole/:roleId', projects.getProjectsByRole);
     app.post('/projects', projects.add);
     app.post('/upload', upload.array('files'), projects.uploadImages);
     app.delete('/projects/:id', projects.remove);

@@ -6,6 +6,17 @@ projectService.getBriefAll = function () {
     return ProjectModel.find({}, 'name').exec();
 };
 
+projectService.getProjectsByRole = function (roleId) {
+    return ProjectModel.find({'roles.roleId': {"$in": roleId}}).populate('tech').exec();
+};
+
+projectService.updateProjectRole = function (projectId ,roleId) {
+    console.log(projectId ,roleId);
+    return ProjectModel.findByIdAndUpdate(projectId, {'roles.roleId': ObjectId(roleId.toString())}, {'$set': {
+        'roles.$.addingCount': 2}
+    }).exec();
+};
+
 projectService.getAll = function () {
     return new Promise(function (resolve, reject) {
         ProjectModel.find().populate('tech').exec(function (err, projects) {

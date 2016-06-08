@@ -18,6 +18,20 @@ projectCtrl.getAll = function (req, res, next) {
     }).catch(function (err) {
         return next(err);
     });
+};
+
+projectCtrl.getProjectsByRole = function (req, res, next) {
+    projectService.getProjectsByRole(req.params.roleId).then(function (projects) {
+        projects = projects.filter(function (project) {
+            var role = project.roles.find(function (role) {
+                return role.roleId == req.params.roleId;
+            });
+            return role.count > role.addingCount;
+        });
+        return res.send(projects);
+    }).catch(function (err) {
+        return next(err);
+    });
 }
 
 projectCtrl.get = function (req, res, next) {
